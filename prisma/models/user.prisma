@@ -1,0 +1,45 @@
+model User {
+  id        Int     @id @default(autoincrement())
+  userId    String? @unique
+
+  name      String
+  email     String  @unique
+  password  String
+
+  address   String?
+  contact   String?
+  gender    Gender?
+  role      Role
+
+  isActive  Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  refreshTokens RefreshToken[]
+
+  teacherProfile TeacherProfile?
+  studentProfile StudentProfile?
+
+  tuitionPosts TuitionPost[]
+  applications TuitionApplication[]
+
+  teacherAssignments Assigned[] @relation("TeacherAssignments")
+  studentAssignments Assigned[] @relation("StudentAssignments")
+
+  teacherDemoClasses DemoClass[] @relation("TeacherDemoClasses")
+  studentDemoClasses DemoClass[] @relation("StudentDemoClasses")
+
+  teacherHomework Assignment[] @relation("TeacherHomework")
+  studentHomework Assignment[] @relation("StudentHomework")
+
+  @@map("users")
+}
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  @@map("refresh_tokens")
+}

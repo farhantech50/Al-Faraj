@@ -1,0 +1,27 @@
+model Assigned {
+  id            Int @id @default(autoincrement())
+
+  tuitionPostId Int
+  teacherId     Int
+  studentId     Int
+  assignedBy    Int
+
+  statusId      Int
+
+  startDate     DateTime @default(now())
+  endDate       DateTime?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  tuitionPost   TuitionPost @relation(fields: [tuitionPostId], references: [id], onDelete: Cascade)
+
+  teacher       User @relation("TeacherAssignments", fields: [teacherId], references: [id])
+  student       User @relation("StudentAssignments", fields: [studentId], references: [id])
+
+  status        Lookup @relation("AssignedStatus", fields: [statusId], references: [id])
+
+  demoClass     DemoClass?
+
+  @@map("assigned_teacher_students")
+}

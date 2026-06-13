@@ -1,0 +1,65 @@
+model TuitionPost {
+  id          Int @id @default(autoincrement())
+
+  postedBy    Int
+
+  title       String
+  description String?
+  budget      Decimal?
+
+  mode        Mode
+  area        Int
+
+  days        Day[]
+  startTime   String
+  endTime     String
+
+  statusId    Int
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  postedByUser User @relation(fields: [postedBy], references: [id], onDelete: Cascade)
+
+  status      Lookup @relation("TuitionStatus", fields: [statusId], references: [id])
+
+  subjects    TuitionPostSubject[]
+
+  applications TuitionApplication[]
+  assigned     Assigned[]
+  demoClasses  DemoClass[]
+
+  @@map("tuition_posts")
+}
+
+model TuitionApplication {
+  id            Int @id @default(autoincrement())
+
+  tuitionPostId Int
+  teacherId     Int
+  statusId      Int
+
+  coverNote     String?
+
+  appliedAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  tuitionPost   TuitionPost @relation(fields: [tuitionPostId], references: [id], onDelete: Cascade)
+  teacher       User @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  status        Lookup @relation("ApplicationStatus", fields: [statusId], references: [id])
+
+  @@unique([tuitionPostId, teacherId])
+}
+
+model TuitionPostSubject {
+  id            Int @id @default(autoincrement())
+
+  tuitionPostId Int
+  subjectId     Int
+
+  tuitionPost   TuitionPost @relation(fields: [tuitionPostId], references: [id], onDelete: Cascade)
+  subject       Lookup @relation("SubjectLookup", fields: [subjectId], references: [id])
+
+  @@unique([tuitionPostId, subjectId])
+}

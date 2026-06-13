@@ -1,0 +1,17 @@
+model StudentProfile {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @unique
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mode        Mode
+  gradeLevel  Int?
+  institution String?
+  guardianName String?
+  guardianAddress String?
+  guardianContact     String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("student_profiles")
+}

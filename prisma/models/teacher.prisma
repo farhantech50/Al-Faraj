@@ -1,0 +1,18 @@
+model TeacherProfile {
+  id                    Int      @id @default(autoincrement())
+  userId                Int      @unique
+
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  bio                   String?
+  experienceYears       Int?
+  educationalBackground String?
+  cvUrl                 String?
+
+  mode                  Mode
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("teacher_profiles")
+}

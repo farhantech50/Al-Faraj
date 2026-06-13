@@ -1,0 +1,33 @@
+model Assignment {
+  id          Int @id @default(autoincrement())
+
+  teacherId   Int
+  studentId   Int
+
+  title       String
+  description String?
+
+  dueDate     DateTime
+
+  fileUrl     String?
+  fileName    String?
+
+  note        String?
+  grade       Int?
+  feedback    String?
+  gradedAt    DateTime?
+
+  statusId    Int?
+  subjectId   Int?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  teacher     User @relation("TeacherHomework", fields: [teacherId], references: [id])
+  student     User @relation("StudentHomework", fields: [studentId], references: [id])
+
+  status      Lookup? @relation("AssignmentStatus", fields: [statusId], references: [id])
+  subject     Lookup? @relation("AssignmentSubjectLookup", fields: [subjectId], references: [id])
+
+  @@map("assignments")
+}

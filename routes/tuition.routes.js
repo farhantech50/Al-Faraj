@@ -1,0 +1,157 @@
+import express from "express";
+import {
+  createTuitionPost,
+  updateTuitionPost,
+  getAllTuitionPosts,
+  getTuitionPostById,
+  updateTuitionPostStatus,
+  deleteTuitionPost,
+  getTuitionsHavePendingApplications,
+  deleteTeacherApplication,
+  getActiveTuitions,
+} from "../controllers/tuition.controller.js";
+import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
+import { validate } from "../middlewares/validate.middleware.js";
+import {
+  validateCreateTuitionPost,
+  validateUpdateTuitionPost,
+} from "../validators/tuition.validator.js";
+
+const router = express.Router();
+
+router.post(
+  "/create",
+  protect,
+  authorizeRoles("student", "admin", "moderator"),
+  validateCreateTuitionPost,
+  validate,
+  (req, res, next) => {
+    /* #swagger.tags = ['Tuition']
+       #swagger.requestBody = {
+         required: true,
+         content: {
+           "application/json": {
+             schema: {
+               type: "object",
+               properties: {
+                 postedBy: { type: "integer", example: 1 },
+                 title: { type: "string", example: "Need Math and Physics Teacher" },
+                 description: { type: "string", example: "Looking for an experienced teacher" },
+                 budget: { type: "number", example: 3000 },
+                 medium: { type: "string", example: "online" },
+                 area: { type: "string", example: "Dhanmondi" },
+                 days: { type: "array", items: { type: "string" }, example: ["monday", "wednesday"] },
+                 startTime: { type: "string", example: "16:00" },
+                 endTime: { type: "string", example: "18:00" },
+                 subjectIds: { type: "array", items: { type: "integer" }, example: [1, 2] }
+               }
+             }
+           }
+         }
+       }
+    */
+    createTuitionPost(req, res, next);
+  },
+);
+
+router.put(
+  "/update/:id",
+  protect,
+  authorizeRoles("student", "admin", "moderator"),
+  validateUpdateTuitionPost,
+  validate,
+  (req, res, next) => {
+    /* #swagger.tags = ['Tuition']
+       #swagger.requestBody = {
+         required: true,
+         content: {
+           "application/json": {
+             schema: {
+               type: "object",
+               properties: {
+                 title: { type: "string", example: "Updated Title" },
+                 description: { type: "string", example: "Updated description" },
+                 budget: { type: "number", example: 4000 },
+                 medium: { type: "string", example: "offline" },
+                 area: { type: "string", example: "Mirpur" },
+                 days: { type: "array", items: { type: "string" }, example: ["tuesday", "thursday"] },
+                 startTime: { type: "string", example: "17:00" },
+                 endTime: { type: "string", example: "19:00" },
+                 subjectIds: { type: "array", items: { type: "integer" }, example: [1] }
+               }
+             }
+           }
+         }
+       }
+    */
+    updateTuitionPost(req, res, next);
+  },
+);
+
+router.put(
+  "/status/:id",
+  protect,
+  authorizeRoles("admin", "moderator"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Tuition']
+       #swagger.requestBody = {
+         required: true,
+         content: {
+           "application/json": {
+             schema: {
+               type: "object",
+               properties: {
+                 status: { type: "string", example: "approved" }
+               }
+             }
+           }
+         }
+       }
+    */
+    updateTuitionPostStatus(req, res, next);
+  },
+);
+
+router.get("/all", protect, (req, res, next) => {
+  /* #swagger.tags = ['Tuition'] */
+  getAllTuitionPosts(req, res, next);
+});
+
+router.get("/:id", protect, (req, res, next) => {
+  /* #swagger.tags = ['Tuition'] */
+  getTuitionPostById(req, res, next);
+});
+
+router.delete(
+  "/delete/:id",
+  protect,
+  authorizeRoles("admin", "moderator", "student"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Tuition'] */
+    deleteTuitionPost(req, res, next);
+  },
+);
+router.get("/pending/teacherApplications", protect, (req, res, next) => {
+  /* #swagger.tags = ['Tuition'] */
+  getTuitionsHavePendingApplications(req, res, next);
+});
+router.delete(
+  "/teacherApplication/delete/:id",
+  protect,
+  authorizeRoles("admin", "moderator", "teacher"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Tuition'] */
+    deleteTeacherApplication(req, res, next);
+  },
+);
+router.get(
+  "/activeTuitions/all",
+  protect,
+  authorizeRoles("admin", "moderator", "teacher", "student"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Tuition'] */
+    getActiveTuitions(req, res, next);
+  },
+);
+
+export default router;

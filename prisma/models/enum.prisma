@@ -1,0 +1,27 @@
+enum Role {
+  admin
+  moderator
+  teacher
+  student
+}
+
+enum Gender {
+  male
+  female
+  other
+}
+
+enum Mode {
+  online
+  offline
+}
+
+enum Day {
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
+  saturday
+  sunday
+}

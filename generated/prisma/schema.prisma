@@ -1,0 +1,245 @@
+model TeacherApplication {
+  id            Int      @id @default(autoincrement())
+  tuitionPostId Int
+  teacherId     Int
+  coverNote     String?
+  status        Int      @default(23)
+  appliedAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([tuitionPostId, teacherId])
+  @@map("teacher_applications")
+}
+
+model AssignedTeacherStudent {
+  id            Int            @id @default(autoincrement())
+  tuitionPostId Int            @unique
+  teacherId     Int
+  studentId     Int
+  assignedBy    Int
+  startDate     DateTime
+  endDate       DateTime?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  tuitionPost   TuitionPost    @relation(fields: [tuitionPostId], references: [id], onDelete: Cascade)
+  teacher       User           @relation("TeacherAssignments", fields: [teacherId], references: [id])
+  student       User           @relation("StudentAssignments", fields: [studentId], references: [id])
+  classSchedule ClassSchedule?
+
+  @@map("assigned_teacher_students")
+}
+
+model Assignment {
+  id          Int       @id @default(autoincrement())
+  teacherId   Int
+  studentId   Int
+  title       String
+  description String?
+  dueDate     DateTime
+  fileUrl     String?
+  fileName    String?
+  note        String?
+  grade       Int?
+  feedback    String?
+  gradedAt    DateTime?
+  status      Int?      @default(41)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  subject     Int?
+  teacher     User      @relation("TeacherHomework", fields: [teacherId], references: [id])
+  student     User      @relation("StudentHomework", fields: [studentId], references: [id])
+
+  @@map("assignments")
+}
+
+model ClassSchedule {
+  id           Int                     @id @default(autoincrement())
+  assignmentId Int                     @unique
+  teacherId    Int
+  studentId    Int
+  subjectIds   Int[]
+  days         Day[]
+  startTime    String
+  endTime      String
+  medium       Medium
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+  overrides    ClassScheduleOverride[]
+
+  assignment AssignedTeacherStudent @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+
+  @@map("class_schedules")
+}
+
+model ClassScheduleOverride {
+  id              Int      @id @default(autoincrement())
+  classScheduleId Int
+  originalDate    DateTime // ← original scheduled date
+  newDate         DateTime // ← moved to this date
+  startTime       String
+  endTime         String
+  medium          Medium
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  classSchedule ClassSchedule @relation(fields: [classScheduleId], references: [id], onDelete: Cascade)
+
+  @@map("class_schedule_overrides")
+}
+
+model Lookup {
+  id        Int      @id @default(autoincrement())
+  name      String
+  value     String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("lookups")
+}
+
+model ModeratorPermission {
+  id                    Int      @id @default(autoincrement())
+  userId                Int      @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  canAssignTeachers     Boolean  @default(false)
+  canApproveJobs        Boolean  @default(false)
+  canManageUsers        Boolean  @default(false)
+  canPostJobs           Boolean  @default(false)
+  canRejectApplications Boolean  @default(false)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("moderator_permissions")
+}
+
+model StudentProfile {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gradeLevel  Int?
+  institution String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  contact     String?
+
+  @@map("student_profiles")
+}
+
+model TeacherProfile {
+  id                    Int      @id @default(autoincrement())
+  userId                Int      @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio                   String?
+  experienceYears       Int?
+  educationalBackground String?
+  cvUrl                 String?
+  medium                Medium[]
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("teacher_profiles")
+}
+
+enum Medium {
+  online
+  offline
+}
+
+model TuitionPost {
+  id           Int                     @id @default(autoincrement())
+  postedBy     Int
+  title        String
+  description  String?
+  budget       Decimal?
+  medium       Medium
+  area         Int
+  days         Day[]
+  startTime    String
+  endTime      String
+  status       Int                     @default(23)
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+  subjects     Int[]
+  postedByUser User                    @relation(fields: [postedBy], references: [id], onDelete: Cascade)
+  assigns      AssignedTeacherStudent?
+
+  @@map("tuition_posts")
+}
+
+enum Day {
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
+  saturday
+  sunday
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  userCode String? @unique
+
+  name     String
+  email    String @unique
+  password String
+
+  address String?
+  contact String?
+  gender  Gender?
+  role    Role    @default(student)
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  refreshTokens RefreshToken[]
+
+  teacherProfile      TeacherProfile?
+  moderatorPermission ModeratorPermission?
+  studentProfile      StudentProfile?
+
+  teacherAssignments AssignedTeacherStudent[] @relation("TeacherAssignments")
+  studentAssignments AssignedTeacherStudent[] @relation("StudentAssignments")
+
+  teacherHomework Assignment[] @relation("TeacherHomework")
+  studentHomework Assignment[] @relation("StudentHomework")
+
+  tuitionPosts TuitionPost[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@map("refresh_tokens")
+}
+
+enum Role {
+  admin
+  moderator
+  teacher
+  student
+}
+
+enum Gender {
+  male
+  female
+  other
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../generated/prisma"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+  provider = "postgresql"
+}

@@ -1,0 +1,16 @@
+model Lookup {
+  id        Int @id @default(autoincrement())
+  name      String
+  value     String
+  isActive  Boolean @default(true)
+  createdAt DateTime @default(now())
+
+  tuitionStatuses   TuitionPost[] @relation("TuitionStatus")
+  applicationStatus TuitionApplication[] @relation("ApplicationStatus")
+  assignmentStatus  Assignment[] @relation("AssignmentStatus")
+  assignedStatus    Assigned[] @relation("AssignedStatus")
+  assignmentSubject Assignment[]@relation("AssignmentSubjectLookup")
+  subjects          TuitionPostSubject[] @relation("SubjectLookup")
+
+  @@map("lookups")
+}
