@@ -8,68 +8,85 @@ import {
   changePassword,
   resetPassword,
 } from "../controllers/auth.controller.js";
+
 import { refreshToken } from "../controllers/token.controller.js";
 import { authorizeRoles, protect } from "../middlewares/auth.middleware.js";
-import {
-  validateRegister,
-  validateLogin,
-} from "../validators/auth.validator.js";
-import { validate } from "../middlewares/validate.middleware.js";
 
 const router = express.Router();
 
-router.post("/register", validateRegister, validate, (req, res, next) => {
+router.post("/register", (req, res, next) => {
   /* #swagger.tags = ['Auth']
+     #swagger.summary = 'Register new user'
      #swagger.requestBody = {
-       required: true,
-       content: {
-         "application/json": {
-           schema: {
-             type: "object",
-             properties: {
-               name: { type: "string", example: "John Doe" },
-               email: { type: "string", example: "john@gmail.com" },
-               password: { type: "string", example: "password123" },
-               role: { type: "string", example: "student" },
-               contact: { type: "string", example: "01700000000" },
-               address: { type: "string", example: "Dhaka, Bangladesh" },
-               gender: { type: "string", enum: ["male", "female", "other"], example: "male" }
-             }
-           }
-         }
-       }
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              required: ["name", "email", "password", "role"],
+              properties: {
+                name: { type: "string", example: "Admin" },
+                email: { type: "string", example: "admin@email.com" },
+                password: { type: "string", example: "Soft@123" },
+                address: { type: "string", example: "Dhaka, Bangladesh" },
+                contact: { type: "string", example: "+8801700000000" },
+                gender: { type: "string", example: "male" },
+                role: { type: "string", example: "admin" }
+              }
+            }
+          }
+        }
      }
   */
   registerUser(req, res, next);
 });
 
-router.post("/login", validateLogin, validate, (req, res, next) => {
+router.post("/login", (req, res, next) => {
   /* #swagger.tags = ['Auth']
+     #swagger.summary = 'Login user'
      #swagger.requestBody = {
-       required: true,
-       content: {
-         "application/json": {
-           schema: {
-             type: "object",
-             properties: {
-               email: { type: "string", example: "admin@email.com" },
-               password: { type: "string", example: "Soft@123" }
-             }
-           }
-         }
-       }
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              required: ["email", "password"],
+              properties: {
+                email: { type: "string", example: "admin@email.com" },
+                password: { type: "string", example: "Soft@123" }
+              }
+            }
+          }
+        }
      }
   */
   loginUser(req, res, next);
 });
 
 router.post("/logout", (req, res, next) => {
-  /* #swagger.tags = ['Auth'] */
+  /* #swagger.tags = ['Auth']
+     #swagger.summary = 'Logout user'
+  */
   logoutUser(req, res, next);
 });
 
 router.post("/refresh", (req, res, next) => {
-  /* #swagger.tags = ['Auth'] */
+  /* #swagger.tags = ['Auth']
+     #swagger.summary = 'Refresh token'
+     #swagger.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                refreshToken: { type: "string", example: "token_here" }
+              }
+            }
+          }
+        }
+     }
+  */
   refreshToken(req, res, next);
 });
 
@@ -78,7 +95,9 @@ router.get(
   protect,
   authorizeRoles("admin", "moderator", "teacher", "student"),
   (req, res, next) => {
-    /* #swagger.tags = ['Auth'] */
+    /* #swagger.tags = ['Auth']
+     #swagger.summary = 'Get all users'
+  */
     getUsers(req, res, next);
   },
 );
@@ -89,24 +108,28 @@ router.put(
   authorizeRoles("admin", "moderator", "teacher", "student"),
   (req, res, next) => {
     /* #swagger.tags = ['Auth']
+     #swagger.summary = 'Update user'
+     #swagger.parameters['id'] = {
+        in: 'path',
+        required: true,
+        type: 'integer',
+        example: 1
+     }
      #swagger.requestBody = {
-       required: true,
-       content: {
-         "application/json": {
-           schema: {
-             type: "object",
-             properties: {
-               name: { type: "string", example: "John Doe" },
-               email: { type: "string", example: "john@gmail.com" },
-               contact: { type: "string", example: "01700000000" },
-               address: { type: "string", example: "Dhaka, Bangladesh" },
-               gender: { type: "string", enum: ["male", "female", "other"], example: "male" },
-               role: { type: "string", enum: ["admin", "moderator", "teacher", "student"], example: "teacher" },
-               isActive: { type: "boolean", example: true }
-             }
-           }
-         }
-       }
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                name: { type: "string", example: "Updated Name" },
+                contact: { type: "string", example: "+8801711111111" },
+                address: { type: "string", example: "Updated Address" },
+                isActive: { type: "boolean", example: true }
+              }
+            }
+          }
+        }
      }
   */
     updateUser(req, res, next);
@@ -114,7 +137,24 @@ router.put(
 );
 
 router.patch("/change-password", protect, (req, res, next) => {
-  /* #swagger.tags = ['Auth'] */
+  /* #swagger.tags = ['Auth']
+     #swagger.summary = 'Change password'
+     #swagger.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              required: ["oldPassword", "newPassword"],
+              properties: {
+                oldPassword: { type: "string", example: "old123" },
+                newPassword: { type: "string", example: "new123456" }
+              }
+            }
+          }
+        }
+     }
+  */
   changePassword(req, res, next);
 });
 
@@ -123,8 +163,31 @@ router.patch(
   protect,
   authorizeRoles("admin", "moderator"),
   (req, res, next) => {
-    /* #swagger.tags = ['Auth'] */
+    /* #swagger.tags = ['Auth']
+     #swagger.summary = 'Reset password'
+     #swagger.parameters['id'] = {
+        in: 'path',
+        required: true,
+        type: 'integer',
+        example: 1
+     }
+     #swagger.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              required: ["newPassword"],
+              properties: {
+                newPassword: { type: "string", example: "reset123456" }
+              }
+            }
+          }
+        }
+     }
+  */
     resetPassword(req, res, next);
   },
 );
+
 export default router;

@@ -2,18 +2,13 @@ import prisma from "../config/dbConfig.js";
 
 export const createTeacherProfile = async (req, res) => {
   try {
-    const {
-      bio,
-      experienceYears,
-      educationalBackground,
-      cvUrl,
-      medium,
-      userId,
-    } = req.body;
+    const { bio, experienceYears, educationalBackground, cvUrl, mode, userId } =
+      req.body;
 
     if (!userId) {
       return res.status(400).json({ error: "userId is required" });
     }
+
     const existing = await prisma.teacherProfile.findUnique({
       where: { userId },
     });
@@ -29,7 +24,7 @@ export const createTeacherProfile = async (req, res) => {
         experienceYears,
         educationalBackground,
         cvUrl,
-        medium,
+        mode,
       },
       include: {
         user: { select: { id: true, name: true, email: true } },
@@ -45,14 +40,8 @@ export const createTeacherProfile = async (req, res) => {
 
 export const updateTeacherProfile = async (req, res) => {
   try {
-    const {
-      bio,
-      experienceYears,
-      educationalBackground,
-      cvUrl,
-      medium,
-      userId,
-    } = req.body;
+    const { bio, experienceYears, educationalBackground, cvUrl, mode, userId } =
+      req.body;
 
     if (!userId) {
       return res.status(400).json({ error: "userId is required" });
@@ -73,7 +62,7 @@ export const updateTeacherProfile = async (req, res) => {
         experienceYears,
         educationalBackground,
         cvUrl,
-        medium,
+        mode,
       },
       include: {
         user: { select: { id: true, name: true, email: true } },
@@ -133,7 +122,16 @@ export const getTeacherById = async (req, res) => {
 
 export const getAllTeachers = async (req, res) => {
   try {
+    const { mode } = req.query;
+
     const teachers = await prisma.teacherProfile.findMany({
+      where: mode
+        ? {
+            mode: {
+              has: mode,
+            },
+          }
+        : undefined,
       include: {
         user: { select: { id: true, name: true, email: true, contact: true } },
       },
@@ -148,37 +146,31 @@ export const getAllTeachers = async (req, res) => {
 
 export const applyToTuitionPost = async (req, res) => {
   try {
-    const { tuitionPostId, coverNote, teacherId } = req.body;
+    const teacherId = req.user.id;
+    const { tuitionPostId, coverNote } = req.body;
 
-    const tuitionPost = await prisma.tuitionPost.findUnique({
-      where: { id: parseInt(tuitionPostId) },
-    });
-
-    if (!tuitionPost) {
-      return res.status(404).json({ error: "Tuition post not found" });
-    }
-
-    if (tuitionPost.status !== 24) {
-      return res
-        .status(400)
-        .json({ error: "Tuition post is not open for applications" });
-    }
-
-    const existing = await prisma.teacherApplication.findFirst({
-      where: { tuitionPostId, teacherId },
+    const existing = await prisma.tuitionApplication.findFirst({
+      where: {
+        teacherId,
+        tuitionPostId: Number(tuitionPostId),
+      },
     });
 
     if (existing) {
-      return res
-        .status(400)
-        .json({ error: "You have already applied to this post" });
+      return res.status(400).json({ error: "Already applied" });
     }
 
-    const application = await prisma.teacherApplication.create({
+    const application = await prisma.tuitionApplication.create({
       data: {
-        tuitionPostId,
-        teacherId,
         coverNote,
+
+        teacher: {
+          connect: { id: teacherId },
+        },
+
+        tuitionPost: {
+          connect: { id: Number(tuitionPostId) },
+        },
       },
     });
 
@@ -193,120 +185,78 @@ export const getMyApplications = async (req, res) => {
   try {
     const teacherId = req.user.id;
 
-    const {
-      status,
-      search,
-      page,
-      limit,
-      area,
-      fromDate,
-      toDate,
-      subjectIds,
-      budgetFrom,
-      budgetTo,
-    } = req.query;
+    const { search, page, limit } = req.query;
 
-    const applicationWhere = { teacherId };
-    if (status) applicationWhere.status = parseInt(status);
+    const take = limit ? Number(limit) : 10;
+    const skip = page ? (Number(page) - 1) * take : 0;
 
-    const applications = await prisma.teacherApplication.findMany({
-      where: applicationWhere,
-      orderBy: { appliedAt: "desc" },
-    });
+    const where = {
+      teacherId,
+      ...(search && {
+        tuitionPost: {
+          OR: [
+            { title: { contains: search, mode: "insensitive" } },
+            { description: { contains: search, mode: "insensitive" } },
+          ],
+        },
+      }),
+    };
 
-    if (applications.length === 0) {
-      return res
-        .status(200)
-        .json({ data: [], total: 0, page: 1, totalPages: 1 });
-    }
-
-    const postIds = applications.map((a) => a.tuitionPostId);
-    const statusIds = [...new Set(applications.map((a) => parseInt(a.status)))];
-
-    const postWhere = { id: { in: postIds } };
-
-    if (area) postWhere.area = parseInt(area);
-
-    if (search) {
-      postWhere.OR = [
-        { title: { contains: search, mode: "insensitive" } },
-        { description: { contains: search, mode: "insensitive" } },
-      ];
-    }
-
-    if (subjectIds) {
-      postWhere.subjects = {
-        hasSome: subjectIds.split(",").map((id) => parseInt(id)),
-      };
-    }
-
-    if (budgetFrom || budgetTo) {
-      postWhere.budget = {
-        ...(budgetFrom && { gte: parseFloat(budgetFrom) }),
-        ...(budgetTo && { lte: parseFloat(budgetTo) }),
-      };
-    }
-
-    if (fromDate && toDate) {
-      postWhere.createdAt = { gte: new Date(fromDate), lte: new Date(toDate) };
-    } else if (fromDate) {
-      postWhere.createdAt = { gte: new Date(fromDate) };
-    } else if (toDate) {
-      postWhere.createdAt = { lte: new Date(toDate) };
-    }
-
-    const take = limit ? Number(limit) : undefined;
-    const skip = page && limit ? (Number(page) - 1) * Number(limit) : undefined;
-
-    const [posts, total] = await Promise.all([
-      prisma.tuitionPost.findMany({
-        where: postWhere,
+    const [applications, total] = await Promise.all([
+      prisma.teacherApplication.findMany({
+        where,
         skip,
         take,
-        orderBy: { createdAt: "desc" },
+        orderBy: { appliedAt: "desc" },
+        include: {
+          status: {
+            select: {
+              id: true,
+              value: true,
+            },
+          },
+          area: {
+            select: {
+              id: true,
+              value: true,
+            },
+          },
+          subjects: {
+            select: {
+              subject: {
+                select: {
+                  id: true,
+                  value: true,
+                },
+              },
+            },
+          },
+        },
       }),
-      prisma.tuitionPost.count({ where: postWhere }),
+
+      prisma.teacherApplication.count({ where }),
     ]);
 
-    const areaIds = [...new Set(posts.map((p) => parseInt(p.area)))];
-    const subjectIdList = [...new Set(posts.flatMap((p) => p.subjects))];
+    const result = applications.map((app) => ({
+      id: app.id,
+      appliedAt: app.appliedAt,
+      status: app.status,
 
-    const [areas, statuses, subjects] = await Promise.all([
-      prisma.lookup.findMany({
-        where: { id: { in: areaIds } },
-        select: { id: true, value: true },
-      }),
-      prisma.lookup.findMany({
-        where: { id: { in: statusIds } },
-        select: { id: true, value: true },
-      }),
-      prisma.lookup.findMany({
-        where: { id: { in: subjectIdList } },
-        select: { id: true, value: true },
-      }),
-    ]);
-
-    const result = posts.map((post) => {
-      const areaObj = areas.find((a) => a.id === post.area);
-      const application = applications.find((a) => a.tuitionPostId === post.id);
-      const statusObj = statuses.find((s) => s.id === application?.status);
-      const postSubjects = post.subjects
-        .map((id) => subjects.find((s) => s.id === id))
-        .filter(Boolean);
-      return {
-        ...post,
-        area: areaObj ?? post.area,
-        applicationStatus: statusObj ?? application?.status,
-        appliedAt: application?.appliedAt,
-        subjects: postSubjects.map((s) => s),
-      };
-    });
+      tuitionPost: {
+        ...app.tuitionPost,
+        area: app.tuitionPost.area?.value,
+        status: app.tuitionPost.status?.value,
+        subjects: app.tuitionPost.subjects
+          .map((s) => s.subject.value)
+          .join(", "),
+      },
+    }));
 
     return res.json({
       data: result,
       total,
       page: Number(page) || 1,
-      totalPages: take ? Math.ceil(total / take) : 1,
+      totalPages: Math.ceil(total / take),
     });
   } catch (error) {
     console.log("Error in getMyApplications", error);

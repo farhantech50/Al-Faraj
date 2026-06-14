@@ -8,13 +8,13 @@ model TuitionPost {
   budget      Decimal?
 
   mode        Mode
-  area        Int
+  areaId        Int 
 
   days        Day[]
   startTime   String
   endTime     String
 
-  statusId    Int
+  statusId    Int @default(1)
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -22,7 +22,7 @@ model TuitionPost {
   postedByUser User @relation(fields: [postedBy], references: [id], onDelete: Cascade)
 
   status      Lookup @relation("TuitionStatus", fields: [statusId], references: [id])
-
+  area        Lookup? @relation("TuitionPostArea", fields: [areaId], references: [id])
   subjects    TuitionPostSubject[]
 
   applications TuitionApplication[]
@@ -37,7 +37,7 @@ model TuitionApplication {
 
   tuitionPostId Int
   teacherId     Int
-  statusId      Int
+  statusId      Int @default(14)
 
   coverNote     String?
 

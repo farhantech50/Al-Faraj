@@ -6,11 +6,6 @@ import {
   deleteSubject,
 } from "../controllers/subject.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
-import { validate } from "../middlewares/validate.middleware.js";
-import {
-  validateCreateSubject,
-  validateUpdateSubject,
-} from "../validators/subject.validator.js";
 
 const router = express.Router();
 
@@ -23,8 +18,7 @@ router.post(
   "/create",
   protect,
   authorizeRoles("admin", "moderator"),
-  validateCreateSubject,
-  validate,
+
   (req, res, next) => {
     /* #swagger.tags = ['Subject']
        #swagger.requestBody = {
@@ -50,8 +44,7 @@ router.put(
   "/update/:id",
   protect,
   authorizeRoles("admin", "moderator"),
-  validateUpdateSubject,
-  validate,
+
   (req, res, next) => {
     /* #swagger.tags = ['Subject']
        #swagger.requestBody = {

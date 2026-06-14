@@ -120,22 +120,13 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.TeacherApplicationScalarFieldEnum = {
-  id: 'id',
-  tuitionPostId: 'tuitionPostId',
-  teacherId: 'teacherId',
-  coverNote: 'coverNote',
-  status: 'status',
-  appliedAt: 'appliedAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.AssignedTeacherStudentScalarFieldEnum = {
+exports.Prisma.AssignedScalarFieldEnum = {
   id: 'id',
   tuitionPostId: 'tuitionPostId',
   teacherId: 'teacherId',
   studentId: 'studentId',
   assignedBy: 'assignedBy',
+  statusId: 'statusId',
   startDate: 'startDate',
   endDate: 'endDate',
   createdAt: 'createdAt',
@@ -155,34 +146,18 @@ exports.Prisma.AssignmentScalarFieldEnum = {
   grade: 'grade',
   feedback: 'feedback',
   gradedAt: 'gradedAt',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  subject: 'subject'
-};
-
-exports.Prisma.ClassScheduleScalarFieldEnum = {
-  id: 'id',
-  assignmentId: 'assignmentId',
-  teacherId: 'teacherId',
-  studentId: 'studentId',
-  subjectIds: 'subjectIds',
-  days: 'days',
-  startTime: 'startTime',
-  endTime: 'endTime',
-  medium: 'medium',
+  statusId: 'statusId',
+  subjectId: 'subjectId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.ClassScheduleOverrideScalarFieldEnum = {
+exports.Prisma.DemoClassScalarFieldEnum = {
   id: 'id',
-  classScheduleId: 'classScheduleId',
-  originalDate: 'originalDate',
-  newDate: 'newDate',
-  startTime: 'startTime',
-  endTime: 'endTime',
-  medium: 'medium',
+  tuitionPostId: 'tuitionPostId',
+  teacherId: 'teacherId',
+  studentId: 'studentId',
+  assignedId: 'assignedId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -195,26 +170,24 @@ exports.Prisma.LookupScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.ModeratorPermissionScalarFieldEnum = {
+exports.Prisma.RolePermissionScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  canAssignTeachers: 'canAssignTeachers',
-  canApproveJobs: 'canApproveJobs',
-  canManageUsers: 'canManageUsers',
-  canPostJobs: 'canPostJobs',
-  canRejectApplications: 'canRejectApplications',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  role: 'role',
+  permission: 'permission',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.StudentProfileScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  mode: 'mode',
   gradeLevel: 'gradeLevel',
   institution: 'institution',
+  guardianName: 'guardianName',
+  guardianAddress: 'guardianAddress',
+  guardianContact: 'guardianContact',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  contact: 'contact'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.TeacherProfileScalarFieldEnum = {
@@ -224,7 +197,7 @@ exports.Prisma.TeacherProfileScalarFieldEnum = {
   experienceYears: 'experienceYears',
   educationalBackground: 'educationalBackground',
   cvUrl: 'cvUrl',
-  medium: 'medium',
+  mode: 'mode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -235,20 +208,35 @@ exports.Prisma.TuitionPostScalarFieldEnum = {
   title: 'title',
   description: 'description',
   budget: 'budget',
-  medium: 'medium',
-  area: 'area',
+  mode: 'mode',
+  areaId: 'areaId',
   days: 'days',
   startTime: 'startTime',
   endTime: 'endTime',
-  status: 'status',
+  statusId: 'statusId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  subjects: 'subjects'
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TuitionApplicationScalarFieldEnum = {
+  id: 'id',
+  tuitionPostId: 'tuitionPostId',
+  teacherId: 'teacherId',
+  statusId: 'statusId',
+  coverNote: 'coverNote',
+  appliedAt: 'appliedAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TuitionPostSubjectScalarFieldEnum = {
+  id: 'id',
+  tuitionPostId: 'tuitionPostId',
+  subjectId: 'subjectId'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  userCode: 'userCode',
+  userId: 'userId',
   name: 'name',
   email: 'email',
   password: 'password',
@@ -274,16 +262,23 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
-exports.Prisma.QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
-};
-
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.Medium = exports.$Enums.Medium = {
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+exports.Role = exports.$Enums.Role = {
+  admin: 'admin',
+  moderator: 'moderator',
+  teacher: 'teacher',
+  student: 'student'
+};
+
+exports.Mode = exports.$Enums.Mode = {
   online: 'online',
   offline: 'offline'
 };
@@ -304,24 +299,17 @@ exports.Gender = exports.$Enums.Gender = {
   other: 'other'
 };
 
-exports.Role = exports.$Enums.Role = {
-  admin: 'admin',
-  moderator: 'moderator',
-  teacher: 'teacher',
-  student: 'student'
-};
-
 exports.Prisma.ModelName = {
-  TeacherApplication: 'TeacherApplication',
-  AssignedTeacherStudent: 'AssignedTeacherStudent',
+  Assigned: 'Assigned',
   Assignment: 'Assignment',
-  ClassSchedule: 'ClassSchedule',
-  ClassScheduleOverride: 'ClassScheduleOverride',
+  DemoClass: 'DemoClass',
   Lookup: 'Lookup',
-  ModeratorPermission: 'ModeratorPermission',
+  RolePermission: 'RolePermission',
   StudentProfile: 'StudentProfile',
   TeacherProfile: 'TeacherProfile',
   TuitionPost: 'TuitionPost',
+  TuitionApplication: 'TuitionApplication',
+  TuitionPostSubject: 'TuitionPostSubject',
   User: 'User',
   RefreshToken: 'RefreshToken'
 };

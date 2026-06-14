@@ -8,21 +8,15 @@ import {
 } from "./token.controller.js";
 import { profile } from "console";
 
-const getPermissions = async (userId) => {
-  const permissions = await prisma.moderatorPermission.findUnique({
-    where: { userId },
+const getPermissions = async (role) => {
+  const permissions = await prisma.rolePermission.findMany({
+    where: { role },
     select: {
-      canAssignTeachers: true,
-      canApproveJobs: true,
-      canManageUsers: true,
-      canPostJobs: true,
-      canRejectApplications: true,
+      permission: true,
     },
   });
-  if (!permissions) return null;
-  return {
-    permissions,
-  };
+
+  return permissions.map((p) => p.permission);
 };
 
 export const loginUser = async (req, res) => {
@@ -38,6 +32,7 @@ export const loginUser = async (req, res) => {
     }
 
     const isPasswordCorrect = await argon2.verify(user.password, password);
+
     if (!isPasswordCorrect) {
       return res.status(400).json({ error: "Invalid email or password" });
     }
@@ -46,35 +41,41 @@ export const loginUser = async (req, res) => {
       return res.status(403).json({ error: "Account is disabled" });
     }
 
-    const permissions =
-      user.role === "moderator" ? await getPermissions(user.id) : null;
+    const permissions = await getPermissions(user.role);
 
     let profile = null;
+    let mode = null;
 
     if (user.role === "student") {
       profile = await prisma.studentProfile.findUnique({
         where: { userId: user.id },
       });
+      mode = profile?.mode || null;
     }
 
     if (user.role === "teacher") {
       profile = await prisma.teacherProfile.findUnique({
         where: { userId: user.id },
       });
+      mode = profile?.mode || null;
     }
 
     const isProfileComplete =
-      user.role === "student" || user.role === "teacher" ? !!profile : null;
+      user.role === "student" || user.role === "teacher" ? !!profile : true;
 
     const refreshToken = generateRefreshToken(user.id, user.role, user.name);
+
     await saveRefreshToken(user.id, refreshToken);
+
     setRefreshTokenCookie(res, refreshToken);
 
     return res.status(200).json({
       id: user.id,
+      userId: user.userId,
       name: user.name,
       email: user.email,
       role: user.role,
+      mode,
       permissions,
       [process.env.ACCESS_TOKEN_KEY]: generateAccessToken(
         user.id,
@@ -82,6 +83,7 @@ export const loginUser = async (req, res) => {
         user.name,
         permissions,
         isProfileComplete,
+        mode,
       ),
     });
   } catch (error) {
@@ -120,28 +122,16 @@ export const registerUser = async (req, res) => {
       const updatedUser = await tx.user.update({
         where: { id: newUser.id },
         data: {
-          userCode: `ALF-${String(newUser.id).padStart(4, "0")}`,
+          userId: `ALF-${String(newUser.id).padStart(4, "0")}`,
         },
       });
 
-      if (role === "moderator") {
-        await tx.moderatorPermission.create({
-          data: {
-            userId: newUser.id,
-            canAssignTeachers: false,
-            canApproveJobs: false,
-            canManageUsers: false,
-            canPostJobs: false,
-            canRejectApplications: false,
-          },
-        });
-      }
-
       return updatedUser;
     });
+
     return res.status(201).json({
       id: result.id,
-      userCode: result.userCode,
+      userId: result.userId,
       name: result.name,
       email: result.email,
       role: result.role,
@@ -162,8 +152,15 @@ export const logoutUser = async (req, res) => {
       });
     }
 
-    res.cookie(process.env.REFRESH_TOKEN_KEY, "", { maxAge: 0 });
-    return res.status(200).json({ message: "Logged out successfully" });
+    res.clearCookie(process.env.REFRESH_TOKEN_KEY, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({
+      message: "Logged out successfully",
+    });
   } catch (error) {
     console.log("Error in logout controller", error);
     return res.status(500).json({ error: "Internal server error" });
@@ -171,42 +168,25 @@ export const logoutUser = async (req, res) => {
 };
 export const getUsers = async (req, res) => {
   try {
-    const { role, id, search, page, limit, isActive } = req.query;
+    const { role, mode, page, limit, search } = req.query;
+
     const where = {};
 
-    if (id) {
-      const user = await prisma.user.findUnique({
-        where: { id: parseInt(id) },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          role: true,
-          contact: true,
-          address: true,
-          gender: true,
-          isActive: true,
-          createdAt: true,
-        },
-      });
-
-      if (!user) return res.status(404).json({ error: "User not found" });
-      return res.status(200).json(user);
+    if (role) {
+      where.role = role;
     }
 
-    if (role) where.role = role;
+    if (mode) {
+      where.mode = mode;
+    }
 
     if (search) {
       where.OR = [
         { name: { contains: search, mode: "insensitive" } },
         { email: { contains: search, mode: "insensitive" } },
         { contact: { contains: search, mode: "insensitive" } },
+        { userCode: { contains: search, mode: "insensitive" } },
       ];
-    }
-    if (!isActive) {
-      where.isActive = true;
-    } else {
-      where.isActive = isActive === "true";
     }
     const take = limit ? Number(limit) : undefined;
     const skip = page && limit ? (Number(page) - 1) * Number(limit) : undefined;
@@ -219,6 +199,7 @@ export const getUsers = async (req, res) => {
         orderBy: { createdAt: "desc" },
         select: {
           id: true,
+          userId: true,
           name: true,
           email: true,
           role: true,
@@ -235,40 +216,55 @@ export const getUsers = async (req, res) => {
     return res.status(200).json({
       data: users,
       total,
-      page: Number(page) || 1,
-      totalPages: take ? Math.ceil(total / take) : 1,
+      page: Number(page),
+      totalPages: Math.ceil(total / take),
     });
   } catch (error) {
     console.log("Error in getUsers", error);
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 export const updateUser = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = parseInt(req.params.id);
+
     const { name, email, contact, address, gender, role, isActive } = req.body;
 
     const existing = await prisma.user.findUnique({
-      where: { id: parseInt(id) },
+      where: { id },
     });
 
     if (!existing) {
       return res.status(404).json({ error: "User not found" });
     }
 
+    if (email && email !== existing.email) {
+      const emailExists = await prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (emailExists) {
+        return res.status(400).json({
+          error: "Email already exists",
+        });
+      }
+    }
+
     const user = await prisma.user.update({
-      where: { id: parseInt(id) },
+      where: { id },
       data: {
-        ...(name && { name }),
-        ...(email && { email }),
-        ...(contact && { contact }),
-        ...(address && { address }),
-        ...(gender && { gender }),
-        ...(role && { role }),
+        ...(name !== undefined && { name }),
+        ...(email !== undefined && { email }),
+        ...(contact !== undefined && { contact }),
+        ...(address !== undefined && { address }),
+        ...(gender !== undefined && { gender }),
+        ...(role !== undefined && { role }),
         ...(isActive !== undefined && { isActive }),
       },
       select: {
         id: true,
+        userId: true,
         name: true,
         email: true,
         role: true,
@@ -289,12 +285,13 @@ export const updateUser = async (req, res) => {
 export const changePassword = async (req, res) => {
   try {
     const userId = req.user.id;
+
     const { currentPassword, newPassword } = req.body;
 
     if (!currentPassword || !newPassword) {
-      return res
-        .status(400)
-        .json({ error: "Current and new password are required" });
+      return res.status(400).json({
+        error: "Current and new password are required",
+      });
     }
 
     const user = await prisma.user.findUnique({
@@ -302,28 +299,35 @@ export const changePassword = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({
+        error: "User not found",
+      });
     }
 
     const isCorrect = await argon2.verify(user.password, currentPassword);
+
     if (!isCorrect) {
-      return res.status(400).json({ error: "Current password is incorrect" });
+      return res.status(400).json({
+        error: "Current password is incorrect",
+      });
     }
 
     const hashedPassword = await argon2.hash(newPassword);
 
     await prisma.user.update({
       where: { id: userId },
-      data: { password: hashedPassword },
+      data: {
+        password: hashedPassword,
+      },
     });
 
     await prisma.refreshToken.deleteMany({
       where: { userId },
     });
 
-    return res
-      .status(200)
-      .json({ message: "Password changed successfully. Please login again." });
+    return res.status(200).json({
+      message: "Password changed successfully. Please login again.",
+    });
   } catch (error) {
     console.log("Error in changePassword", error);
     return res.status(500).json({ error: "Internal server error" });
@@ -332,33 +336,42 @@ export const changePassword = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = parseInt(req.params.id);
+
     const { newPassword } = req.body;
 
     if (!newPassword) {
-      return res.status(400).json({ error: "New password is required" });
+      return res.status(400).json({
+        error: "New password is required",
+      });
     }
 
     const existing = await prisma.user.findUnique({
-      where: { id: parseInt(id) },
+      where: { id },
     });
 
     if (!existing) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({
+        error: "User not found",
+      });
     }
 
     const hashedPassword = await argon2.hash(newPassword);
 
     await prisma.user.update({
-      where: { id: parseInt(id) },
-      data: { password: hashedPassword },
+      where: { id },
+      data: {
+        password: hashedPassword,
+      },
     });
 
     await prisma.refreshToken.deleteMany({
-      where: { userId: parseInt(id) },
+      where: { userId: id },
     });
 
-    return res.status(200).json({ message: "Password reset successfully" });
+    return res.status(200).json({
+      message: "Password reset successfully",
+    });
   } catch (error) {
     console.log("Error in resetPassword", error);
     return res.status(500).json({ error: "Internal server error" });

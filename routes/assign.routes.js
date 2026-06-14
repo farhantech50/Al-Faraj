@@ -5,8 +5,6 @@ import {
   getStudentAssignments,
 } from "../controllers/assign.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
-import { validate } from "../middlewares/validate.middleware.js";
-import { validateCreateAssignment } from "../validators/assign.validator.js";
 
 const router = express.Router();
 
@@ -14,8 +12,7 @@ router.post(
   "/new",
   protect,
   authorizeRoles("admin", "moderator"),
-  validateCreateAssignment,
-  validate,
+
   (req, res, next) => {
     /* #swagger.tags = ['Assign']
        #swagger.requestBody = {

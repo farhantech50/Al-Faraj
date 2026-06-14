@@ -6,7 +6,6 @@ export const createTuitionPost = async (req, res) => {
       title,
       description,
       budget,
-      medium,
       area,
       days,
       startTime,
@@ -14,18 +13,38 @@ export const createTuitionPost = async (req, res) => {
       subjectIds,
     } = req.body;
 
+    const userId = req.user.id;
+
+    const studentProfile = await prisma.studentProfile.findUnique({
+      where: { userId },
+    });
+
+    if (!studentProfile) {
+      return res.status(400).json({ error: "Student profile not found" });
+    }
+
+    const mode = studentProfile.mode;
+
     const post = await prisma.tuitionPost.create({
       data: {
-        postedBy: req.user.id,
+        postedByUser: {
+          connect: { id: userId },
+        },
         title,
         description,
         budget: budget ? parseFloat(budget) : null,
-        medium,
+        mode,
         area: parseInt(area),
         days,
         startTime,
         endTime,
-        subjects: subjectIds,
+        subjects: {
+          create: subjectIds.map((id) => ({
+            subject: {
+              connect: { id },
+            },
+          })),
+        },
       },
     });
 
@@ -43,7 +62,6 @@ export const updateTuitionPost = async (req, res) => {
       title,
       description,
       budget,
-      medium,
       area,
       days,
       startTime,
@@ -59,11 +77,9 @@ export const updateTuitionPost = async (req, res) => {
       return res.status(404).json({ error: "Tuition post not found" });
     }
 
-    if (existing.status !== 23) {
-      return res
-        .status(400)
-        .json({ error: "Only pending posts can be edited" });
-    }
+    await prisma.tuitionPostSubject.deleteMany({
+      where: { tuitionPostId: parseInt(id) },
+    });
 
     const post = await prisma.tuitionPost.update({
       where: { id: parseInt(id) },
@@ -71,12 +87,17 @@ export const updateTuitionPost = async (req, res) => {
         title,
         description,
         budget: budget ? parseFloat(budget) : null,
-        medium,
-        area: area ? parseInt(area) : undefined,
+        areaId: area ? parseInt(area) : undefined,
         days,
         startTime,
         endTime,
-        ...(subjectIds && { subjects: subjectIds }),
+        subjects: {
+          create: subjectIds?.map((id) => ({
+            subject: {
+              connect: { id },
+            },
+          })),
+        },
       },
     });
 
@@ -89,50 +110,21 @@ export const updateTuitionPost = async (req, res) => {
 
 export const getAllTuitionPosts = async (req, res) => {
   try {
-    const {
-      status,
-      search,
-      page,
-      limit,
-      area,
-      fromDate,
-      toDate,
-      subjectIds,
-      budgetFrom,
-      budgetTo,
-    } = req.query;
+    const { mode, search, page, limit, status } = req.query;
 
     const where = {};
 
-    if (status) where.status = parseInt(status);
-    if (area) where.area = parseInt(area);
-
+    if (mode) {
+      where.mode = mode;
+    }
+    if (status) {
+      where.statusId = Number(status);
+    }
     if (search) {
       where.OR = [
         { title: { contains: search, mode: "insensitive" } },
         { description: { contains: search, mode: "insensitive" } },
       ];
-    }
-
-    if (subjectIds) {
-      where.subjects = {
-        hasSome: subjectIds.split(",").map((id) => parseInt(id)),
-      };
-    }
-
-    if (budgetFrom || budgetTo) {
-      where.budget = {
-        ...(budgetFrom && { gte: parseFloat(budgetFrom) }),
-        ...(budgetTo && { lte: parseFloat(budgetTo) }),
-      };
-    }
-
-    if (fromDate && toDate) {
-      where.createdAt = { gte: new Date(fromDate), lte: new Date(toDate) };
-    } else if (fromDate) {
-      where.createdAt = { gte: new Date(fromDate) };
-    } else if (toDate) {
-      where.createdAt = { lte: new Date(toDate) };
     }
 
     const take = limit ? Number(limit) : undefined;
@@ -148,50 +140,8 @@ export const getAllTuitionPosts = async (req, res) => {
       prisma.tuitionPost.count({ where }),
     ]);
 
-    if (posts.length === 0) {
-      return res.json({
-        data: [],
-        total: 0,
-        page: Number(page) || 1,
-        totalPages: 1,
-      });
-    }
-
-    const areaIds = [...new Set(posts.map((p) => parseInt(p.area)))];
-    const statusIds = [...new Set(posts.map((p) => parseInt(p.status)))];
-    const subjectIdList = [...new Set(posts.flatMap((p) => p.subjects))];
-    const [areas, statuses, subjects] = await Promise.all([
-      prisma.lookup.findMany({
-        where: { id: { in: areaIds } },
-        select: { id: true, value: true },
-      }),
-      prisma.lookup.findMany({
-        where: { id: { in: statusIds } },
-        select: { id: true, value: true },
-      }),
-      prisma.lookup.findMany({
-        where: { id: { in: subjectIdList } },
-        select: { id: true, value: true },
-      }),
-    ]);
-
-    const result = posts.map((post) => {
-      const areaObj = areas.find((a) => a.id === post.area);
-      const statusObj = statuses.find((s) => s.id === post.status);
-      const postSubjects = post.subjects
-        .map((id) => subjects.find((s) => s.id === id))
-        .filter(Boolean);
-
-      return {
-        ...post,
-        area: areaObj ?? post.area,
-        status: statusObj ?? post.status,
-        subjects: postSubjects.map((s) => s),
-      };
-    });
-
     return res.json({
-      data: result,
+      data: posts,
       total,
       page: Number(page) || 1,
       totalPages: take ? Math.ceil(total / take) : 1,
@@ -208,34 +158,37 @@ export const getTuitionPostById = async (req, res) => {
 
     const post = await prisma.tuitionPost.findUnique({
       where: { id: parseInt(id) },
+      include: {
+        status: {
+          select: {
+            id: true,
+            value: true,
+          },
+        },
+        area: {
+          select: {
+            id: true,
+            value: true,
+          },
+        },
+        subjects: {
+          select: {
+            subject: {
+              select: {
+                id: true,
+                value: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!post) {
       return res.status(404).json({ error: "Tuition post not found" });
     }
 
-    const [areaLookup, statusLookup, subjectLookups] =
-      await prisma.$transaction([
-        prisma.lookup.findUnique({
-          where: { id: parseInt(post.area) },
-          select: { id: true, value: true },
-        }),
-        prisma.lookup.findUnique({
-          where: { id: parseInt(post.status) },
-          select: { id: true, value: true },
-        }),
-        prisma.lookup.findMany({
-          where: { id: { in: post.subjects } },
-          select: { id: true, value: true },
-        }),
-      ]);
-
-    return res.status(200).json({
-      ...post,
-      area: areaLookup ?? post.area,
-      status: statusLookup ?? post.status,
-      subjects: subjectLookups.map((a) => a) ?? post.subjects,
-    });
+    return res.status(200).json(post);
   } catch (error) {
     console.log("Error in getTuitionPostById", error);
     return res.status(500).json({ error: "Internal server error" });

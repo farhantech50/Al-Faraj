@@ -7,11 +7,11 @@
   },
   "servers": [
     {
-      "url": "http://localhost:5000",
+      "url": "http://localhost:5001",
       "description": "Localhost"
     },
     {
-      "url": "http://192.168.68.120:5000"
+      "url": "http://192.168.68.120:5001"
     }
   ],
   "paths": {
@@ -20,6 +20,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Register new user",
         "description": "",
         "responses": {
           "201": {
@@ -38,39 +39,40 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password",
+                  "role"
+                ],
                 "properties": {
                   "name": {
                     "type": "string",
-                    "example": "John Doe"
+                    "example": "Admin"
                   },
                   "email": {
                     "type": "string",
-                    "example": "john@gmail.com"
+                    "example": "admin@email.com"
                   },
                   "password": {
                     "type": "string",
-                    "example": "password123"
-                  },
-                  "role": {
-                    "type": "string",
-                    "example": "student"
-                  },
-                  "contact": {
-                    "type": "string",
-                    "example": "01700000000"
+                    "example": "Soft@123"
                   },
                   "address": {
                     "type": "string",
                     "example": "Dhaka, Bangladesh"
                   },
+                  "contact": {
+                    "type": "string",
+                    "example": "+8801700000000"
+                  },
                   "gender": {
                     "type": "string",
-                    "enum": [
-                      "male",
-                      "female",
-                      "other"
-                    ],
                     "example": "male"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "admin"
                   }
                 }
               }
@@ -84,6 +86,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Login user",
         "description": "",
         "responses": {
           "200": {
@@ -105,6 +108,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "email": {
                     "type": "string",
@@ -126,6 +133,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Logout user",
         "description": "",
         "responses": {
           "200": {
@@ -142,6 +150,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Refresh token",
         "description": "",
         "responses": {
           "200": {
@@ -149,6 +158,22 @@
           },
           "401": {
             "description": "Unauthorized"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refreshToken": {
+                    "type": "string",
+                    "example": "token_here"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -158,6 +183,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Get all users",
         "description": "",
         "parameters": [
           {
@@ -168,14 +194,7 @@
             }
           },
           {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "search",
+            "name": "mode",
             "in": "query",
             "schema": {
               "type": "string"
@@ -196,7 +215,7 @@
             }
           },
           {
-            "name": "isActive",
+            "name": "search",
             "in": "query",
             "schema": {
               "type": "string"
@@ -220,9 +239,6 @@
           "403": {
             "description": "Forbidden"
           },
-          "404": {
-            "description": "Not Found"
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -234,6 +250,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Update user",
         "description": "",
         "parameters": [
           {
@@ -242,7 +259,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": 1
           },
           {
             "name": "authorization",
@@ -255,6 +273,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
@@ -278,38 +299,15 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "example": "John Doe"
-                  },
-                  "email": {
-                    "type": "string",
-                    "example": "john@gmail.com"
+                    "example": "Updated Name"
                   },
                   "contact": {
                     "type": "string",
-                    "example": "01700000000"
+                    "example": "+8801711111111"
                   },
                   "address": {
                     "type": "string",
-                    "example": "Dhaka, Bangladesh"
-                  },
-                  "gender": {
-                    "type": "string",
-                    "enum": [
-                      "male",
-                      "female",
-                      "other"
-                    ],
-                    "example": "male"
-                  },
-                  "role": {
-                    "type": "string",
-                    "enum": [
-                      "admin",
-                      "moderator",
-                      "teacher",
-                      "student"
-                    ],
-                    "example": "teacher"
+                    "example": "Updated Address"
                   },
                   "isActive": {
                     "type": "boolean",
@@ -327,6 +325,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Change password",
         "description": "",
         "parameters": [
           {
@@ -355,16 +354,23 @@
           }
         },
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "oldPassword",
+                  "newPassword"
+                ],
                 "properties": {
-                  "currentPassword": {
-                    "example": "any"
+                  "oldPassword": {
+                    "type": "string",
+                    "example": "old123"
                   },
                   "newPassword": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "new123456"
                   }
                 }
               }
@@ -378,6 +384,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Reset password",
         "description": "",
         "parameters": [
           {
@@ -386,7 +393,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": 1
           },
           {
             "name": "authorization",
@@ -417,13 +425,18 @@
           }
         },
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "newPassword"
+                ],
                 "properties": {
                   "newPassword": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "reset123456"
                   }
                 }
               }
@@ -437,6 +450,7 @@
         "tags": [
           "Teacher"
         ],
+        "summary": "Create teacher profile",
         "description": "",
         "parameters": [
           {
@@ -470,6 +484,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "userId"
+                ],
                 "properties": {
                   "userId": {
                     "type": "integer",
@@ -491,7 +508,7 @@
                     "type": "string",
                     "example": "https://example.com/cv.pdf"
                   },
-                  "medium": {
+                  "mode": {
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -522,6 +539,7 @@
         "tags": [
           "Teacher"
         ],
+        "summary": "Update teacher profile",
         "description": "",
         "parameters": [
           {
@@ -579,7 +597,7 @@
                     "type": "string",
                     "example": "https://example.com/cv.pdf"
                   },
-                  "medium": {
+                  "mode": {
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -610,6 +628,7 @@
         "tags": [
           "Teacher"
         ],
+        "summary": "Get my teacher profile",
         "description": "",
         "parameters": [
           {
@@ -644,8 +663,59 @@
         "tags": [
           "Teacher"
         ],
+        "summary": "Get all teachers",
         "description": "",
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "required": false,
+            "example": "online",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/teacher/profile/{id}": {
+      "get": {
+        "tags": [
+          "Teacher"
+        ],
+        "summary": "Get teacher by user id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": 1
+          },
           {
             "name": "authorization",
             "in": "header",
@@ -661,8 +731,8 @@
           "401": {
             "description": "Unauthorized"
           },
-          "403": {
-            "description": "Forbidden"
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -708,45 +778,6 @@
         }
       }
     },
-    "/api/teacher/profile/{id}": {
-      "get": {
-        "tags": [
-          "Teacher"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
     "/api/teacher/apply": {
       "post": {
         "tags": [
@@ -774,9 +805,6 @@
           },
           "403": {
             "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -816,13 +844,6 @@
         "description": "",
         "parameters": [
           {
-            "name": "status",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "search",
             "in": "query",
             "schema": {
@@ -838,48 +859,6 @@
           },
           {
             "name": "limit",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "area",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "fromDate",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "toDate",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "subjectIds",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "budgetFrom",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "budgetTo",
             "in": "query",
             "schema": {
               "type": "string"
@@ -1017,9 +996,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
@@ -1249,6 +1225,7 @@
         "tags": [
           "Student"
         ],
+        "summary": "Create student profile",
         "description": "",
         "parameters": [
           {
@@ -1282,6 +1259,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "userId"
+                ],
                 "properties": {
                   "userId": {
                     "type": "integer",
@@ -1315,6 +1295,7 @@
         "tags": [
           "Student"
         ],
+        "summary": "Update student profile",
         "description": "",
         "parameters": [
           {
@@ -1384,6 +1365,7 @@
         "tags": [
           "Student"
         ],
+        "summary": "Get my student profile",
         "description": "",
         "parameters": [
           {
@@ -1418,11 +1400,21 @@
         "tags": [
           "Student"
         ],
+        "summary": "Get all students",
         "description": "",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "required": false,
+            "example": "online",
             "schema": {
               "type": "string"
             }
@@ -1449,6 +1441,7 @@
         "tags": [
           "Student"
         ],
+        "summary": "Get student by user id",
         "description": "",
         "parameters": [
           {
@@ -1457,7 +1450,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": 1
           },
           {
             "name": "authorization",
@@ -1491,7 +1485,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "status",
+            "name": "statusId",
             "in": "query",
             "schema": {
               "type": "string"
@@ -1513,48 +1507,6 @@
           },
           {
             "name": "limit",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "area",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "fromDate",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "toDate",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "subjectIds",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "budgetFrom",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "budgetTo",
             "in": "query",
             "schema": {
               "type": "string"
@@ -1620,10 +1572,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "postedBy": {
-                    "type": "integer",
-                    "example": 1
-                  },
                   "title": {
                     "type": "string",
                     "example": "Need Math and Physics Teacher"
@@ -1636,13 +1584,9 @@
                     "type": "number",
                     "example": 3000
                   },
-                  "medium": {
-                    "type": "string",
-                    "example": "online"
-                  },
                   "area": {
-                    "type": "string",
-                    "example": "Dhanmondi"
+                    "type": "integer",
+                    "example": 101
                   },
                   "days": {
                     "type": "array",
@@ -1706,9 +1650,6 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "401": {
             "description": "Unauthorized"
           },
@@ -1741,13 +1682,9 @@
                     "type": "number",
                     "example": 4000
                   },
-                  "medium": {
-                    "type": "string",
-                    "example": "offline"
-                  },
                   "area": {
-                    "type": "string",
-                    "example": "Mirpur"
+                    "type": "integer",
+                    "example": 102
                   },
                   "days": {
                     "type": "array",
@@ -1831,8 +1768,8 @@
                 "type": "object",
                 "properties": {
                   "status": {
-                    "type": "string",
-                    "example": "approved"
+                    "type": "integer",
+                    "example": 23
                   }
                 }
               }
@@ -1849,7 +1786,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "status",
+            "name": "mode",
             "in": "query",
             "schema": {
               "type": "string"
@@ -1877,42 +1814,7 @@
             }
           },
           {
-            "name": "area",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "fromDate",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "toDate",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "subjectIds",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "budgetFrom",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "budgetTo",
+            "name": "status",
             "in": "query",
             "schema": {
               "type": "string"
@@ -2403,12 +2305,21 @@
         "tags": [
           "Lookup"
         ],
+        "summary": "Get lookup values by name",
         "description": "",
         "parameters": [
           {
             "name": "name",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "tuitionPostStatus"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2418,17 +2329,24 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         }
       }
     },
-    "/api/lookup/create": {
+    "/api/lookup/": {
       "post": {
         "tags": [
           "Lookup"
         ],
+        "summary": "Create lookup values (bulk)",
         "description": "",
         "parameters": [
           {
@@ -2442,9 +2360,6 @@
         "responses": {
           "201": {
             "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
@@ -2464,6 +2379,10 @@
                 "type": "array",
                 "items": {
                   "type": "object",
+                  "required": [
+                    "name",
+                    "value"
+                  ],
                   "properties": {
                     "name": {
                       "type": "string",
@@ -2473,41 +2392,20 @@
                       "type": "string",
                       "example": "pending"
                     }
-                  },
-                  "required": [
-                    "name",
-                    "value"
-                  ]
-                },
-                "example": [
-                  {
-                    "name": "tuitionPostStatus",
-                    "value": "pending"
-                  },
-                  {
-                    "name": "tuitionPostStatus",
-                    "value": "approved"
-                  },
-                  {
-                    "name": "tuitionPostStatus",
-                    "value": "rejected"
-                  },
-                  {
-                    "name": "tuitionPostStatus",
-                    "value": "closed"
                   }
-                ]
+                }
               }
             }
           }
         }
       }
     },
-    "/api/lookup/update/{id}": {
+    "/api/lookup/{id}": {
       "put": {
         "tags": [
           "Lookup"
         ],
+        "summary": "Update lookup",
         "description": "",
         "parameters": [
           {
@@ -2516,7 +2414,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": 1
           },
           {
             "name": "authorization",
@@ -2544,29 +2443,31 @@
           }
         },
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
                   "value": {
-                    "example": "any"
+                    "type": "string",
+                    "example": "approved"
                   },
                   "isActive": {
-                    "example": "any"
+                    "type": "boolean",
+                    "example": true
                   }
                 }
               }
             }
           }
         }
-      }
-    },
-    "/api/lookup/delete/{id}": {
+      },
       "delete": {
         "tags": [
           "Lookup"
         ],
+        "summary": "Delete lookup",
         "description": "",
         "parameters": [
           {
@@ -2575,7 +2476,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": 1
           },
           {
             "name": "authorization",

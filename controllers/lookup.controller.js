@@ -1,5 +1,8 @@
 import prisma from "../config/dbConfig.js";
 
+/**
+ * GET LOOKUP BY NAME
+ */
 export const getLookupByName = async (req, res) => {
   try {
     const { name } = req.params;
@@ -16,6 +19,9 @@ export const getLookupByName = async (req, res) => {
   }
 };
 
+/**
+ * CREATE LOOKUP (BULK)
+ */
 export const createLookup = async (req, res) => {
   try {
     const data = req.body;
@@ -32,13 +38,16 @@ export const createLookup = async (req, res) => {
   }
 };
 
+/**
+ * UPDATE LOOKUP
+ */
 export const updateLookup = async (req, res) => {
   try {
     const { id } = req.params;
     const { value, isActive } = req.body;
 
     const existing = await prisma.lookup.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
     });
 
     if (!existing) {
@@ -46,9 +55,9 @@ export const updateLookup = async (req, res) => {
     }
 
     const lookup = await prisma.lookup.update({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
       data: {
-        ...(value && { value }),
+        ...(value !== undefined && { value }),
         ...(isActive !== undefined && { isActive }),
       },
     });
@@ -60,12 +69,15 @@ export const updateLookup = async (req, res) => {
   }
 };
 
+/**
+ * DELETE LOOKUP
+ */
 export const deleteLookup = async (req, res) => {
   try {
     const { id } = req.params;
 
     const existing = await prisma.lookup.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
     });
 
     if (!existing) {
@@ -73,7 +85,7 @@ export const deleteLookup = async (req, res) => {
     }
 
     await prisma.lookup.delete({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
     });
 
     return res.status(200).json({ message: "Lookup deleted successfully" });

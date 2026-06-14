@@ -8,11 +8,11 @@ const doc = {
   },
   servers: [
     {
-      url: "http://localhost:5000",
+      url: "http://localhost:5001",
       description: "Localhost",
     },
     {
-      url: `http://192.168.68.120:5000`,
+      url: `http://192.168.68.120:5001`,
     },
   ],
   components: {

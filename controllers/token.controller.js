@@ -8,9 +8,10 @@ export const generateAccessToken = (
   name,
   permissions = null,
   isProfileComplete,
+  mode,
 ) => {
   return jwt.sign(
-    { id, role, name, permissions, isProfileComplete },
+    { id, role, name, permissions, isProfileComplete, mode },
     process.env.JWT_KEY,
     {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRY,

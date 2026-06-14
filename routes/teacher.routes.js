@@ -10,11 +10,6 @@ import {
   getAssignedStudents,
 } from "../controllers/teacher.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
-import { validate } from "../middlewares/validate.middleware.js";
-import {
-  validateCreateTeacherProfile,
-  validateUpdateTeacherProfile,
-} from "../validators/teacher.validator.js";
 
 const router = express.Router();
 
@@ -22,23 +17,23 @@ router.post(
   "/create",
   protect,
   authorizeRoles("teacher", "admin", "moderator"),
-  validateCreateTeacherProfile,
-  validate,
   (req, res, next) => {
     /* #swagger.tags = ['Teacher']
+       #swagger.summary = 'Create teacher profile'
        #swagger.requestBody = {
          required: true,
          content: {
            "application/json": {
              schema: {
                type: "object",
+               required: ["userId"],
                properties: {
-                userId: { type: "integer", example: 1 },
+                 userId: { type: "integer", example: 1 },
                  bio: { type: "string", example: "Experienced math teacher" },
                  experienceYears: { type: "integer", example: 5 },
                  educationalBackground: { type: "string", example: "BSc Mathematics, University of Dhaka" },
                  cvUrl: { type: "string", example: "https://example.com/cv.pdf" },
-                 medium: {
+                 mode: {
                    type: "array",
                    items: { type: "string" },
                    example: ["online"]
@@ -62,10 +57,9 @@ router.put(
   "/update",
   protect,
   authorizeRoles("teacher", "admin", "moderator"),
-  validateUpdateTeacherProfile,
-  validate,
   (req, res, next) => {
     /* #swagger.tags = ['Teacher']
+       #swagger.summary = 'Update teacher profile'
        #swagger.requestBody = {
          required: false,
          content: {
@@ -73,12 +67,12 @@ router.put(
              schema: {
                type: "object",
                properties: {
-                userId: { type: "integer", example: 1 },
+                 userId: { type: "integer", example: 1 },
                  bio: { type: "string", example: "Updated bio" },
                  experienceYears: { type: "integer", example: 6 },
                  educationalBackground: { type: "string", example: "MSc Mathematics, University of Dhaka" },
                  cvUrl: { type: "string", example: "https://example.com/cv.pdf" },
-                 medium: {
+                 mode: {
                    type: "array",
                    items: { type: "string" },
                    example: ["online"]
@@ -99,7 +93,9 @@ router.put(
 );
 
 router.get("/profile", protect, authorizeRoles("teacher"), (req, res, next) => {
-  /* #swagger.tags = ['Teacher'] */
+  /* #swagger.tags = ['Teacher']
+       #swagger.summary = 'Get my teacher profile'
+    */
   getMyTeacherProfile(req, res, next);
 });
 
@@ -108,10 +104,32 @@ router.get(
   protect,
   authorizeRoles("admin", "moderator", "teacher"),
   (req, res, next) => {
-    /* #swagger.tags = ['Teacher'] */
+    /* #swagger.tags = ['Teacher']
+       #swagger.summary = 'Get all teachers'
+       #swagger.parameters['mode'] = {
+          in: 'query',
+          required: false,
+          type: 'string',
+          example: 'online'
+       }
+    */
     getAllTeachers(req, res, next);
   },
 );
+
+router.get("/profile/:id", protect, (req, res, next) => {
+  /* #swagger.tags = ['Teacher']
+       #swagger.summary = 'Get teacher by user id'
+       #swagger.parameters['id'] = {
+          in: 'path',
+          required: true,
+          type: 'integer',
+          example: 1
+       }
+    */
+  getTeacherById(req, res, next);
+});
+
 router.get(
   "/getAssignedStudent",
   protect,
@@ -122,17 +140,12 @@ router.get(
   },
 );
 
-router.get("/profile/:id", protect, (req, res, next) => {
-  /* #swagger.tags = ['Teacher'] */
-  getTeacherById(req, res, next);
-});
-
 router.post(
   "/apply",
   protect,
   authorizeRoles("admin", "moderator", "teacher"),
   (req, res, next) => {
-    /* #swagger.tags = ['Teacher']
+    /* #swagger.tags = ['Teacher'] 
        #swagger.requestBody = {
          required: true,
          content: {

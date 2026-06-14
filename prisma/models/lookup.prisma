@@ -10,6 +10,7 @@ model Lookup {
   assignmentStatus  Assignment[] @relation("AssignmentStatus")
   assignedStatus    Assigned[] @relation("AssignedStatus")
   assignmentSubject Assignment[]@relation("AssignmentSubjectLookup")
+  TuitionPostArea TuitionPost[] @relation("TuitionPostArea")
   subjects          TuitionPostSubject[] @relation("SubjectLookup")
 
   @@map("lookups")
