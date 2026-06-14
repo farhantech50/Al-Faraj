@@ -8,6 +8,7 @@ import {
   getMyApplications,
   applyToTuitionPost,
   getAssignedStudents,
+  findTeacherApplicationStatusCounts,
 } from "../controllers/teacher.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
 
@@ -173,6 +174,15 @@ router.get(
   (req, res, next) => {
     /* #swagger.tags = ['Teacher'] */
     getMyApplications(req, res, next);
+  },
+);
+router.get(
+  "/application-status-counts",
+  protect,
+  authorizeRoles("admin", "moderator", "teacher"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Teacher'] */
+    findTeacherApplicationStatusCounts(req, res, next);
   },
 );
 

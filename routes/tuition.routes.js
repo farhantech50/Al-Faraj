@@ -9,6 +9,7 @@ import {
   getTuitionsHavePendingApplications,
   deleteTeacherApplication,
   getActiveTuitions,
+  getTuitionApplicationById,
 } from "../controllers/tuition.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
 
@@ -159,4 +160,13 @@ router.get(
   },
 );
 
+router.get(
+  "/applications/:id",
+  protect,
+  authorizeRoles("admin", "moderator", "teacher", "student"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Tuition'] */
+    getTuitionApplicationById(req, res, next);
+  },
+);
 export default router;

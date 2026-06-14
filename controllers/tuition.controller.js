@@ -244,7 +244,78 @@ export const deleteTuitionPost = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+export const getTuitionApplicationById = async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    const application = await prisma.tuitionApplication.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+      select: {
+        id: true,
+        appliedAt: true,
+        coverNote: true,
+        status: {
+          select: {
+            id: true,
+            value: true,
+          },
+        },
+        teacher: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            contact: true,
+            teacherProfile: {
+              select: {
+                bio: true,
+                experienceYears: true,
+                educationalBackground: true,
+                cvUrl: true,
+                mode: true,
+              },
+            },
+          },
+        },
+        tuitionPost: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            budget: true,
+            area: {
+              select: {
+                id: true,
+                value: true,
+              },
+            },
+            subjects: {
+              select: {
+                subject: {
+                  select: {
+                    id: true,
+                    value: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!application) {
+      return res.status(404).json({ error: "Application not found" });
+    }
+
+    return res.status(200).json(application);
+  } catch (error) {
+    console.log("Error in getTuitionApplicationById", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
 export const getTuitionsHavePendingApplications = async (req, res) => {
   try {
     const applications = await prisma.teacherApplication.findMany({

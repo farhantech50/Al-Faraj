@@ -185,13 +185,18 @@ export const getMyApplications = async (req, res) => {
   try {
     const teacherId = req.user.id;
 
-    const { search, page, limit } = req.query;
+    const { search, page, limit, apptype } = req.query;
 
     const take = limit ? Number(limit) : 10;
     const skip = page ? (Number(page) - 1) * take : 0;
 
     const where = {
       teacherId,
+
+      ...(apptype && {
+        statusId: Number(apptype),
+      }),
+
       ...(search && {
         tuitionPost: {
           OR: [
@@ -203,30 +208,39 @@ export const getMyApplications = async (req, res) => {
     };
 
     const [applications, total] = await Promise.all([
-      prisma.teacherApplication.findMany({
+      prisma.tuitionApplication.findMany({
         where,
         skip,
         take,
         orderBy: { appliedAt: "desc" },
-        include: {
+        select: {
+          id: true,
+          appliedAt: true,
           status: {
             select: {
               id: true,
               value: true,
             },
           },
-          area: {
+          tuitionPost: {
             select: {
               id: true,
-              value: true,
-            },
-          },
-          subjects: {
-            select: {
-              subject: {
+              title: true,
+              budget: true,
+              area: {
                 select: {
                   id: true,
                   value: true,
+                },
+              },
+              subjects: {
+                select: {
+                  subject: {
+                    select: {
+                      id: true,
+                      value: true,
+                    },
+                  },
                 },
               },
             },
@@ -234,26 +248,11 @@ export const getMyApplications = async (req, res) => {
         },
       }),
 
-      prisma.teacherApplication.count({ where }),
+      prisma.tuitionApplication.count({ where }),
     ]);
 
-    const result = applications.map((app) => ({
-      id: app.id,
-      appliedAt: app.appliedAt,
-      status: app.status,
-
-      tuitionPost: {
-        ...app.tuitionPost,
-        area: app.tuitionPost.area?.value,
-        status: app.tuitionPost.status?.value,
-        subjects: app.tuitionPost.subjects
-          .map((s) => s.subject.value)
-          .join(", "),
-      },
-    }));
-
-    return res.json({
-      data: result,
+    return res.status(200).json({
+      data: applications,
       total,
       page: Number(page) || 1,
       totalPages: Math.ceil(total / take),
@@ -284,6 +283,53 @@ export const getAssignedStudents = async (req, res) => {
     return res.status(200).json(result);
   } catch (error) {
     console.log("Error in getAssignedStudents", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const findTeacherApplicationStatusCounts = async (req, res) => {
+  try {
+    const teacherId = req.user.id;
+
+    const [totalData, pending, shortlisted, demo, approved, rejected] =
+      await Promise.all([
+        prisma.tuitionApplication.count({
+          where: { teacherId },
+        }),
+
+        prisma.tuitionApplication.count({
+          where: { teacherId, statusId: 14 },
+        }),
+
+        prisma.tuitionApplication.count({
+          where: { teacherId, statusId: 15 },
+        }),
+
+        prisma.tuitionApplication.count({
+          where: { teacherId, statusId: 16 },
+        }),
+
+        prisma.tuitionApplication.count({
+          where: { teacherId, statusId: 17 },
+        }),
+
+        prisma.tuitionApplication.count({
+          where: { teacherId, statusId: 18 },
+        }),
+      ]);
+
+    return res.status(200).json({
+      data: [
+        { id: 0, value: "Total Applied", count: totalData },
+        { id: 14, value: "Pending", count: pending },
+        { id: 15, value: "Shortlisted", count: shortlisted },
+        { id: 16, value: "Demo", count: demo },
+        { id: 17, value: "Approved", count: approved },
+        { id: 18, value: "Rejected", count: rejected },
+      ],
+    });
+  } catch (error) {
+    console.log("Error in findTeacherApplicationStatusCounts", error);
     return res.status(500).json({ error: "Internal server error" });
   }
 };
