@@ -1,5 +1,5 @@
 import prisma from "../config/dbConfig.js";
-
+const generatePostId = () => `PST-${Date.now().toString().slice(-8)}`;
 export const createTuitionPost = async (req, res) => {
   try {
     const {
@@ -14,19 +14,27 @@ export const createTuitionPost = async (req, res) => {
     } = req.body;
 
     const userId = req.user.id;
+    const role = req.user.role;
 
-    const studentProfile = await prisma.studentProfile.findUnique({
-      where: { userId },
-    });
+    let mode;
 
-    if (!studentProfile) {
-      return res.status(400).json({ error: "Student profile not found" });
+    if (role === "admin" || role === "moderator") {
+      mode = req.body.mode;
+    } else {
+      const studentProfile = await prisma.studentProfile.findUnique({
+        where: { userId },
+      });
+
+      if (!studentProfile) {
+        return res.status(400).json({ error: "Student profile not found" });
+      }
+
+      mode = studentProfile.mode;
     }
-
-    const mode = studentProfile.mode;
 
     const post = await prisma.tuitionPost.create({
       data: {
+        postId: generatePostId(),
         postedByUser: {
           connect: { id: userId },
         },
@@ -34,7 +42,9 @@ export const createTuitionPost = async (req, res) => {
         description,
         budget: budget ? parseFloat(budget) : null,
         mode,
-        area: parseInt(area),
+        area: {
+          connect: { id: parseInt(area) },
+        },
         days,
         startTime,
         endTime,
@@ -54,7 +64,6 @@ export const createTuitionPost = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
-
 export const updateTuitionPost = async (req, res) => {
   try {
     const { id } = req.params;
@@ -110,7 +119,8 @@ export const updateTuitionPost = async (req, res) => {
 
 export const getAllTuitionPosts = async (req, res) => {
   try {
-    const { mode, search, page, limit, status } = req.query;
+    const { mode, search, page, limit, status, area, fromDate, toDate } =
+      req.query;
 
     const where = {};
 
@@ -120,6 +130,16 @@ export const getAllTuitionPosts = async (req, res) => {
     if (status) {
       where.statusId = Number(status);
     }
+
+    if (fromDate && toDate) {
+      where.createdAt = { gte: new Date(fromDate), lte: new Date(toDate) };
+    } else if (fromDate) {
+      where.createdAt = { gte: new Date(fromDate) };
+    } else if (toDate) {
+      where.createdAt = { lte: new Date(toDate) };
+    }
+
+    if (area) where.areaId = parseInt(area);
     if (search) {
       where.OR = [
         { title: { contains: search, mode: "insensitive" } },
@@ -136,6 +156,20 @@ export const getAllTuitionPosts = async (req, res) => {
         skip,
         take,
         orderBy: { createdAt: "desc" },
+        include: {
+          area: {
+            select: {
+              id: true,
+              value: true,
+            },
+          },
+          status: {
+            select: {
+              id: true,
+              value: true,
+            },
+          },
+        },
       }),
       prisma.tuitionPost.count({ where }),
     ]);
@@ -159,6 +193,13 @@ export const getTuitionPostById = async (req, res) => {
     const post = await prisma.tuitionPost.findUnique({
       where: { id: parseInt(id) },
       include: {
+        postedByUser: {
+          select: {
+            email: true,
+            userId: true,
+            name: true,
+          },
+        },
         status: {
           select: {
             id: true,
@@ -210,7 +251,7 @@ export const updateTuitionPostStatus = async (req, res) => {
 
     const post = await prisma.tuitionPost.update({
       where: { id: parseInt(id) },
-      data: { status: parseInt(status) },
+      data: { status: { connect: { id: parseInt(status) } } },
     });
 
     return res.status(200).json(post);
@@ -423,108 +464,45 @@ export const deleteTeacherApplication = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
-export const getActiveTuitions = async (req, res) => {
+
+export const shortlistTeachers = async (req, res) => {
   try {
-    const { role, id } = req.query;
+    const { tuitionPostId, teacherIds } = req.body;
 
-    let where = {};
-
-    if (role && id) {
-      if (role === "teacher") {
-        where.teacherId = Number(id);
-      } else if (role === "student") {
-        where.studentId = Number(id);
-      }
+    if (!tuitionPostId || !Array.isArray(teacherIds)) {
+      return res.status(400).json({ error: "Invalid payload" });
     }
 
-    const tuitions = await prisma.assignedTeacherStudent.findMany({
-      where,
-      include: {
-        tuitionPost: true,
-        student: {
-          select: {
-            name: true,
-            address: true,
-            contact: true,
-            gender: true,
-          },
+    const postId = Number(tuitionPostId);
+    const shortlistedIds = teacherIds.map(Number);
+
+    await prisma.$transaction([
+      prisma.tuitionApplication.updateMany({
+        where: {
+          tuitionPostId: postId,
+          teacherId: { in: shortlistedIds },
         },
-        teacher: {
-          select: {
-            name: true,
-            contact: true,
-            gender: true,
-          },
+        data: {
+          statusId: 15,
         },
-      },
-    });
-
-    const areaIds = [
-      ...new Set(
-        tuitions
-          .map((t) => t.tuitionPost?.area)
-          .filter(Boolean)
-          .map(Number),
-      ),
-    ];
-
-    const statusIds = [
-      ...new Set(
-        tuitions
-          .map((t) => t.tuitionPost?.status)
-          .filter(Boolean)
-          .map(Number),
-      ),
-    ];
-
-    const subjectIdList = [
-      ...new Set(tuitions.flatMap((t) => t.tuitionPost?.subjects || [])),
-    ];
-
-    const [areas, statuses, subjects] = await Promise.all([
-      prisma.lookup.findMany({
-        where: { id: { in: areaIds } },
-        select: { id: true, value: true },
       }),
-      prisma.lookup.findMany({
-        where: { id: { in: statusIds } },
-        select: { id: true, value: true },
-      }),
-      prisma.lookup.findMany({
-        where: { id: { in: subjectIdList } },
-        select: { id: true, value: true },
+
+      prisma.tuitionApplication.updateMany({
+        where: {
+          tuitionPostId: postId,
+          teacherId: { notIn: shortlistedIds },
+        },
+        data: {
+          statusId: 18,
+        },
       }),
     ]);
 
-    const result = tuitions.map((tuition) => {
-      const post = tuition.tuitionPost;
-
-      if (!post) return tuition;
-
-      const areaObj = areas.find((a) => a.id === Number(post.area));
-      const statusObj = statuses.find((s) => s.id === Number(post.status));
-
-      const postSubjects = (post.subjects || [])
-        .map((id) => subjects.find((s) => s.id === Number(id)))
-        .filter(Boolean);
-
-      return {
-        ...tuition,
-        tuitionPost: {
-          ...post,
-          area: areaObj ?? post.area,
-          status: statusObj ?? post.status,
-          subjects: postSubjects,
-        },
-      };
+    return res.status(200).json({
+      message: "Shortlisted and others rejected successfully",
     });
-
-    return res.status(200).json(result);
   } catch (error) {
-    console.log("Error in getActiveTuitions", error);
-
-    return res.status(500).json({
-      error: "Internal server error",
-    });
+    console.log("Error in shortlistTeachers", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };

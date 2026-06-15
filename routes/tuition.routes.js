@@ -8,8 +8,8 @@ import {
   deleteTuitionPost,
   getTuitionsHavePendingApplications,
   deleteTeacherApplication,
-  getActiveTuitions,
   getTuitionApplicationById,
+  shortlistTeachers,
 } from "../controllers/tuition.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
 
@@ -150,15 +150,6 @@ router.delete(
     deleteTeacherApplication(req, res, next);
   },
 );
-router.get(
-  "/activeTuitions/all",
-  protect,
-  authorizeRoles("admin", "moderator", "teacher", "student"),
-  (req, res, next) => {
-    /* #swagger.tags = ['Tuition'] */
-    getActiveTuitions(req, res, next);
-  },
-);
 
 router.get(
   "/applications/:id",
@@ -167,6 +158,37 @@ router.get(
   (req, res, next) => {
     /* #swagger.tags = ['Tuition'] */
     getTuitionApplicationById(req, res, next);
+  },
+);
+
+router.post(
+  "/shortlist",
+  protect,
+  authorizeRoles("admin", "moderator"),
+
+  (req, res, next) => {
+    /* #swagger.tags = ['Tuition']
+       #swagger.requestBody = {
+         required: true,
+         content: {
+           "application/json": {
+             schema: {
+               type: "object",
+               properties: {
+                 tuitionPostId: { type: "integer", example: 12 },
+                 teacherIds: {
+                   type: "array",
+                   items: { type: "integer" },
+                   example: [3, 5, 9]
+                 }
+               },
+               required: ["tuitionPostId", "teacherIds"]
+             }
+           }
+         }
+       }
+    */
+    shortlistTeachers(req, res, next);
   },
 );
 export default router;

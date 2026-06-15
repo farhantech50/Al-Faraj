@@ -204,6 +204,7 @@ exports.Prisma.TeacherProfileScalarFieldEnum = {
 
 exports.Prisma.TuitionPostScalarFieldEnum = {
   id: 'id',
+  postId: 'postId',
   postedBy: 'postedBy',
   title: 'title',
   description: 'description',
@@ -220,6 +221,7 @@ exports.Prisma.TuitionPostScalarFieldEnum = {
 
 exports.Prisma.TuitionApplicationScalarFieldEnum = {
   id: 'id',
+  applicationId: 'applicationId',
   tuitionPostId: 'tuitionPostId',
   teacherId: 'teacherId',
   statusId: 'statusId',

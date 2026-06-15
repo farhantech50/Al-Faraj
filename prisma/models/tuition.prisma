@@ -1,5 +1,6 @@
 model TuitionPost {
   id          Int @id @default(autoincrement())
+  postId      String @unique
 
   postedBy    Int
 
@@ -8,7 +9,7 @@ model TuitionPost {
   budget      Decimal?
 
   mode        Mode
-  areaId        Int 
+  areaId      Int
 
   days        Day[]
   startTime   String
@@ -34,6 +35,7 @@ model TuitionPost {
 
 model TuitionApplication {
   id            Int @id @default(autoincrement())
+  applicationId String @unique
 
   tuitionPostId Int
   teacherId     Int

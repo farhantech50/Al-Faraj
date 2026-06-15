@@ -10561,6 +10561,7 @@ export namespace Prisma {
 
   export type TuitionPostMinAggregateOutputType = {
     id: number | null
+    postId: string | null
     postedBy: number | null
     title: string | null
     description: string | null
@@ -10576,6 +10577,7 @@ export namespace Prisma {
 
   export type TuitionPostMaxAggregateOutputType = {
     id: number | null
+    postId: string | null
     postedBy: number | null
     title: string | null
     description: string | null
@@ -10591,6 +10593,7 @@ export namespace Prisma {
 
   export type TuitionPostCountAggregateOutputType = {
     id: number
+    postId: number
     postedBy: number
     title: number
     description: number
@@ -10625,6 +10628,7 @@ export namespace Prisma {
 
   export type TuitionPostMinAggregateInputType = {
     id?: true
+    postId?: true
     postedBy?: true
     title?: true
     description?: true
@@ -10640,6 +10644,7 @@ export namespace Prisma {
 
   export type TuitionPostMaxAggregateInputType = {
     id?: true
+    postId?: true
     postedBy?: true
     title?: true
     description?: true
@@ -10655,6 +10660,7 @@ export namespace Prisma {
 
   export type TuitionPostCountAggregateInputType = {
     id?: true
+    postId?: true
     postedBy?: true
     title?: true
     description?: true
@@ -10758,6 +10764,7 @@ export namespace Prisma {
 
   export type TuitionPostGroupByOutputType = {
     id: number
+    postId: string
     postedBy: number
     title: string
     description: string | null
@@ -10793,6 +10800,7 @@ export namespace Prisma {
 
   export type TuitionPostSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    postId?: boolean
     postedBy?: boolean
     title?: boolean
     description?: boolean
@@ -10817,6 +10825,7 @@ export namespace Prisma {
 
   export type TuitionPostSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    postId?: boolean
     postedBy?: boolean
     title?: boolean
     description?: boolean
@@ -10836,6 +10845,7 @@ export namespace Prisma {
 
   export type TuitionPostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    postId?: boolean
     postedBy?: boolean
     title?: boolean
     description?: boolean
@@ -10855,6 +10865,7 @@ export namespace Prisma {
 
   export type TuitionPostSelectScalar = {
     id?: boolean
+    postId?: boolean
     postedBy?: boolean
     title?: boolean
     description?: boolean
@@ -10869,7 +10880,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TuitionPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "postedBy" | "title" | "description" | "budget" | "mode" | "areaId" | "days" | "startTime" | "endTime" | "statusId" | "createdAt" | "updatedAt", ExtArgs["result"]["tuitionPost"]>
+  export type TuitionPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "postId" | "postedBy" | "title" | "description" | "budget" | "mode" | "areaId" | "days" | "startTime" | "endTime" | "statusId" | "createdAt" | "updatedAt", ExtArgs["result"]["tuitionPost"]>
   export type TuitionPostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     postedByUser?: boolean | UserDefaultArgs<ExtArgs>
     status?: boolean | LookupDefaultArgs<ExtArgs>
@@ -10904,6 +10915,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      postId: string
       postedBy: number
       title: string
       description: string | null
@@ -11347,6 +11359,7 @@ export namespace Prisma {
    */
   interface TuitionPostFieldRefs {
     readonly id: FieldRef<"TuitionPost", 'Int'>
+    readonly postId: FieldRef<"TuitionPost", 'String'>
     readonly postedBy: FieldRef<"TuitionPost", 'Int'>
     readonly title: FieldRef<"TuitionPost", 'String'>
     readonly description: FieldRef<"TuitionPost", 'String'>
@@ -11921,6 +11934,7 @@ export namespace Prisma {
 
   export type TuitionApplicationMinAggregateOutputType = {
     id: number | null
+    applicationId: string | null
     tuitionPostId: number | null
     teacherId: number | null
     statusId: number | null
@@ -11931,6 +11945,7 @@ export namespace Prisma {
 
   export type TuitionApplicationMaxAggregateOutputType = {
     id: number | null
+    applicationId: string | null
     tuitionPostId: number | null
     teacherId: number | null
     statusId: number | null
@@ -11941,6 +11956,7 @@ export namespace Prisma {
 
   export type TuitionApplicationCountAggregateOutputType = {
     id: number
+    applicationId: number
     tuitionPostId: number
     teacherId: number
     statusId: number
@@ -11967,6 +11983,7 @@ export namespace Prisma {
 
   export type TuitionApplicationMinAggregateInputType = {
     id?: true
+    applicationId?: true
     tuitionPostId?: true
     teacherId?: true
     statusId?: true
@@ -11977,6 +11994,7 @@ export namespace Prisma {
 
   export type TuitionApplicationMaxAggregateInputType = {
     id?: true
+    applicationId?: true
     tuitionPostId?: true
     teacherId?: true
     statusId?: true
@@ -11987,6 +12005,7 @@ export namespace Prisma {
 
   export type TuitionApplicationCountAggregateInputType = {
     id?: true
+    applicationId?: true
     tuitionPostId?: true
     teacherId?: true
     statusId?: true
@@ -12084,6 +12103,7 @@ export namespace Prisma {
 
   export type TuitionApplicationGroupByOutputType = {
     id: number
+    applicationId: string
     tuitionPostId: number
     teacherId: number
     statusId: number
@@ -12113,6 +12133,7 @@ export namespace Prisma {
 
   export type TuitionApplicationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    applicationId?: boolean
     tuitionPostId?: boolean
     teacherId?: boolean
     statusId?: boolean
@@ -12126,6 +12147,7 @@ export namespace Prisma {
 
   export type TuitionApplicationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    applicationId?: boolean
     tuitionPostId?: boolean
     teacherId?: boolean
     statusId?: boolean
@@ -12139,6 +12161,7 @@ export namespace Prisma {
 
   export type TuitionApplicationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    applicationId?: boolean
     tuitionPostId?: boolean
     teacherId?: boolean
     statusId?: boolean
@@ -12152,6 +12175,7 @@ export namespace Prisma {
 
   export type TuitionApplicationSelectScalar = {
     id?: boolean
+    applicationId?: boolean
     tuitionPostId?: boolean
     teacherId?: boolean
     statusId?: boolean
@@ -12160,7 +12184,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TuitionApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tuitionPostId" | "teacherId" | "statusId" | "coverNote" | "appliedAt" | "updatedAt", ExtArgs["result"]["tuitionApplication"]>
+  export type TuitionApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "tuitionPostId" | "teacherId" | "statusId" | "coverNote" | "appliedAt" | "updatedAt", ExtArgs["result"]["tuitionApplication"]>
   export type TuitionApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
     teacher?: boolean | UserDefaultArgs<ExtArgs>
@@ -12186,6 +12210,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      applicationId: string
       tuitionPostId: number
       teacherId: number
       statusId: number
@@ -12619,6 +12644,7 @@ export namespace Prisma {
    */
   interface TuitionApplicationFieldRefs {
     readonly id: FieldRef<"TuitionApplication", 'Int'>
+    readonly applicationId: FieldRef<"TuitionApplication", 'String'>
     readonly tuitionPostId: FieldRef<"TuitionApplication", 'Int'>
     readonly teacherId: FieldRef<"TuitionApplication", 'Int'>
     readonly statusId: FieldRef<"TuitionApplication", 'Int'>
@@ -16821,6 +16847,7 @@ export namespace Prisma {
 
   export const TuitionPostScalarFieldEnum: {
     id: 'id',
+    postId: 'postId',
     postedBy: 'postedBy',
     title: 'title',
     description: 'description',
@@ -16840,6 +16867,7 @@ export namespace Prisma {
 
   export const TuitionApplicationScalarFieldEnum: {
     id: 'id',
+    applicationId: 'applicationId',
     tuitionPostId: 'tuitionPostId',
     teacherId: 'teacherId',
     statusId: 'statusId',
@@ -17634,6 +17662,7 @@ export namespace Prisma {
     OR?: TuitionPostWhereInput[]
     NOT?: TuitionPostWhereInput | TuitionPostWhereInput[]
     id?: IntFilter<"TuitionPost"> | number
+    postId?: StringFilter<"TuitionPost"> | string
     postedBy?: IntFilter<"TuitionPost"> | number
     title?: StringFilter<"TuitionPost"> | string
     description?: StringNullableFilter<"TuitionPost"> | string | null
@@ -17657,6 +17686,7 @@ export namespace Prisma {
 
   export type TuitionPostOrderByWithRelationInput = {
     id?: SortOrder
+    postId?: SortOrder
     postedBy?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
@@ -17680,6 +17710,7 @@ export namespace Prisma {
 
   export type TuitionPostWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    postId?: string
     AND?: TuitionPostWhereInput | TuitionPostWhereInput[]
     OR?: TuitionPostWhereInput[]
     NOT?: TuitionPostWhereInput | TuitionPostWhereInput[]
@@ -17702,10 +17733,11 @@ export namespace Prisma {
     applications?: TuitionApplicationListRelationFilter
     assigned?: AssignedListRelationFilter
     demoClasses?: DemoClassListRelationFilter
-  }, "id">
+  }, "id" | "postId">
 
   export type TuitionPostOrderByWithAggregationInput = {
     id?: SortOrder
+    postId?: SortOrder
     postedBy?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
@@ -17730,6 +17762,7 @@ export namespace Prisma {
     OR?: TuitionPostScalarWhereWithAggregatesInput[]
     NOT?: TuitionPostScalarWhereWithAggregatesInput | TuitionPostScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"TuitionPost"> | number
+    postId?: StringWithAggregatesFilter<"TuitionPost"> | string
     postedBy?: IntWithAggregatesFilter<"TuitionPost"> | number
     title?: StringWithAggregatesFilter<"TuitionPost"> | string
     description?: StringNullableWithAggregatesFilter<"TuitionPost"> | string | null
@@ -17749,6 +17782,7 @@ export namespace Prisma {
     OR?: TuitionApplicationWhereInput[]
     NOT?: TuitionApplicationWhereInput | TuitionApplicationWhereInput[]
     id?: IntFilter<"TuitionApplication"> | number
+    applicationId?: StringFilter<"TuitionApplication"> | string
     tuitionPostId?: IntFilter<"TuitionApplication"> | number
     teacherId?: IntFilter<"TuitionApplication"> | number
     statusId?: IntFilter<"TuitionApplication"> | number
@@ -17762,6 +17796,7 @@ export namespace Prisma {
 
   export type TuitionApplicationOrderByWithRelationInput = {
     id?: SortOrder
+    applicationId?: SortOrder
     tuitionPostId?: SortOrder
     teacherId?: SortOrder
     statusId?: SortOrder
@@ -17775,6 +17810,7 @@ export namespace Prisma {
 
   export type TuitionApplicationWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    applicationId?: string
     tuitionPostId_teacherId?: TuitionApplicationTuitionPostIdTeacherIdCompoundUniqueInput
     AND?: TuitionApplicationWhereInput | TuitionApplicationWhereInput[]
     OR?: TuitionApplicationWhereInput[]
@@ -17788,10 +17824,11 @@ export namespace Prisma {
     tuitionPost?: XOR<TuitionPostScalarRelationFilter, TuitionPostWhereInput>
     teacher?: XOR<UserScalarRelationFilter, UserWhereInput>
     status?: XOR<LookupScalarRelationFilter, LookupWhereInput>
-  }, "id" | "tuitionPostId_teacherId">
+  }, "id" | "applicationId" | "tuitionPostId_teacherId">
 
   export type TuitionApplicationOrderByWithAggregationInput = {
     id?: SortOrder
+    applicationId?: SortOrder
     tuitionPostId?: SortOrder
     teacherId?: SortOrder
     statusId?: SortOrder
@@ -17810,6 +17847,7 @@ export namespace Prisma {
     OR?: TuitionApplicationScalarWhereWithAggregatesInput[]
     NOT?: TuitionApplicationScalarWhereWithAggregatesInput | TuitionApplicationScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"TuitionApplication"> | number
+    applicationId?: StringWithAggregatesFilter<"TuitionApplication"> | string
     tuitionPostId?: IntWithAggregatesFilter<"TuitionApplication"> | number
     teacherId?: IntWithAggregatesFilter<"TuitionApplication"> | number
     statusId?: IntWithAggregatesFilter<"TuitionApplication"> | number
@@ -18620,6 +18658,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostCreateInput = {
+    postId: string
     title: string
     description?: string | null
     budget?: Decimal | DecimalJsLike | number | string | null
@@ -18640,6 +18679,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedCreateInput = {
     id?: number
+    postId: string
     postedBy: number
     title: string
     description?: string | null
@@ -18659,6 +18699,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostUpdateInput = {
+    postId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -18679,6 +18720,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     postedBy?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18699,6 +18741,7 @@ export namespace Prisma {
 
   export type TuitionPostCreateManyInput = {
     id?: number
+    postId: string
     postedBy: number
     title: string
     description?: string | null
@@ -18714,6 +18757,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostUpdateManyMutationInput = {
+    postId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -18727,6 +18771,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     postedBy?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18742,6 +18787,7 @@ export namespace Prisma {
   }
 
   export type TuitionApplicationCreateInput = {
+    applicationId: string
     coverNote?: string | null
     appliedAt?: Date | string
     updatedAt?: Date | string
@@ -18752,6 +18798,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedCreateInput = {
     id?: number
+    applicationId: string
     tuitionPostId: number
     teacherId: number
     statusId?: number
@@ -18761,6 +18808,7 @@ export namespace Prisma {
   }
 
   export type TuitionApplicationUpdateInput = {
+    applicationId?: StringFieldUpdateOperationsInput | string
     coverNote?: NullableStringFieldUpdateOperationsInput | string | null
     appliedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18771,6 +18819,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    applicationId?: StringFieldUpdateOperationsInput | string
     tuitionPostId?: IntFieldUpdateOperationsInput | number
     teacherId?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
@@ -18781,6 +18830,7 @@ export namespace Prisma {
 
   export type TuitionApplicationCreateManyInput = {
     id?: number
+    applicationId: string
     tuitionPostId: number
     teacherId: number
     statusId?: number
@@ -18790,6 +18840,7 @@ export namespace Prisma {
   }
 
   export type TuitionApplicationUpdateManyMutationInput = {
+    applicationId?: StringFieldUpdateOperationsInput | string
     coverNote?: NullableStringFieldUpdateOperationsInput | string | null
     appliedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18797,6 +18848,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    applicationId?: StringFieldUpdateOperationsInput | string
     tuitionPostId?: IntFieldUpdateOperationsInput | number
     teacherId?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
@@ -19717,6 +19769,7 @@ export namespace Prisma {
 
   export type TuitionPostCountOrderByAggregateInput = {
     id?: SortOrder
+    postId?: SortOrder
     postedBy?: SortOrder
     title?: SortOrder
     description?: SortOrder
@@ -19741,6 +19794,7 @@ export namespace Prisma {
 
   export type TuitionPostMaxOrderByAggregateInput = {
     id?: SortOrder
+    postId?: SortOrder
     postedBy?: SortOrder
     title?: SortOrder
     description?: SortOrder
@@ -19756,6 +19810,7 @@ export namespace Prisma {
 
   export type TuitionPostMinOrderByAggregateInput = {
     id?: SortOrder
+    postId?: SortOrder
     postedBy?: SortOrder
     title?: SortOrder
     description?: SortOrder
@@ -19800,6 +19855,7 @@ export namespace Prisma {
 
   export type TuitionApplicationCountOrderByAggregateInput = {
     id?: SortOrder
+    applicationId?: SortOrder
     tuitionPostId?: SortOrder
     teacherId?: SortOrder
     statusId?: SortOrder
@@ -19817,6 +19873,7 @@ export namespace Prisma {
 
   export type TuitionApplicationMaxOrderByAggregateInput = {
     id?: SortOrder
+    applicationId?: SortOrder
     tuitionPostId?: SortOrder
     teacherId?: SortOrder
     statusId?: SortOrder
@@ -19827,6 +19884,7 @@ export namespace Prisma {
 
   export type TuitionApplicationMinOrderByAggregateInput = {
     id?: SortOrder
+    applicationId?: SortOrder
     tuitionPostId?: SortOrder
     teacherId?: SortOrder
     statusId?: SortOrder
@@ -21612,6 +21670,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostCreateWithoutAssignedInput = {
+    postId: string
     title: string
     description?: string | null
     budget?: Decimal | DecimalJsLike | number | string | null
@@ -21631,6 +21690,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedCreateWithoutAssignedInput = {
     id?: number
+    postId: string
     postedBy: number
     title: string
     description?: string | null
@@ -21827,6 +21887,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostUpdateWithoutAssignedInput = {
+    postId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -21846,6 +21907,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateWithoutAssignedInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     postedBy?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22418,6 +22480,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostCreateWithoutDemoClassesInput = {
+    postId: string
     title: string
     description?: string | null
     budget?: Decimal | DecimalJsLike | number | string | null
@@ -22437,6 +22500,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedCreateWithoutDemoClassesInput = {
     id?: number
+    postId: string
     postedBy: number
     title: string
     description?: string | null
@@ -22609,6 +22673,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostUpdateWithoutDemoClassesInput = {
+    postId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -22628,6 +22693,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateWithoutDemoClassesInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     postedBy?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22802,6 +22868,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostCreateWithoutStatusInput = {
+    postId: string
     title: string
     description?: string | null
     budget?: Decimal | DecimalJsLike | number | string | null
@@ -22821,6 +22888,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedCreateWithoutStatusInput = {
     id?: number
+    postId: string
     postedBy: number
     title: string
     description?: string | null
@@ -22849,6 +22917,7 @@ export namespace Prisma {
   }
 
   export type TuitionApplicationCreateWithoutStatusInput = {
+    applicationId: string
     coverNote?: string | null
     appliedAt?: Date | string
     updatedAt?: Date | string
@@ -22858,6 +22927,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedCreateWithoutStatusInput = {
     id?: number
+    applicationId: string
     tuitionPostId: number
     teacherId: number
     coverNote?: string | null
@@ -23001,6 +23071,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostCreateWithoutAreaInput = {
+    postId: string
     title: string
     description?: string | null
     budget?: Decimal | DecimalJsLike | number | string | null
@@ -23020,6 +23091,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedCreateWithoutAreaInput = {
     id?: number
+    postId: string
     postedBy: number
     title: string
     description?: string | null
@@ -23087,6 +23159,7 @@ export namespace Prisma {
     OR?: TuitionPostScalarWhereInput[]
     NOT?: TuitionPostScalarWhereInput | TuitionPostScalarWhereInput[]
     id?: IntFilter<"TuitionPost"> | number
+    postId?: StringFilter<"TuitionPost"> | string
     postedBy?: IntFilter<"TuitionPost"> | number
     title?: StringFilter<"TuitionPost"> | string
     description?: StringNullableFilter<"TuitionPost"> | string | null
@@ -23122,6 +23195,7 @@ export namespace Prisma {
     OR?: TuitionApplicationScalarWhereInput[]
     NOT?: TuitionApplicationScalarWhereInput | TuitionApplicationScalarWhereInput[]
     id?: IntFilter<"TuitionApplication"> | number
+    applicationId?: StringFilter<"TuitionApplication"> | string
     tuitionPostId?: IntFilter<"TuitionApplication"> | number
     teacherId?: IntFilter<"TuitionApplication"> | number
     statusId?: IntFilter<"TuitionApplication"> | number
@@ -23623,6 +23697,7 @@ export namespace Prisma {
   }
 
   export type TuitionApplicationCreateWithoutTuitionPostInput = {
+    applicationId: string
     coverNote?: string | null
     appliedAt?: Date | string
     updatedAt?: Date | string
@@ -23632,6 +23707,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedCreateWithoutTuitionPostInput = {
     id?: number
+    applicationId: string
     teacherId: number
     statusId?: number
     coverNote?: string | null
@@ -23925,6 +24001,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostCreateWithoutApplicationsInput = {
+    postId: string
     title: string
     description?: string | null
     budget?: Decimal | DecimalJsLike | number | string | null
@@ -23944,6 +24021,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedCreateWithoutApplicationsInput = {
     id?: number
+    postId: string
     postedBy: number
     title: string
     description?: string | null
@@ -24064,6 +24142,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostUpdateWithoutApplicationsInput = {
+    postId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -24083,6 +24162,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateWithoutApplicationsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     postedBy?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24199,6 +24279,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostCreateWithoutSubjectsInput = {
+    postId: string
     title: string
     description?: string | null
     budget?: Decimal | DecimalJsLike | number | string | null
@@ -24218,6 +24299,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedCreateWithoutSubjectsInput = {
     id?: number
+    postId: string
     postedBy: number
     title: string
     description?: string | null
@@ -24284,6 +24366,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostUpdateWithoutSubjectsInput = {
+    postId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -24303,6 +24386,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateWithoutSubjectsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     postedBy?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24436,6 +24520,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostCreateWithoutPostedByUserInput = {
+    postId: string
     title: string
     description?: string | null
     budget?: Decimal | DecimalJsLike | number | string | null
@@ -24455,6 +24540,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedCreateWithoutPostedByUserInput = {
     id?: number
+    postId: string
     title: string
     description?: string | null
     budget?: Decimal | DecimalJsLike | number | string | null
@@ -24483,6 +24569,7 @@ export namespace Prisma {
   }
 
   export type TuitionApplicationCreateWithoutTeacherInput = {
+    applicationId: string
     coverNote?: string | null
     appliedAt?: Date | string
     updatedAt?: Date | string
@@ -24492,6 +24579,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedCreateWithoutTeacherInput = {
     id?: number
+    applicationId: string
     tuitionPostId: number
     statusId?: number
     coverNote?: string | null
@@ -25060,6 +25148,7 @@ export namespace Prisma {
 
   export type TuitionPostCreateManyStatusInput = {
     id?: number
+    postId: string
     postedBy: number
     title: string
     description?: string | null
@@ -25075,6 +25164,7 @@ export namespace Prisma {
 
   export type TuitionApplicationCreateManyStatusInput = {
     id?: number
+    applicationId: string
     tuitionPostId: number
     teacherId: number
     coverNote?: string | null
@@ -25132,6 +25222,7 @@ export namespace Prisma {
 
   export type TuitionPostCreateManyAreaInput = {
     id?: number
+    postId: string
     postedBy: number
     title: string
     description?: string | null
@@ -25151,6 +25242,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostUpdateWithoutStatusInput = {
+    postId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -25170,6 +25262,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateWithoutStatusInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     postedBy?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25189,6 +25282,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateManyWithoutStatusInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     postedBy?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25203,6 +25297,7 @@ export namespace Prisma {
   }
 
   export type TuitionApplicationUpdateWithoutStatusInput = {
+    applicationId?: StringFieldUpdateOperationsInput | string
     coverNote?: NullableStringFieldUpdateOperationsInput | string | null
     appliedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25212,6 +25307,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedUpdateWithoutStatusInput = {
     id?: IntFieldUpdateOperationsInput | number
+    applicationId?: StringFieldUpdateOperationsInput | string
     tuitionPostId?: IntFieldUpdateOperationsInput | number
     teacherId?: IntFieldUpdateOperationsInput | number
     coverNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25221,6 +25317,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedUpdateManyWithoutStatusInput = {
     id?: IntFieldUpdateOperationsInput | number
+    applicationId?: StringFieldUpdateOperationsInput | string
     tuitionPostId?: IntFieldUpdateOperationsInput | number
     teacherId?: IntFieldUpdateOperationsInput | number
     coverNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25372,6 +25469,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostUpdateWithoutAreaInput = {
+    postId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -25391,6 +25489,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateWithoutAreaInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     postedBy?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25410,6 +25509,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateManyWithoutAreaInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     postedBy?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25444,6 +25544,7 @@ export namespace Prisma {
 
   export type TuitionApplicationCreateManyTuitionPostInput = {
     id?: number
+    applicationId: string
     teacherId: number
     statusId?: number
     coverNote?: string | null
@@ -25487,6 +25588,7 @@ export namespace Prisma {
   }
 
   export type TuitionApplicationUpdateWithoutTuitionPostInput = {
+    applicationId?: StringFieldUpdateOperationsInput | string
     coverNote?: NullableStringFieldUpdateOperationsInput | string | null
     appliedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25496,6 +25598,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedUpdateWithoutTuitionPostInput = {
     id?: IntFieldUpdateOperationsInput | number
+    applicationId?: StringFieldUpdateOperationsInput | string
     teacherId?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
     coverNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25505,6 +25608,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedUpdateManyWithoutTuitionPostInput = {
     id?: IntFieldUpdateOperationsInput | number
+    applicationId?: StringFieldUpdateOperationsInput | string
     teacherId?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
     coverNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25584,6 +25688,7 @@ export namespace Prisma {
 
   export type TuitionPostCreateManyPostedByUserInput = {
     id?: number
+    postId: string
     title: string
     description?: string | null
     budget?: Decimal | DecimalJsLike | number | string | null
@@ -25599,6 +25704,7 @@ export namespace Prisma {
 
   export type TuitionApplicationCreateManyTeacherInput = {
     id?: number
+    applicationId: string
     tuitionPostId: number
     statusId?: number
     coverNote?: string | null
@@ -25705,6 +25811,7 @@ export namespace Prisma {
   }
 
   export type TuitionPostUpdateWithoutPostedByUserInput = {
+    postId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -25724,6 +25831,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateWithoutPostedByUserInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -25743,6 +25851,7 @@ export namespace Prisma {
 
   export type TuitionPostUncheckedUpdateManyWithoutPostedByUserInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -25757,6 +25866,7 @@ export namespace Prisma {
   }
 
   export type TuitionApplicationUpdateWithoutTeacherInput = {
+    applicationId?: StringFieldUpdateOperationsInput | string
     coverNote?: NullableStringFieldUpdateOperationsInput | string | null
     appliedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25766,6 +25876,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedUpdateWithoutTeacherInput = {
     id?: IntFieldUpdateOperationsInput | number
+    applicationId?: StringFieldUpdateOperationsInput | string
     tuitionPostId?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
     coverNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25775,6 +25886,7 @@ export namespace Prisma {
 
   export type TuitionApplicationUncheckedUpdateManyWithoutTeacherInput = {
     id?: IntFieldUpdateOperationsInput | number
+    applicationId?: StringFieldUpdateOperationsInput | string
     tuitionPostId?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
     coverNote?: NullableStringFieldUpdateOperationsInput | string | null

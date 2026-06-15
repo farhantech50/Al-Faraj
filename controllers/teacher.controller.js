@@ -1,5 +1,6 @@
 import prisma from "../config/dbConfig.js";
-
+const generateApplicationId = () =>
+  `APT-${Date.now().toString().slice(-8)}-${Math.floor(Math.random() * 1000)}`;
 export const createTeacherProfile = async (req, res) => {
   try {
     const { bio, experienceYears, educationalBackground, cvUrl, mode, userId } =
@@ -224,6 +225,7 @@ export const applyToTuitionPost = async (req, res) => {
 
     const application = await prisma.tuitionApplication.create({
       data: {
+        applicationId: generateApplicationId(),
         coverNote,
 
         teacher: {

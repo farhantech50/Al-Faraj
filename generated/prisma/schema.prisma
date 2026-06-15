@@ -178,7 +178,8 @@ model TeacherProfile {
 }
 
 model TuitionPost {
-  id Int @id @default(autoincrement())
+  id     Int    @id @default(autoincrement())
+  postId String @unique
 
   postedBy Int
 
@@ -212,7 +213,8 @@ model TuitionPost {
 }
 
 model TuitionApplication {
-  id Int @id @default(autoincrement())
+  id            Int    @id @default(autoincrement())
+  applicationId String @unique
 
   tuitionPostId Int
   teacherId     Int
