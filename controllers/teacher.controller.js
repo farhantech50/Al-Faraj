@@ -122,18 +122,84 @@ export const getTeacherById = async (req, res) => {
 
 export const getAllTeachers = async (req, res) => {
   try {
-    const { mode } = req.query;
+    const { mode, search, page = 1, limit = 10 } = req.query;
 
-    const teachers = await prisma.teacherProfile.findMany({
-      where: {
-        mode: mode,
-      },
-      include: {
-        user: { select: { id: true, name: true, email: true, contact: true } },
-      },
+    const take = Number(limit);
+    const skip = (Number(page) - 1) * take;
+
+    const where = {};
+
+    if (mode) {
+      where.mode = mode;
+    }
+
+    if (search) {
+      where.OR = [
+        {
+          user: {
+            name: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          user: {
+            email: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          user: {
+            contact: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          user: {
+            userId: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        },
+      ];
+    }
+
+    const [teachers, total] = await Promise.all([
+      prisma.teacherProfile.findMany({
+        where,
+        skip,
+        take,
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              contact: true,
+              userId: true,
+            },
+          },
+        },
+      }),
+
+      prisma.teacherProfile.count({ where }),
+    ]);
+
+    return res.status(200).json({
+      data: teachers,
+      total,
+      page: Number(page),
+      totalPages: Math.ceil(total / take),
     });
-
-    return res.status(200).json(teachers);
   } catch (error) {
     console.log("Error in getAllTeachers", error);
     return res.status(500).json({ error: "Internal server error" });

@@ -172,20 +172,12 @@ export const getUsers = async (req, res) => {
 
     const where = {};
 
-    if (role) {
-      where.role = role;
-    }
-
-    if (mode) {
-      where.mode = mode;
-    }
-
     if (search) {
       where.OR = [
         { name: { contains: search, mode: "insensitive" } },
         { email: { contains: search, mode: "insensitive" } },
         { contact: { contains: search, mode: "insensitive" } },
-        { userCode: { contains: search, mode: "insensitive" } },
+        { userId: { contains: search, mode: "insensitive" } },
       ];
     }
     const take = limit ? Number(limit) : undefined;

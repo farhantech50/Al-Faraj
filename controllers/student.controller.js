@@ -158,38 +158,90 @@ export const getStudentById = async (req, res) => {
 
 export const getAllStudents = async (req, res) => {
   try {
-    const { mode } = req.query;
+    const { mode, search, page = 1, limit = 10 } = req.query;
 
-    const students = await prisma.studentProfile.findMany({
-      where: mode
-        ? {
-            mode: mode,
-            user: {
-              role: "student",
+    const take = Number(limit);
+    const skip = (Number(page) - 1) * take;
+
+    const where = {};
+
+    if (mode) {
+      where.mode = mode;
+    }
+
+    if (search) {
+      where.OR = [
+        {
+          user: {
+            name: {
+              contains: search,
+              mode: "insensitive",
             },
-          }
-        : {
-            user: {
-              role: "student",
-            },
-          },
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
           },
         },
-      },
-    });
+        {
+          user: {
+            email: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          user: {
+            contact: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          user: {
+            userId: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        },
+      ];
+    }
 
-    return res.status(200).json(students);
+    const [students, total] = await Promise.all([
+      prisma.studentProfile.findMany({
+        where,
+        skip,
+        take,
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              userId: true,
+              contact: true,
+            },
+          },
+        },
+      }),
+
+      prisma.studentProfile.count({ where }),
+    ]);
+
+    return res.status(200).json({
+      data: students,
+      total,
+      page: Number(page),
+      totalPages: Math.ceil(total / take),
+    });
   } catch (error) {
     console.log("Error in getAllStudents", error);
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 export const getMyTuitionPosts = async (req, res) => {
   try {
     const id = req.user.id;
