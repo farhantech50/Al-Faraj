@@ -168,10 +168,12 @@ export const logoutUser = async (req, res) => {
 };
 export const getUsers = async (req, res) => {
   try {
-    const { role, mode, page, limit, search } = req.query;
+    const { role, mode, page, limit, search, id } = req.query;
 
     const where = {};
-
+    if (id) {
+      where.id = Number(id);
+    }
     if (search) {
       where.OR = [
         { name: { contains: search, mode: "insensitive" } },
