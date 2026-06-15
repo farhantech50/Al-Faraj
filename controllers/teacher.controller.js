@@ -125,13 +125,9 @@ export const getAllTeachers = async (req, res) => {
     const { mode } = req.query;
 
     const teachers = await prisma.teacherProfile.findMany({
-      where: mode
-        ? {
-            mode: {
-              has: mode,
-            },
-          }
-        : undefined,
+      where: {
+        mode: mode,
+      },
       include: {
         user: { select: { id: true, name: true, email: true, contact: true } },
       },
