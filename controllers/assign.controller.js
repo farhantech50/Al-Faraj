@@ -1,38 +1,46 @@
 import prisma from "../config/dbConfig.js";
 
-export const createAssignment = async (req, res) => {
+export const createAssigned = async (req, res) => {
   try {
-    const { tuitionPostId, teacherId, subjectIds, startDate, endDate } =
-      req.body;
+    const { tuitionPostId, teacherId, startDate, endDate } = req.body;
     const assignedBy = req.user.id;
 
     const tuitionPost = await prisma.tuitionPost.findUnique({
-      where: { id: tuitionPostId },
+      where: { id: Number(tuitionPostId) },
+      include: {
+        subjects: true,
+      },
     });
-    console.log(tuitionPost);
+
     if (!tuitionPost) {
       return res.status(404).json({ error: "Tuition post not found" });
     }
 
-    if (tuitionPost.status !== 24) {
+    if (tuitionPost.statusId !== 2) {
       return res.status(400).json({ error: "Tuition post is not approved" });
     }
 
     const teacher = await prisma.user.findUnique({
-      where: { id: teacherId },
+      where: { id: Number(teacherId) },
     });
 
     if (!teacher || teacher.role !== "teacher") {
       return res.status(404).json({ error: "Teacher not found" });
     }
 
+    const application = await prisma.tuitionApplication.findFirst({
+      where: {
+        tuitionPostId: Number(tuitionPostId),
+        teacherId: Number(teacherId),
+      },
+    });
+
     const [assignment, schedule] = await prisma.$transaction(async (tx) => {
-      const assignment = await tx.assignedTeacherStudent.create({
+      const assignment = await tx.assigned.create({
         data: {
-          tuitionPostId,
-          teacherId,
+          tuitionPostId: Number(tuitionPostId),
+          teacherId: Number(teacherId),
           studentId: tuitionPost.postedBy,
-          subjectIds: tuitionPost.subjectIds,
           assignedBy,
           startDate: new Date(startDate),
           endDate: endDate ? new Date(endDate) : null,
@@ -41,32 +49,50 @@ export const createAssignment = async (req, res) => {
 
       const schedule = await tx.classSchedule.create({
         data: {
-          assignmentId: assignment.id,
-          teacherId,
+          assignedId: assignment.id,
+          teacherId: Number(teacherId),
           studentId: tuitionPost.postedBy,
-          subjectIds,
           days: tuitionPost.days,
           startTime: tuitionPost.startTime,
           endTime: tuitionPost.endTime,
-          medium: tuitionPost.medium,
+          medium: tuitionPost.mode,
         },
       });
 
       await tx.tuitionPost.update({
-        where: { id: tuitionPostId },
-        data: { status: 26 },
-      });
-      await tx.teacherApplication.updateMany({
-        where: {
-          tuitionPostId,
-          teacherId,
+        where: { id: Number(tuitionPostId) },
+        data: {
+          statusId: 4,
         },
-        data: { status: 24 },
       });
+
+      await tx.tuitionApplication.updateMany({
+        where: {
+          tuitionPostId: Number(tuitionPostId),
+        },
+        data: {
+          statusId: 18,
+        },
+      });
+
+      if (application) {
+        await tx.tuitionApplication.update({
+          where: {
+            id: application.id,
+          },
+          data: {
+            statusId: 16,
+          },
+        });
+      }
+
       return [assignment, schedule];
     });
 
-    return res.status(201).json({ assignment, schedule });
+    return res.status(201).json({
+      assignment,
+      schedule,
+    });
   } catch (error) {
     console.log("Error in createAssignment", error);
     return res.status(500).json({ error: "Internal server error" });

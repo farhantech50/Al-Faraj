@@ -1,0 +1,56 @@
+model ClassSchedule {
+  id           Int @id @default(autoincrement())
+
+  assignedId   Int @unique
+  teacherId    Int
+  studentId    Int
+
+  days         Day[]
+  startTime    String
+  endTime      String
+  mode         Mode
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  assignment   Assigned @relation(fields: [assignedId], references: [id], onDelete: Cascade, name: "AssignedClassSchedule")
+
+  teacher      User @relation("TeacherClassSchedules", fields: [teacherId], references: [id], onDelete: Cascade)
+  student      User @relation("StudentClassSchedules", fields: [studentId], references: [id], onDelete: Cascade)
+
+  overrides    ClassScheduleOverride[]
+  subjects     ClassScheduleSubject[]    // ← added missing reverse
+}
+
+model ClassScheduleSubject {
+  id              Int @id @default(autoincrement())
+
+  classScheduleId Int
+  subjectId       Int
+
+  classSchedule   ClassSchedule @relation(fields: [classScheduleId], references: [id], onDelete: Cascade)
+  subject         Lookup @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  @@unique([classScheduleId, subjectId])
+  @@map("class_schedule_subjects")
+}
+
+model ClassScheduleOverride {
+  id              Int @id @default(autoincrement())
+
+  classScheduleId Int
+
+  originalDate    DateTime
+  newDate         DateTime
+
+  startTime       String
+  endTime         String
+  mode            Mode
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  classSchedule   ClassSchedule @relation(fields: [classScheduleId], references: [id], onDelete: Cascade)
+
+  @@map("class_schedule_overrides")
+}

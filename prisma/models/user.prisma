@@ -32,6 +32,9 @@ model User {
   teacherHomework Assignment[] @relation("TeacherHomework")
   studentHomework Assignment[] @relation("StudentHomework")
 
+  teacherSchedules ClassSchedule[] @relation("TeacherClassSchedules")
+  studentSchedules ClassSchedule[] @relation("StudentClassSchedules")
+
   @@map("users")
 }
 model RefreshToken {

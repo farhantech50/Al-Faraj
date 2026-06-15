@@ -126,7 +126,6 @@ exports.Prisma.AssignedScalarFieldEnum = {
   teacherId: 'teacherId',
   studentId: 'studentId',
   assignedBy: 'assignedBy',
-  statusId: 'statusId',
   startDate: 'startDate',
   endDate: 'endDate',
   createdAt: 'createdAt',
@@ -148,6 +147,37 @@ exports.Prisma.AssignmentScalarFieldEnum = {
   gradedAt: 'gradedAt',
   statusId: 'statusId',
   subjectId: 'subjectId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ClassScheduleScalarFieldEnum = {
+  id: 'id',
+  assignedId: 'assignedId',
+  teacherId: 'teacherId',
+  studentId: 'studentId',
+  days: 'days',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  mode: 'mode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ClassScheduleSubjectScalarFieldEnum = {
+  id: 'id',
+  classScheduleId: 'classScheduleId',
+  subjectId: 'subjectId'
+};
+
+exports.Prisma.ClassScheduleOverrideScalarFieldEnum = {
+  id: 'id',
+  classScheduleId: 'classScheduleId',
+  originalDate: 'originalDate',
+  newDate: 'newDate',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  mode: 'mode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -273,13 +303,6 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-exports.Role = exports.$Enums.Role = {
-  admin: 'admin',
-  moderator: 'moderator',
-  teacher: 'teacher',
-  student: 'student'
-};
-
 exports.Mode = exports.$Enums.Mode = {
   online: 'online',
   offline: 'offline'
@@ -295,6 +318,13 @@ exports.Day = exports.$Enums.Day = {
   sunday: 'sunday'
 };
 
+exports.Role = exports.$Enums.Role = {
+  admin: 'admin',
+  moderator: 'moderator',
+  teacher: 'teacher',
+  student: 'student'
+};
+
 exports.Gender = exports.$Enums.Gender = {
   male: 'male',
   female: 'female',
@@ -304,6 +334,9 @@ exports.Gender = exports.$Enums.Gender = {
 exports.Prisma.ModelName = {
   Assigned: 'Assigned',
   Assignment: 'Assignment',
+  ClassSchedule: 'ClassSchedule',
+  ClassScheduleSubject: 'ClassScheduleSubject',
+  ClassScheduleOverride: 'ClassScheduleOverride',
   DemoClass: 'DemoClass',
   Lookup: 'Lookup',
   RolePermission: 'RolePermission',

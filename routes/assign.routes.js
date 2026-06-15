@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  createAssignment,
+  createAssigned,
   deleteAssignment,
   getStudentAssignments,
 } from "../controllers/assign.controller.js";
@@ -32,7 +32,7 @@ router.post(
          }
        }
     */
-    createAssignment(req, res, next);
+    createAssigned(req, res, next);
   },
 );
 router.delete(

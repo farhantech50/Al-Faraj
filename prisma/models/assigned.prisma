@@ -6,8 +6,6 @@ model Assigned {
   studentId     Int
   assignedBy    Int
 
-  statusId      Int
-
   startDate     DateTime @default(now())
   endDate       DateTime?
 
@@ -19,9 +17,9 @@ model Assigned {
   teacher       User @relation("TeacherAssignments", fields: [teacherId], references: [id])
   student       User @relation("StudentAssignments", fields: [studentId], references: [id])
 
-  status        Lookup @relation("AssignedStatus", fields: [statusId], references: [id])
-
   demoClass     DemoClass?
+
+  classSchedule ClassSchedule? @relation("AssignedClassSchedule")  // ← added
 
   @@map("assigned_teacher_students")
 }
