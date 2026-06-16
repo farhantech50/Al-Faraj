@@ -19,7 +19,7 @@ model Assigned {
 
   demoClass     DemoClass?
 
-  classSchedule ClassSchedule? @relation("AssignedClassSchedule")  // ← added
+  classSchedule ClassSchedule? @relation("AssignedClassSchedule")  
 
   @@map("assigned_teacher_students")
 }

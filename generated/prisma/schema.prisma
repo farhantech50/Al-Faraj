@@ -19,7 +19,7 @@ model Assigned {
 
   demoClass DemoClass?
 
-  classSchedule ClassSchedule? @relation("AssignedClassSchedule") // ← added
+  classSchedule ClassSchedule? @relation("AssignedClassSchedule")
 
   @@map("assigned_teacher_students")
 }
@@ -79,7 +79,7 @@ model ClassSchedule {
   student User @relation("StudentClassSchedules", fields: [studentId], references: [id], onDelete: Cascade)
 
   overrides ClassScheduleOverride[]
-  subjects  ClassScheduleSubject[] // ← added missing reverse
+  subjects  ClassScheduleSubject[]
 }
 
 model ClassScheduleSubject {
