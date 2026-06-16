@@ -26,9 +26,6 @@ model User {
   teacherAssignments Assigned[] @relation("TeacherAssignments")
   studentAssignments Assigned[] @relation("StudentAssignments")
 
-  teacherDemoClasses DemoClass[] @relation("TeacherDemoClasses")
-  studentDemoClasses DemoClass[] @relation("StudentDemoClasses")
-
   teacherHomework Assignment[] @relation("TeacherHomework")
   studentHomework Assignment[] @relation("StudentHomework")
 
@@ -37,6 +34,8 @@ model User {
 
   @@map("users")
 }
+
+
 model RefreshToken {
   id        Int      @id @default(autoincrement())
   token     String   @unique

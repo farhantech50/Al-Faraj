@@ -126,6 +126,8 @@ exports.Prisma.AssignedScalarFieldEnum = {
   teacherId: 'teacherId',
   studentId: 'studentId',
   assignedBy: 'assignedBy',
+  isDemo: 'isDemo',
+  isConfirmed: 'isConfirmed',
   startDate: 'startDate',
   endDate: 'endDate',
   createdAt: 'createdAt',
@@ -178,16 +180,6 @@ exports.Prisma.ClassScheduleOverrideScalarFieldEnum = {
   startTime: 'startTime',
   endTime: 'endTime',
   mode: 'mode',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.DemoClassScalarFieldEnum = {
-  id: 'id',
-  tuitionPostId: 'tuitionPostId',
-  teacherId: 'teacherId',
-  studentId: 'studentId',
-  assignedId: 'assignedId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -337,7 +329,6 @@ exports.Prisma.ModelName = {
   ClassSchedule: 'ClassSchedule',
   ClassScheduleSubject: 'ClassScheduleSubject',
   ClassScheduleOverride: 'ClassScheduleOverride',
-  DemoClass: 'DemoClass',
   Lookup: 'Lookup',
   RolePermission: 'RolePermission',
   StudentProfile: 'StudentProfile',

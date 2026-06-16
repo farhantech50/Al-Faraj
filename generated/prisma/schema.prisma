@@ -6,6 +6,9 @@ model Assigned {
   studentId     Int
   assignedBy    Int
 
+  isDemo      Boolean @default(true)
+  isConfirmed Boolean @default(false)
+
   startDate DateTime  @default(now())
   endDate   DateTime?
 
@@ -16,8 +19,6 @@ model Assigned {
 
   teacher User @relation("TeacherAssignments", fields: [teacherId], references: [id])
   student User @relation("StudentAssignments", fields: [studentId], references: [id])
-
-  demoClass DemoClass?
 
   classSchedule ClassSchedule? @relation("AssignedClassSchedule")
 
@@ -113,28 +114,6 @@ model ClassScheduleOverride {
   classSchedule ClassSchedule @relation(fields: [classScheduleId], references: [id], onDelete: Cascade)
 
   @@map("class_schedule_overrides")
-}
-
-model DemoClass {
-  id Int @id @default(autoincrement())
-
-  tuitionPostId Int
-  teacherId     Int
-  studentId     Int
-
-  assignedId Int? @unique
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  tuitionPost TuitionPost @relation(fields: [tuitionPostId], references: [id], onDelete: Cascade)
-
-  teacher User @relation("TeacherDemoClasses", fields: [teacherId], references: [id])
-  student User @relation("StudentDemoClasses", fields: [studentId], references: [id])
-
-  assigned Assigned? @relation(fields: [assignedId], references: [id])
-
-  @@map("demo_classes")
 }
 
 enum Role {
@@ -262,7 +241,6 @@ model TuitionPost {
 
   applications TuitionApplication[]
   assigned     Assigned[]
-  demoClasses  DemoClass[]
 
   @@map("tuition_posts")
 }
@@ -327,9 +305,6 @@ model User {
 
   teacherAssignments Assigned[] @relation("TeacherAssignments")
   studentAssignments Assigned[] @relation("StudentAssignments")
-
-  teacherDemoClasses DemoClass[] @relation("TeacherDemoClasses")
-  studentDemoClasses DemoClass[] @relation("StudentDemoClasses")
 
   teacherHomework Assignment[] @relation("TeacherHomework")
   studentHomework Assignment[] @relation("StudentHomework")

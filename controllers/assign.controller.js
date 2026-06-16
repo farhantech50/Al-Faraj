@@ -7,9 +7,6 @@ export const createAssigned = async (req, res) => {
 
     const tuitionPost = await prisma.tuitionPost.findUnique({
       where: { id: Number(tuitionPostId) },
-      include: {
-        subjects: true,
-      },
     });
 
     if (!tuitionPost) {
@@ -28,12 +25,20 @@ export const createAssigned = async (req, res) => {
       return res.status(404).json({ error: "Teacher not found" });
     }
 
-    const application = await prisma.tuitionApplication.findFirst({
+    const application = await prisma.tuitionApplication.findUnique({
       where: {
-        tuitionPostId: Number(tuitionPostId),
-        teacherId: Number(teacherId),
+        tuitionPostId_teacherId: {
+          tuitionPostId: Number(tuitionPostId),
+          teacherId: Number(teacherId),
+        },
       },
     });
+
+    if (!application) {
+      return res.status(404).json({
+        error: "Teacher application not found",
+      });
+    }
 
     const [assignment, schedule] = await prisma.$transaction(async (tx) => {
       const assignment = await tx.assigned.create({
@@ -42,7 +47,11 @@ export const createAssigned = async (req, res) => {
           teacherId: Number(teacherId),
           studentId: tuitionPost.postedBy,
           assignedBy,
-          startDate: new Date(startDate),
+
+          isDemo: true,
+          isConfirmed: false,
+
+          startDate: startDate ? new Date(startDate) : undefined,
           endDate: endDate ? new Date(endDate) : null,
         },
       });
@@ -52,15 +61,18 @@ export const createAssigned = async (req, res) => {
           assignedId: assignment.id,
           teacherId: Number(teacherId),
           studentId: tuitionPost.postedBy,
+
           days: tuitionPost.days,
           startTime: tuitionPost.startTime,
           endTime: tuitionPost.endTime,
-          medium: tuitionPost.mode,
+          mode: tuitionPost.mode,
         },
       });
 
       await tx.tuitionPost.update({
-        where: { id: Number(tuitionPostId) },
+        where: {
+          id: Number(tuitionPostId),
+        },
         data: {
           statusId: 4,
         },
@@ -69,22 +81,23 @@ export const createAssigned = async (req, res) => {
       await tx.tuitionApplication.updateMany({
         where: {
           tuitionPostId: Number(tuitionPostId),
+          teacherId: {
+            not: Number(teacherId),
+          },
         },
         data: {
           statusId: 18,
         },
       });
 
-      if (application) {
-        await tx.tuitionApplication.update({
-          where: {
-            id: application.id,
-          },
-          data: {
-            statusId: 16,
-          },
-        });
-      }
+      await tx.tuitionApplication.update({
+        where: {
+          id: application.id,
+        },
+        data: {
+          statusId: 16,
+        },
+      });
 
       return [assignment, schedule];
     });
@@ -94,8 +107,10 @@ export const createAssigned = async (req, res) => {
       schedule,
     });
   } catch (error) {
-    console.log("Error in createAssignment", error);
-    return res.status(500).json({ error: "Internal server error" });
+    console.log("Error in createAssigned", error);
+    return res.status(500).json({
+      error: "Internal server error",
+    });
   }
 };
 export const deleteAssignment = async (req, res) => {
@@ -242,5 +257,83 @@ export const getTeacherAssignments = async (req, res) => {
   } catch (error) {
     console.log("Error in getTeacherAssignments", error);
     return res.status(500).json({ error: "Internal server error" });
+  }
+};
+export const getAssignedPostDetailsById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const tuitionPost = await prisma.tuitionPost.findUnique({
+      where: {
+        id: Number(id),
+      },
+      include: {
+        area: {
+          select: {
+            id: true,
+            value: true,
+          },
+        },
+
+        status: {
+          select: {
+            id: true,
+            value: true,
+          },
+        },
+
+        subjects: {
+          select: {
+            subject: {
+              select: {
+                id: true,
+                value: true,
+              },
+            },
+          },
+        },
+
+        assigned: {
+          select: {
+            id: true,
+
+            teacher: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                contact: true,
+                address: true,
+              },
+            },
+
+            student: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                contact: true,
+                address: true,
+              },
+            },
+            startDate: true,
+            endDate: true,
+          },
+        },
+      },
+    });
+
+    if (!tuitionPost) {
+      return res.status(404).json({
+        error: "Tuition post not found",
+      });
+    }
+
+    return res.status(200).json(tuitionPost);
+  } catch (error) {
+    console.log("Error in getTuitionPostDetails", error);
+    return res.status(500).json({
+      error: "Internal server error",
+    });
   }
 };

@@ -75,14 +75,6 @@ export const createScheduleOverride = async (req, res) => {
         },
       },
     });
-    // if (existing) {
-    //   await prisma.classScheduleOverride.update({
-    //     where: { id: existing.id },
-    //     data: {
-    //       newDate: newDateObj,
-    //     },
-    //   });
-    // }
     if (existing) {
       return res
         .status(400)
@@ -110,7 +102,8 @@ export const createScheduleOverride = async (req, res) => {
 export const getTeacherSchedule = async (req, res) => {
   try {
     const { startDate, endDate, teacherId } = req.query;
-    const teacherIdInt = parseInt(teacherId);
+
+    const teacherIdInt = teacherId ? parseInt(teacherId) : req.user.id;
 
     if (!startDate || !endDate) {
       return res
@@ -130,13 +123,28 @@ export const getTeacherSchedule = async (req, res) => {
 
     const schedules = await prisma.classSchedule.findMany({
       where: { teacherId: teacherIdInt },
+      include: {
+        assignment: {
+          include: {
+            tuitionPost: {
+              select: {
+                area: { select: { id: true, value: true } },
+                subjects: {
+                  select: {
+                    subject: { select: { id: true, value: true } },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     });
 
     if (schedules.length === 0) {
       return res.status(200).json([]);
     }
 
-    // Generate week range
     const weekDates = [];
     const current = new Date(startDate);
     const end = new Date(endDate);
@@ -149,46 +157,17 @@ export const getTeacherSchedule = async (req, res) => {
       current.setDate(current.getDate() + 1);
     }
 
-    const overrides = await prisma.classScheduleOverride.findMany({
-      where: {
-        classScheduleId: { in: schedules.map((s) => s.id) },
-      },
-    });
-
-    const assignmentIds = [...new Set(schedules.map((s) => s.assignmentId))];
     const studentIds = [...new Set(schedules.map((s) => s.studentId))];
 
-    const [assignments, students] = await Promise.all([
-      prisma.assignedTeacherStudent.findMany({
-        where: { id: { in: assignmentIds } },
-        include: { tuitionPost: { select: { area: true, subjects: true } } },
-      }),
-      prisma.user.findMany({
-        where: { id: { in: studentIds } },
-        select: { id: true, name: true, email: true, contact: true },
-      }),
-    ]);
-
-    const areaIds = [
-      ...new Set(assignments.map((a) => a.tuitionPost?.area).filter(Boolean)),
-    ];
-
-    const subjectIdList = [
-      ...new Set(assignments.flatMap((a) => a.tuitionPost?.subjects || [])),
-    ];
-
-    const [areas, subjects] = await Promise.all([
-      prisma.lookup.findMany({
-        where: { id: { in: areaIds } },
-        select: { id: true, value: true },
-      }),
-      prisma.lookup.findMany({
-        where: { id: { in: subjectIdList } },
-        select: { id: true, value: true },
-      }),
-    ]);
-
-    const normalize = (d) => new Date(d).toISOString().split("T")[0];
+    const students = await prisma.user.findMany({
+      where: { id: { in: studentIds } },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        contact: true,
+      },
+    });
 
     const result = [];
 
@@ -196,60 +175,23 @@ export const getTeacherSchedule = async (req, res) => {
       const classes = [];
 
       for (const schedule of schedules) {
-        const assignment = assignments.find(
-          (a) => a.id === schedule.assignmentId,
-        );
+        if (!schedule.days.includes(day)) continue;
 
         const student = students.find((s) => s.id === schedule.studentId);
+        const area = schedule.assignment?.tuitionPost?.area || null;
+        const subjects =
+          schedule.assignment?.tuitionPost?.subjects.map((s) => s.subject) ||
+          [];
 
-        const areaObj = areas.find(
-          (a) => a.id === assignment?.tuitionPost?.area,
-        );
-
-        const postSubjects = (assignment?.tuitionPost?.subjects || [])
-          .map((id) => subjects.find((s) => s.id === id))
-          .filter(Boolean);
-
-        const movedHere = overrides.find(
-          (o) =>
-            o.classScheduleId === schedule.id && normalize(o.newDate) === date,
-        );
-
-        if (movedHere) {
-          classes.push({
-            scheduleId: schedule.id,
-            area: areaObj ?? null,
-            subjects: postSubjects,
-            student,
-            startTime: movedHere.startTime,
-            endTime: movedHere.endTime,
-            medium: movedHere.medium,
-            isOverride: true,
-            originalDate: movedHere.originalDate,
-          });
-          continue;
-        }
-
-        const movedAway = overrides.find(
-          (o) =>
-            o.classScheduleId === schedule.id &&
-            normalize(o.originalDate) === date,
-        );
-
-        if (movedAway) continue;
-
-        if (schedule.days.includes(day)) {
-          classes.push({
-            scheduleId: schedule.id,
-            area: areaObj ?? null,
-            subjects: postSubjects,
-            student,
-            startTime: schedule.startTime,
-            endTime: schedule.endTime,
-            medium: schedule.medium,
-            isOverride: false,
-          });
-        }
+        classes.push({
+          scheduleId: schedule.id,
+          area,
+          subjects,
+          student,
+          startTime: schedule.startTime,
+          endTime: schedule.endTime,
+          medium: schedule.medium,
+        });
       }
 
       result.push({ date, day, classes });
@@ -261,6 +203,7 @@ export const getTeacherSchedule = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 export const getStudentSchedule = async (req, res) => {
   try {
     const { startDate, endDate, studentId } = req.query;
@@ -302,41 +245,33 @@ export const getStudentSchedule = async (req, res) => {
       current.setDate(current.getDate() + 1);
     }
 
-    const overrides = await prisma.classScheduleOverride.findMany({
-      where: {
-        classScheduleId: { in: schedules.map((s) => s.id) },
-      },
-    });
-
-    const assignmentIds = [...new Set(schedules.map((s) => s.assignmentId))];
+    const assignmentIds = [...new Set(schedules.map((s) => s.assignedId))];
     const teacherIds = [...new Set(schedules.map((s) => s.teacherId))];
 
     const [assignments, teachers] = await Promise.all([
-      prisma.assignedTeacherStudent.findMany({
+      prisma.assigned.findMany({
         where: { id: { in: assignmentIds } },
-        include: { tuitionPost: { select: { area: true, subjects: true } } },
+        include: {
+          tuitionPost: {
+            include: {
+              area: { select: { id: true, value: true } },
+              subjects: {
+                include: {
+                  subject: { select: { id: true, value: true } },
+                },
+              },
+            },
+          },
+        },
       }),
       prisma.user.findMany({
         where: { id: { in: teacherIds } },
-        select: { id: true, name: true, email: true, contact: true },
-      }),
-    ]);
-
-    const areaIds = [
-      ...new Set(assignments.map((a) => a.tuitionPost?.area).filter(Boolean)),
-    ];
-    const subjectIdList = [
-      ...new Set(assignments.flatMap((a) => a.tuitionPost?.subjects || [])),
-    ];
-
-    const [areas, subjects] = await Promise.all([
-      prisma.lookup.findMany({
-        where: { id: { in: areaIds } },
-        select: { id: true, value: true },
-      }),
-      prisma.lookup.findMany({
-        where: { id: { in: subjectIdList } },
-        select: { id: true, value: true },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          contact: true,
+        },
       }),
     ]);
 
@@ -346,56 +281,26 @@ export const getStudentSchedule = async (req, res) => {
       const classes = [];
 
       for (const schedule of schedules) {
+        if (!schedule.days.includes(day)) continue;
+
         const assignment = assignments.find(
-          (a) => a.id === schedule.assignmentId,
+          (a) => a.id === schedule.assignedId,
         );
         const teacher = teachers.find((t) => t.id === schedule.teacherId);
-        const areaObj = areas.find(
-          (a) => a.id === assignment?.tuitionPost?.area,
-        );
-        const postSubjects = (assignment?.tuitionPost?.subjects || [])
-          .map((id) => subjects.find((s) => s.id === id))
-          .filter(Boolean);
-
-        // Check if this date was moved away
-        const movedAway = overrides.find(
-          (o) => o.classScheduleId === schedule.id && o.originalDate === date,
+        const area = assignment?.tuitionPost?.area || null;
+        const subjects = (assignment?.tuitionPost?.subjects || []).map(
+          (s) => s.subject,
         );
 
-        if (movedAway) continue;
-
-        // Check if a class was moved TO this date
-        const movedHere = overrides.find(
-          (o) => o.classScheduleId === schedule.id && o.newDate === date,
-        );
-
-        if (movedHere) {
-          classes.push({
-            scheduleId: schedule.id,
-            area: areaObj ?? null,
-            subjects: postSubjects,
-            teacher,
-            startTime: movedHere.startTime,
-            endTime: movedHere.endTime,
-            medium: movedHere.medium,
-            isOverride: true,
-          });
-          continue;
-        }
-
-        // Normal recurring class
-        if (schedule.days.includes(day)) {
-          classes.push({
-            scheduleId: schedule.id,
-            area: areaObj ?? null,
-            subjects: postSubjects,
-            teacher,
-            startTime: schedule.startTime,
-            endTime: schedule.endTime,
-            medium: schedule.medium,
-            isOverride: false,
-          });
-        }
+        classes.push({
+          scheduleId: schedule.id,
+          area,
+          subjects,
+          teacher,
+          startTime: schedule.startTime,
+          endTime: schedule.endTime,
+          medium: schedule.medium,
+        });
       }
 
       result.push({ date, day, classes });

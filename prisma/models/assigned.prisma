@@ -6,6 +6,9 @@ model Assigned {
   studentId     Int
   assignedBy    Int
 
+  isDemo        Boolean @default(true)
+  isConfirmed   Boolean @default(false)
+
   startDate     DateTime @default(now())
   endDate       DateTime?
 
@@ -17,9 +20,7 @@ model Assigned {
   teacher       User @relation("TeacherAssignments", fields: [teacherId], references: [id])
   student       User @relation("StudentAssignments", fields: [studentId], references: [id])
 
-  demoClass     DemoClass?
-
-  classSchedule ClassSchedule? @relation("AssignedClassSchedule")  
+  classSchedule ClassSchedule? @relation("AssignedClassSchedule")
 
   @@map("assigned_teacher_students")
 }

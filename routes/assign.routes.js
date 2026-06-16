@@ -2,6 +2,7 @@ import express from "express";
 import {
   createAssigned,
   deleteAssignment,
+  getAssignedPostDetailsById,
   getStudentAssignments,
 } from "../controllers/assign.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
@@ -51,6 +52,15 @@ router.get(
   (req, res, next) => {
     /* #swagger.tags = ['Assign'] */
     getStudentAssignments(req, res, next);
+  },
+);
+router.get(
+  "/post/:id",
+  protect,
+  authorizeRoles("admin", "moderator", "student", "teacher"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Assign'] */
+    getAssignedPostDetailsById(req, res, next);
   },
 );
 

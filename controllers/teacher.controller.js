@@ -355,7 +355,7 @@ export const findTeacherApplicationStatusCounts = async (req, res) => {
   try {
     const teacherId = req.user.id;
 
-    const [totalData, pending, shortlisted, demo, approved, rejected] =
+    const [totalData, pending, shortlisted, demo, assigned, rejected] =
       await Promise.all([
         prisma.tuitionApplication.count({
           where: { teacherId },
@@ -388,7 +388,7 @@ export const findTeacherApplicationStatusCounts = async (req, res) => {
         { id: 14, value: "Pending", count: pending },
         { id: 15, value: "Shortlisted", count: shortlisted },
         { id: 16, value: "Demo", count: demo },
-        { id: 17, value: "Approved", count: approved },
+        { id: 17, value: "Assigned", count: assigned },
         { id: 18, value: "Rejected", count: rejected },
       ],
     });

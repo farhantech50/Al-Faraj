@@ -28,7 +28,6 @@ model TuitionPost {
 
   applications TuitionApplication[]
   assigned     Assigned[]
-  demoClasses  DemoClass[]
 
   @@map("tuition_posts")
 }

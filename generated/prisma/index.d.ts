@@ -39,11 +39,6 @@ export type ClassScheduleSubject = $Result.DefaultSelection<Prisma.$ClassSchedul
  */
 export type ClassScheduleOverride = $Result.DefaultSelection<Prisma.$ClassScheduleOverridePayload>
 /**
- * Model DemoClass
- * 
- */
-export type DemoClass = $Result.DefaultSelection<Prisma.$DemoClassPayload>
-/**
  * Model Lookup
  * 
  */
@@ -320,16 +315,6 @@ export class PrismaClient<
     * ```
     */
   get classScheduleOverride(): Prisma.ClassScheduleOverrideDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.demoClass`: Exposes CRUD operations for the **DemoClass** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more DemoClasses
-    * const demoClasses = await prisma.demoClass.findMany()
-    * ```
-    */
-  get demoClass(): Prisma.DemoClassDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.lookup`: Exposes CRUD operations for the **Lookup** model.
@@ -859,7 +844,6 @@ export namespace Prisma {
     ClassSchedule: 'ClassSchedule',
     ClassScheduleSubject: 'ClassScheduleSubject',
     ClassScheduleOverride: 'ClassScheduleOverride',
-    DemoClass: 'DemoClass',
     Lookup: 'Lookup',
     RolePermission: 'RolePermission',
     StudentProfile: 'StudentProfile',
@@ -884,7 +868,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "assigned" | "assignment" | "classSchedule" | "classScheduleSubject" | "classScheduleOverride" | "demoClass" | "lookup" | "rolePermission" | "studentProfile" | "teacherProfile" | "tuitionPost" | "tuitionApplication" | "tuitionPostSubject" | "user" | "refreshToken"
+      modelProps: "assigned" | "assignment" | "classSchedule" | "classScheduleSubject" | "classScheduleOverride" | "lookup" | "rolePermission" | "studentProfile" | "teacherProfile" | "tuitionPost" | "tuitionApplication" | "tuitionPostSubject" | "user" | "refreshToken"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1255,80 +1239,6 @@ export namespace Prisma {
           count: {
             args: Prisma.ClassScheduleOverrideCountArgs<ExtArgs>
             result: $Utils.Optional<ClassScheduleOverrideCountAggregateOutputType> | number
-          }
-        }
-      }
-      DemoClass: {
-        payload: Prisma.$DemoClassPayload<ExtArgs>
-        fields: Prisma.DemoClassFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.DemoClassFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DemoClassPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.DemoClassFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DemoClassPayload>
-          }
-          findFirst: {
-            args: Prisma.DemoClassFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DemoClassPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.DemoClassFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DemoClassPayload>
-          }
-          findMany: {
-            args: Prisma.DemoClassFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DemoClassPayload>[]
-          }
-          create: {
-            args: Prisma.DemoClassCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DemoClassPayload>
-          }
-          createMany: {
-            args: Prisma.DemoClassCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.DemoClassCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DemoClassPayload>[]
-          }
-          delete: {
-            args: Prisma.DemoClassDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DemoClassPayload>
-          }
-          update: {
-            args: Prisma.DemoClassUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DemoClassPayload>
-          }
-          deleteMany: {
-            args: Prisma.DemoClassDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.DemoClassUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.DemoClassUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DemoClassPayload>[]
-          }
-          upsert: {
-            args: Prisma.DemoClassUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DemoClassPayload>
-          }
-          aggregate: {
-            args: Prisma.DemoClassAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateDemoClass>
-          }
-          groupBy: {
-            args: Prisma.DemoClassGroupByArgs<ExtArgs>
-            result: $Utils.Optional<DemoClassGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.DemoClassCountArgs<ExtArgs>
-            result: $Utils.Optional<DemoClassCountAggregateOutputType> | number
           }
         }
       }
@@ -2111,7 +2021,6 @@ export namespace Prisma {
     classSchedule?: ClassScheduleOmit
     classScheduleSubject?: ClassScheduleSubjectOmit
     classScheduleOverride?: ClassScheduleOverrideOmit
-    demoClass?: DemoClassOmit
     lookup?: LookupOmit
     rolePermission?: RolePermissionOmit
     studentProfile?: StudentProfileOmit
@@ -2329,14 +2238,12 @@ export namespace Prisma {
     subjects: number
     applications: number
     assigned: number
-    demoClasses: number
   }
 
   export type TuitionPostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subjects?: boolean | TuitionPostCountOutputTypeCountSubjectsArgs
     applications?: boolean | TuitionPostCountOutputTypeCountApplicationsArgs
     assigned?: boolean | TuitionPostCountOutputTypeCountAssignedArgs
-    demoClasses?: boolean | TuitionPostCountOutputTypeCountDemoClassesArgs
   }
 
   // Custom InputTypes
@@ -2371,13 +2278,6 @@ export namespace Prisma {
     where?: AssignedWhereInput
   }
 
-  /**
-   * TuitionPostCountOutputType without action
-   */
-  export type TuitionPostCountOutputTypeCountDemoClassesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DemoClassWhereInput
-  }
-
 
   /**
    * Count Type UserCountOutputType
@@ -2389,8 +2289,6 @@ export namespace Prisma {
     applications: number
     teacherAssignments: number
     studentAssignments: number
-    teacherDemoClasses: number
-    studentDemoClasses: number
     teacherHomework: number
     studentHomework: number
     teacherSchedules: number
@@ -2403,8 +2301,6 @@ export namespace Prisma {
     applications?: boolean | UserCountOutputTypeCountApplicationsArgs
     teacherAssignments?: boolean | UserCountOutputTypeCountTeacherAssignmentsArgs
     studentAssignments?: boolean | UserCountOutputTypeCountStudentAssignmentsArgs
-    teacherDemoClasses?: boolean | UserCountOutputTypeCountTeacherDemoClassesArgs
-    studentDemoClasses?: boolean | UserCountOutputTypeCountStudentDemoClassesArgs
     teacherHomework?: boolean | UserCountOutputTypeCountTeacherHomeworkArgs
     studentHomework?: boolean | UserCountOutputTypeCountStudentHomeworkArgs
     teacherSchedules?: boolean | UserCountOutputTypeCountTeacherSchedulesArgs
@@ -2455,20 +2351,6 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountStudentAssignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AssignedWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountTeacherDemoClassesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DemoClassWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountStudentDemoClassesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DemoClassWhereInput
   }
 
   /**
@@ -2538,6 +2420,8 @@ export namespace Prisma {
     teacherId: number | null
     studentId: number | null
     assignedBy: number | null
+    isDemo: boolean | null
+    isConfirmed: boolean | null
     startDate: Date | null
     endDate: Date | null
     createdAt: Date | null
@@ -2550,6 +2434,8 @@ export namespace Prisma {
     teacherId: number | null
     studentId: number | null
     assignedBy: number | null
+    isDemo: boolean | null
+    isConfirmed: boolean | null
     startDate: Date | null
     endDate: Date | null
     createdAt: Date | null
@@ -2562,6 +2448,8 @@ export namespace Prisma {
     teacherId: number
     studentId: number
     assignedBy: number
+    isDemo: number
+    isConfirmed: number
     startDate: number
     endDate: number
     createdAt: number
@@ -2592,6 +2480,8 @@ export namespace Prisma {
     teacherId?: true
     studentId?: true
     assignedBy?: true
+    isDemo?: true
+    isConfirmed?: true
     startDate?: true
     endDate?: true
     createdAt?: true
@@ -2604,6 +2494,8 @@ export namespace Prisma {
     teacherId?: true
     studentId?: true
     assignedBy?: true
+    isDemo?: true
+    isConfirmed?: true
     startDate?: true
     endDate?: true
     createdAt?: true
@@ -2616,6 +2508,8 @@ export namespace Prisma {
     teacherId?: true
     studentId?: true
     assignedBy?: true
+    isDemo?: true
+    isConfirmed?: true
     startDate?: true
     endDate?: true
     createdAt?: true
@@ -2715,6 +2609,8 @@ export namespace Prisma {
     teacherId: number
     studentId: number
     assignedBy: number
+    isDemo: boolean
+    isConfirmed: boolean
     startDate: Date
     endDate: Date | null
     createdAt: Date
@@ -2746,6 +2642,8 @@ export namespace Prisma {
     teacherId?: boolean
     studentId?: boolean
     assignedBy?: boolean
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: boolean
     endDate?: boolean
     createdAt?: boolean
@@ -2753,7 +2651,6 @@ export namespace Prisma {
     tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
     teacher?: boolean | UserDefaultArgs<ExtArgs>
     student?: boolean | UserDefaultArgs<ExtArgs>
-    demoClass?: boolean | Assigned$demoClassArgs<ExtArgs>
     classSchedule?: boolean | Assigned$classScheduleArgs<ExtArgs>
   }, ExtArgs["result"]["assigned"]>
 
@@ -2763,6 +2660,8 @@ export namespace Prisma {
     teacherId?: boolean
     studentId?: boolean
     assignedBy?: boolean
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: boolean
     endDate?: boolean
     createdAt?: boolean
@@ -2778,6 +2677,8 @@ export namespace Prisma {
     teacherId?: boolean
     studentId?: boolean
     assignedBy?: boolean
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: boolean
     endDate?: boolean
     createdAt?: boolean
@@ -2793,18 +2694,19 @@ export namespace Prisma {
     teacherId?: boolean
     studentId?: boolean
     assignedBy?: boolean
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: boolean
     endDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type AssignedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tuitionPostId" | "teacherId" | "studentId" | "assignedBy" | "startDate" | "endDate" | "createdAt" | "updatedAt", ExtArgs["result"]["assigned"]>
+  export type AssignedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tuitionPostId" | "teacherId" | "studentId" | "assignedBy" | "isDemo" | "isConfirmed" | "startDate" | "endDate" | "createdAt" | "updatedAt", ExtArgs["result"]["assigned"]>
   export type AssignedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
     teacher?: boolean | UserDefaultArgs<ExtArgs>
     student?: boolean | UserDefaultArgs<ExtArgs>
-    demoClass?: boolean | Assigned$demoClassArgs<ExtArgs>
     classSchedule?: boolean | Assigned$classScheduleArgs<ExtArgs>
   }
   export type AssignedIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2824,7 +2726,6 @@ export namespace Prisma {
       tuitionPost: Prisma.$TuitionPostPayload<ExtArgs>
       teacher: Prisma.$UserPayload<ExtArgs>
       student: Prisma.$UserPayload<ExtArgs>
-      demoClass: Prisma.$DemoClassPayload<ExtArgs> | null
       classSchedule: Prisma.$ClassSchedulePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -2833,6 +2734,8 @@ export namespace Prisma {
       teacherId: number
       studentId: number
       assignedBy: number
+      isDemo: boolean
+      isConfirmed: boolean
       startDate: Date
       endDate: Date | null
       createdAt: Date
@@ -3234,7 +3137,6 @@ export namespace Prisma {
     tuitionPost<T extends TuitionPostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TuitionPostDefaultArgs<ExtArgs>>): Prisma__TuitionPostClient<$Result.GetResult<Prisma.$TuitionPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     teacher<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    demoClass<T extends Assigned$demoClassArgs<ExtArgs> = {}>(args?: Subset<T, Assigned$demoClassArgs<ExtArgs>>): Prisma__DemoClassClient<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     classSchedule<T extends Assigned$classScheduleArgs<ExtArgs> = {}>(args?: Subset<T, Assigned$classScheduleArgs<ExtArgs>>): Prisma__ClassScheduleClient<$Result.GetResult<Prisma.$ClassSchedulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3270,6 +3172,8 @@ export namespace Prisma {
     readonly teacherId: FieldRef<"Assigned", 'Int'>
     readonly studentId: FieldRef<"Assigned", 'Int'>
     readonly assignedBy: FieldRef<"Assigned", 'Int'>
+    readonly isDemo: FieldRef<"Assigned", 'Boolean'>
+    readonly isConfirmed: FieldRef<"Assigned", 'Boolean'>
     readonly startDate: FieldRef<"Assigned", 'DateTime'>
     readonly endDate: FieldRef<"Assigned", 'DateTime'>
     readonly createdAt: FieldRef<"Assigned", 'DateTime'>
@@ -3672,25 +3576,6 @@ export namespace Prisma {
      * Limit how many Assigneds to delete.
      */
     limit?: number
-  }
-
-  /**
-   * Assigned.demoClass
-   */
-  export type Assigned$demoClassArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    where?: DemoClassWhereInput
   }
 
   /**
@@ -8534,1188 +8419,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ClassScheduleOverrideInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model DemoClass
-   */
-
-  export type AggregateDemoClass = {
-    _count: DemoClassCountAggregateOutputType | null
-    _avg: DemoClassAvgAggregateOutputType | null
-    _sum: DemoClassSumAggregateOutputType | null
-    _min: DemoClassMinAggregateOutputType | null
-    _max: DemoClassMaxAggregateOutputType | null
-  }
-
-  export type DemoClassAvgAggregateOutputType = {
-    id: number | null
-    tuitionPostId: number | null
-    teacherId: number | null
-    studentId: number | null
-    assignedId: number | null
-  }
-
-  export type DemoClassSumAggregateOutputType = {
-    id: number | null
-    tuitionPostId: number | null
-    teacherId: number | null
-    studentId: number | null
-    assignedId: number | null
-  }
-
-  export type DemoClassMinAggregateOutputType = {
-    id: number | null
-    tuitionPostId: number | null
-    teacherId: number | null
-    studentId: number | null
-    assignedId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type DemoClassMaxAggregateOutputType = {
-    id: number | null
-    tuitionPostId: number | null
-    teacherId: number | null
-    studentId: number | null
-    assignedId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type DemoClassCountAggregateOutputType = {
-    id: number
-    tuitionPostId: number
-    teacherId: number
-    studentId: number
-    assignedId: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type DemoClassAvgAggregateInputType = {
-    id?: true
-    tuitionPostId?: true
-    teacherId?: true
-    studentId?: true
-    assignedId?: true
-  }
-
-  export type DemoClassSumAggregateInputType = {
-    id?: true
-    tuitionPostId?: true
-    teacherId?: true
-    studentId?: true
-    assignedId?: true
-  }
-
-  export type DemoClassMinAggregateInputType = {
-    id?: true
-    tuitionPostId?: true
-    teacherId?: true
-    studentId?: true
-    assignedId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type DemoClassMaxAggregateInputType = {
-    id?: true
-    tuitionPostId?: true
-    teacherId?: true
-    studentId?: true
-    assignedId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type DemoClassCountAggregateInputType = {
-    id?: true
-    tuitionPostId?: true
-    teacherId?: true
-    studentId?: true
-    assignedId?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type DemoClassAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which DemoClass to aggregate.
-     */
-    where?: DemoClassWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of DemoClasses to fetch.
-     */
-    orderBy?: DemoClassOrderByWithRelationInput | DemoClassOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: DemoClassWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` DemoClasses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` DemoClasses.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned DemoClasses
-    **/
-    _count?: true | DemoClassCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: DemoClassAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: DemoClassSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: DemoClassMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: DemoClassMaxAggregateInputType
-  }
-
-  export type GetDemoClassAggregateType<T extends DemoClassAggregateArgs> = {
-        [P in keyof T & keyof AggregateDemoClass]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateDemoClass[P]>
-      : GetScalarType<T[P], AggregateDemoClass[P]>
-  }
-
-
-
-
-  export type DemoClassGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DemoClassWhereInput
-    orderBy?: DemoClassOrderByWithAggregationInput | DemoClassOrderByWithAggregationInput[]
-    by: DemoClassScalarFieldEnum[] | DemoClassScalarFieldEnum
-    having?: DemoClassScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: DemoClassCountAggregateInputType | true
-    _avg?: DemoClassAvgAggregateInputType
-    _sum?: DemoClassSumAggregateInputType
-    _min?: DemoClassMinAggregateInputType
-    _max?: DemoClassMaxAggregateInputType
-  }
-
-  export type DemoClassGroupByOutputType = {
-    id: number
-    tuitionPostId: number
-    teacherId: number
-    studentId: number
-    assignedId: number | null
-    createdAt: Date
-    updatedAt: Date
-    _count: DemoClassCountAggregateOutputType | null
-    _avg: DemoClassAvgAggregateOutputType | null
-    _sum: DemoClassSumAggregateOutputType | null
-    _min: DemoClassMinAggregateOutputType | null
-    _max: DemoClassMaxAggregateOutputType | null
-  }
-
-  type GetDemoClassGroupByPayload<T extends DemoClassGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<DemoClassGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof DemoClassGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], DemoClassGroupByOutputType[P]>
-            : GetScalarType<T[P], DemoClassGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type DemoClassSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    tuitionPostId?: boolean
-    teacherId?: boolean
-    studentId?: boolean
-    assignedId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
-    student?: boolean | UserDefaultArgs<ExtArgs>
-    assigned?: boolean | DemoClass$assignedArgs<ExtArgs>
-  }, ExtArgs["result"]["demoClass"]>
-
-  export type DemoClassSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    tuitionPostId?: boolean
-    teacherId?: boolean
-    studentId?: boolean
-    assignedId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
-    student?: boolean | UserDefaultArgs<ExtArgs>
-    assigned?: boolean | DemoClass$assignedArgs<ExtArgs>
-  }, ExtArgs["result"]["demoClass"]>
-
-  export type DemoClassSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    tuitionPostId?: boolean
-    teacherId?: boolean
-    studentId?: boolean
-    assignedId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
-    student?: boolean | UserDefaultArgs<ExtArgs>
-    assigned?: boolean | DemoClass$assignedArgs<ExtArgs>
-  }, ExtArgs["result"]["demoClass"]>
-
-  export type DemoClassSelectScalar = {
-    id?: boolean
-    tuitionPostId?: boolean
-    teacherId?: boolean
-    studentId?: boolean
-    assignedId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type DemoClassOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tuitionPostId" | "teacherId" | "studentId" | "assignedId" | "createdAt" | "updatedAt", ExtArgs["result"]["demoClass"]>
-  export type DemoClassInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
-    student?: boolean | UserDefaultArgs<ExtArgs>
-    assigned?: boolean | DemoClass$assignedArgs<ExtArgs>
-  }
-  export type DemoClassIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
-    student?: boolean | UserDefaultArgs<ExtArgs>
-    assigned?: boolean | DemoClass$assignedArgs<ExtArgs>
-  }
-  export type DemoClassIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
-    teacher?: boolean | UserDefaultArgs<ExtArgs>
-    student?: boolean | UserDefaultArgs<ExtArgs>
-    assigned?: boolean | DemoClass$assignedArgs<ExtArgs>
-  }
-
-  export type $DemoClassPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "DemoClass"
-    objects: {
-      tuitionPost: Prisma.$TuitionPostPayload<ExtArgs>
-      teacher: Prisma.$UserPayload<ExtArgs>
-      student: Prisma.$UserPayload<ExtArgs>
-      assigned: Prisma.$AssignedPayload<ExtArgs> | null
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      tuitionPostId: number
-      teacherId: number
-      studentId: number
-      assignedId: number | null
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["demoClass"]>
-    composites: {}
-  }
-
-  type DemoClassGetPayload<S extends boolean | null | undefined | DemoClassDefaultArgs> = $Result.GetResult<Prisma.$DemoClassPayload, S>
-
-  type DemoClassCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<DemoClassFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: DemoClassCountAggregateInputType | true
-    }
-
-  export interface DemoClassDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DemoClass'], meta: { name: 'DemoClass' } }
-    /**
-     * Find zero or one DemoClass that matches the filter.
-     * @param {DemoClassFindUniqueArgs} args - Arguments to find a DemoClass
-     * @example
-     * // Get one DemoClass
-     * const demoClass = await prisma.demoClass.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends DemoClassFindUniqueArgs>(args: SelectSubset<T, DemoClassFindUniqueArgs<ExtArgs>>): Prisma__DemoClassClient<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one DemoClass that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {DemoClassFindUniqueOrThrowArgs} args - Arguments to find a DemoClass
-     * @example
-     * // Get one DemoClass
-     * const demoClass = await prisma.demoClass.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends DemoClassFindUniqueOrThrowArgs>(args: SelectSubset<T, DemoClassFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DemoClassClient<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first DemoClass that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DemoClassFindFirstArgs} args - Arguments to find a DemoClass
-     * @example
-     * // Get one DemoClass
-     * const demoClass = await prisma.demoClass.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends DemoClassFindFirstArgs>(args?: SelectSubset<T, DemoClassFindFirstArgs<ExtArgs>>): Prisma__DemoClassClient<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first DemoClass that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DemoClassFindFirstOrThrowArgs} args - Arguments to find a DemoClass
-     * @example
-     * // Get one DemoClass
-     * const demoClass = await prisma.demoClass.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends DemoClassFindFirstOrThrowArgs>(args?: SelectSubset<T, DemoClassFindFirstOrThrowArgs<ExtArgs>>): Prisma__DemoClassClient<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more DemoClasses that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DemoClassFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all DemoClasses
-     * const demoClasses = await prisma.demoClass.findMany()
-     * 
-     * // Get first 10 DemoClasses
-     * const demoClasses = await prisma.demoClass.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const demoClassWithIdOnly = await prisma.demoClass.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends DemoClassFindManyArgs>(args?: SelectSubset<T, DemoClassFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a DemoClass.
-     * @param {DemoClassCreateArgs} args - Arguments to create a DemoClass.
-     * @example
-     * // Create one DemoClass
-     * const DemoClass = await prisma.demoClass.create({
-     *   data: {
-     *     // ... data to create a DemoClass
-     *   }
-     * })
-     * 
-     */
-    create<T extends DemoClassCreateArgs>(args: SelectSubset<T, DemoClassCreateArgs<ExtArgs>>): Prisma__DemoClassClient<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many DemoClasses.
-     * @param {DemoClassCreateManyArgs} args - Arguments to create many DemoClasses.
-     * @example
-     * // Create many DemoClasses
-     * const demoClass = await prisma.demoClass.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends DemoClassCreateManyArgs>(args?: SelectSubset<T, DemoClassCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many DemoClasses and returns the data saved in the database.
-     * @param {DemoClassCreateManyAndReturnArgs} args - Arguments to create many DemoClasses.
-     * @example
-     * // Create many DemoClasses
-     * const demoClass = await prisma.demoClass.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many DemoClasses and only return the `id`
-     * const demoClassWithIdOnly = await prisma.demoClass.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends DemoClassCreateManyAndReturnArgs>(args?: SelectSubset<T, DemoClassCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a DemoClass.
-     * @param {DemoClassDeleteArgs} args - Arguments to delete one DemoClass.
-     * @example
-     * // Delete one DemoClass
-     * const DemoClass = await prisma.demoClass.delete({
-     *   where: {
-     *     // ... filter to delete one DemoClass
-     *   }
-     * })
-     * 
-     */
-    delete<T extends DemoClassDeleteArgs>(args: SelectSubset<T, DemoClassDeleteArgs<ExtArgs>>): Prisma__DemoClassClient<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one DemoClass.
-     * @param {DemoClassUpdateArgs} args - Arguments to update one DemoClass.
-     * @example
-     * // Update one DemoClass
-     * const demoClass = await prisma.demoClass.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends DemoClassUpdateArgs>(args: SelectSubset<T, DemoClassUpdateArgs<ExtArgs>>): Prisma__DemoClassClient<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more DemoClasses.
-     * @param {DemoClassDeleteManyArgs} args - Arguments to filter DemoClasses to delete.
-     * @example
-     * // Delete a few DemoClasses
-     * const { count } = await prisma.demoClass.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends DemoClassDeleteManyArgs>(args?: SelectSubset<T, DemoClassDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more DemoClasses.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DemoClassUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many DemoClasses
-     * const demoClass = await prisma.demoClass.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends DemoClassUpdateManyArgs>(args: SelectSubset<T, DemoClassUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more DemoClasses and returns the data updated in the database.
-     * @param {DemoClassUpdateManyAndReturnArgs} args - Arguments to update many DemoClasses.
-     * @example
-     * // Update many DemoClasses
-     * const demoClass = await prisma.demoClass.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more DemoClasses and only return the `id`
-     * const demoClassWithIdOnly = await prisma.demoClass.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends DemoClassUpdateManyAndReturnArgs>(args: SelectSubset<T, DemoClassUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one DemoClass.
-     * @param {DemoClassUpsertArgs} args - Arguments to update or create a DemoClass.
-     * @example
-     * // Update or create a DemoClass
-     * const demoClass = await prisma.demoClass.upsert({
-     *   create: {
-     *     // ... data to create a DemoClass
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the DemoClass we want to update
-     *   }
-     * })
-     */
-    upsert<T extends DemoClassUpsertArgs>(args: SelectSubset<T, DemoClassUpsertArgs<ExtArgs>>): Prisma__DemoClassClient<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of DemoClasses.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DemoClassCountArgs} args - Arguments to filter DemoClasses to count.
-     * @example
-     * // Count the number of DemoClasses
-     * const count = await prisma.demoClass.count({
-     *   where: {
-     *     // ... the filter for the DemoClasses we want to count
-     *   }
-     * })
-    **/
-    count<T extends DemoClassCountArgs>(
-      args?: Subset<T, DemoClassCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], DemoClassCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a DemoClass.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DemoClassAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends DemoClassAggregateArgs>(args: Subset<T, DemoClassAggregateArgs>): Prisma.PrismaPromise<GetDemoClassAggregateType<T>>
-
-    /**
-     * Group by DemoClass.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DemoClassGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends DemoClassGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: DemoClassGroupByArgs['orderBy'] }
-        : { orderBy?: DemoClassGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, DemoClassGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDemoClassGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the DemoClass model
-   */
-  readonly fields: DemoClassFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for DemoClass.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__DemoClassClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    tuitionPost<T extends TuitionPostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TuitionPostDefaultArgs<ExtArgs>>): Prisma__TuitionPostClient<$Result.GetResult<Prisma.$TuitionPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    teacher<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    assigned<T extends DemoClass$assignedArgs<ExtArgs> = {}>(args?: Subset<T, DemoClass$assignedArgs<ExtArgs>>): Prisma__AssignedClient<$Result.GetResult<Prisma.$AssignedPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the DemoClass model
-   */
-  interface DemoClassFieldRefs {
-    readonly id: FieldRef<"DemoClass", 'Int'>
-    readonly tuitionPostId: FieldRef<"DemoClass", 'Int'>
-    readonly teacherId: FieldRef<"DemoClass", 'Int'>
-    readonly studentId: FieldRef<"DemoClass", 'Int'>
-    readonly assignedId: FieldRef<"DemoClass", 'Int'>
-    readonly createdAt: FieldRef<"DemoClass", 'DateTime'>
-    readonly updatedAt: FieldRef<"DemoClass", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * DemoClass findUnique
-   */
-  export type DemoClassFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    /**
-     * Filter, which DemoClass to fetch.
-     */
-    where: DemoClassWhereUniqueInput
-  }
-
-  /**
-   * DemoClass findUniqueOrThrow
-   */
-  export type DemoClassFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    /**
-     * Filter, which DemoClass to fetch.
-     */
-    where: DemoClassWhereUniqueInput
-  }
-
-  /**
-   * DemoClass findFirst
-   */
-  export type DemoClassFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    /**
-     * Filter, which DemoClass to fetch.
-     */
-    where?: DemoClassWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of DemoClasses to fetch.
-     */
-    orderBy?: DemoClassOrderByWithRelationInput | DemoClassOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for DemoClasses.
-     */
-    cursor?: DemoClassWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` DemoClasses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` DemoClasses.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of DemoClasses.
-     */
-    distinct?: DemoClassScalarFieldEnum | DemoClassScalarFieldEnum[]
-  }
-
-  /**
-   * DemoClass findFirstOrThrow
-   */
-  export type DemoClassFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    /**
-     * Filter, which DemoClass to fetch.
-     */
-    where?: DemoClassWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of DemoClasses to fetch.
-     */
-    orderBy?: DemoClassOrderByWithRelationInput | DemoClassOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for DemoClasses.
-     */
-    cursor?: DemoClassWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` DemoClasses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` DemoClasses.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of DemoClasses.
-     */
-    distinct?: DemoClassScalarFieldEnum | DemoClassScalarFieldEnum[]
-  }
-
-  /**
-   * DemoClass findMany
-   */
-  export type DemoClassFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    /**
-     * Filter, which DemoClasses to fetch.
-     */
-    where?: DemoClassWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of DemoClasses to fetch.
-     */
-    orderBy?: DemoClassOrderByWithRelationInput | DemoClassOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing DemoClasses.
-     */
-    cursor?: DemoClassWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` DemoClasses from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` DemoClasses.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of DemoClasses.
-     */
-    distinct?: DemoClassScalarFieldEnum | DemoClassScalarFieldEnum[]
-  }
-
-  /**
-   * DemoClass create
-   */
-  export type DemoClassCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    /**
-     * The data needed to create a DemoClass.
-     */
-    data: XOR<DemoClassCreateInput, DemoClassUncheckedCreateInput>
-  }
-
-  /**
-   * DemoClass createMany
-   */
-  export type DemoClassCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many DemoClasses.
-     */
-    data: DemoClassCreateManyInput | DemoClassCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * DemoClass createManyAndReturn
-   */
-  export type DemoClassCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * The data used to create many DemoClasses.
-     */
-    data: DemoClassCreateManyInput | DemoClassCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * DemoClass update
-   */
-  export type DemoClassUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    /**
-     * The data needed to update a DemoClass.
-     */
-    data: XOR<DemoClassUpdateInput, DemoClassUncheckedUpdateInput>
-    /**
-     * Choose, which DemoClass to update.
-     */
-    where: DemoClassWhereUniqueInput
-  }
-
-  /**
-   * DemoClass updateMany
-   */
-  export type DemoClassUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update DemoClasses.
-     */
-    data: XOR<DemoClassUpdateManyMutationInput, DemoClassUncheckedUpdateManyInput>
-    /**
-     * Filter which DemoClasses to update
-     */
-    where?: DemoClassWhereInput
-    /**
-     * Limit how many DemoClasses to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * DemoClass updateManyAndReturn
-   */
-  export type DemoClassUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * The data used to update DemoClasses.
-     */
-    data: XOR<DemoClassUpdateManyMutationInput, DemoClassUncheckedUpdateManyInput>
-    /**
-     * Filter which DemoClasses to update
-     */
-    where?: DemoClassWhereInput
-    /**
-     * Limit how many DemoClasses to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * DemoClass upsert
-   */
-  export type DemoClassUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    /**
-     * The filter to search for the DemoClass to update in case it exists.
-     */
-    where: DemoClassWhereUniqueInput
-    /**
-     * In case the DemoClass found by the `where` argument doesn't exist, create a new DemoClass with this data.
-     */
-    create: XOR<DemoClassCreateInput, DemoClassUncheckedCreateInput>
-    /**
-     * In case the DemoClass was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<DemoClassUpdateInput, DemoClassUncheckedUpdateInput>
-  }
-
-  /**
-   * DemoClass delete
-   */
-  export type DemoClassDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    /**
-     * Filter which DemoClass to delete.
-     */
-    where: DemoClassWhereUniqueInput
-  }
-
-  /**
-   * DemoClass deleteMany
-   */
-  export type DemoClassDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which DemoClasses to delete
-     */
-    where?: DemoClassWhereInput
-    /**
-     * Limit how many DemoClasses to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * DemoClass.assigned
-   */
-  export type DemoClass$assignedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Assigned
-     */
-    select?: AssignedSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Assigned
-     */
-    omit?: AssignedOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssignedInclude<ExtArgs> | null
-    where?: AssignedWhereInput
-  }
-
-  /**
-   * DemoClass without action
-   */
-  export type DemoClassDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
   }
 
 
@@ -14632,7 +13335,6 @@ export namespace Prisma {
     subjects?: boolean | TuitionPost$subjectsArgs<ExtArgs>
     applications?: boolean | TuitionPost$applicationsArgs<ExtArgs>
     assigned?: boolean | TuitionPost$assignedArgs<ExtArgs>
-    demoClasses?: boolean | TuitionPost$demoClassesArgs<ExtArgs>
     _count?: boolean | TuitionPostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tuitionPost"]>
 
@@ -14701,7 +13403,6 @@ export namespace Prisma {
     subjects?: boolean | TuitionPost$subjectsArgs<ExtArgs>
     applications?: boolean | TuitionPost$applicationsArgs<ExtArgs>
     assigned?: boolean | TuitionPost$assignedArgs<ExtArgs>
-    demoClasses?: boolean | TuitionPost$demoClassesArgs<ExtArgs>
     _count?: boolean | TuitionPostCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TuitionPostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14724,7 +13425,6 @@ export namespace Prisma {
       subjects: Prisma.$TuitionPostSubjectPayload<ExtArgs>[]
       applications: Prisma.$TuitionApplicationPayload<ExtArgs>[]
       assigned: Prisma.$AssignedPayload<ExtArgs>[]
-      demoClasses: Prisma.$DemoClassPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -15141,7 +13841,6 @@ export namespace Prisma {
     subjects<T extends TuitionPost$subjectsArgs<ExtArgs> = {}>(args?: Subset<T, TuitionPost$subjectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TuitionPostSubjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     applications<T extends TuitionPost$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, TuitionPost$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TuitionApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     assigned<T extends TuitionPost$assignedArgs<ExtArgs> = {}>(args?: Subset<T, TuitionPost$assignedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssignedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    demoClasses<T extends TuitionPost$demoClassesArgs<ExtArgs> = {}>(args?: Subset<T, TuitionPost$demoClassesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15674,30 +14373,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AssignedScalarFieldEnum | AssignedScalarFieldEnum[]
-  }
-
-  /**
-   * TuitionPost.demoClasses
-   */
-  export type TuitionPost$demoClassesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    where?: DemoClassWhereInput
-    orderBy?: DemoClassOrderByWithRelationInput | DemoClassOrderByWithRelationInput[]
-    cursor?: DemoClassWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: DemoClassScalarFieldEnum | DemoClassScalarFieldEnum[]
   }
 
   /**
@@ -18231,8 +16906,6 @@ export namespace Prisma {
     applications?: boolean | User$applicationsArgs<ExtArgs>
     teacherAssignments?: boolean | User$teacherAssignmentsArgs<ExtArgs>
     studentAssignments?: boolean | User$studentAssignmentsArgs<ExtArgs>
-    teacherDemoClasses?: boolean | User$teacherDemoClassesArgs<ExtArgs>
-    studentDemoClasses?: boolean | User$studentDemoClassesArgs<ExtArgs>
     teacherHomework?: boolean | User$teacherHomeworkArgs<ExtArgs>
     studentHomework?: boolean | User$studentHomeworkArgs<ExtArgs>
     teacherSchedules?: boolean | User$teacherSchedulesArgs<ExtArgs>
@@ -18294,8 +16967,6 @@ export namespace Prisma {
     applications?: boolean | User$applicationsArgs<ExtArgs>
     teacherAssignments?: boolean | User$teacherAssignmentsArgs<ExtArgs>
     studentAssignments?: boolean | User$studentAssignmentsArgs<ExtArgs>
-    teacherDemoClasses?: boolean | User$teacherDemoClassesArgs<ExtArgs>
-    studentDemoClasses?: boolean | User$studentDemoClassesArgs<ExtArgs>
     teacherHomework?: boolean | User$teacherHomeworkArgs<ExtArgs>
     studentHomework?: boolean | User$studentHomeworkArgs<ExtArgs>
     teacherSchedules?: boolean | User$teacherSchedulesArgs<ExtArgs>
@@ -18315,8 +16986,6 @@ export namespace Prisma {
       applications: Prisma.$TuitionApplicationPayload<ExtArgs>[]
       teacherAssignments: Prisma.$AssignedPayload<ExtArgs>[]
       studentAssignments: Prisma.$AssignedPayload<ExtArgs>[]
-      teacherDemoClasses: Prisma.$DemoClassPayload<ExtArgs>[]
-      studentDemoClasses: Prisma.$DemoClassPayload<ExtArgs>[]
       teacherHomework: Prisma.$AssignmentPayload<ExtArgs>[]
       studentHomework: Prisma.$AssignmentPayload<ExtArgs>[]
       teacherSchedules: Prisma.$ClassSchedulePayload<ExtArgs>[]
@@ -18736,8 +17405,6 @@ export namespace Prisma {
     applications<T extends User$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, User$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TuitionApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     teacherAssignments<T extends User$teacherAssignmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$teacherAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssignedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentAssignments<T extends User$studentAssignmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$studentAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssignedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    teacherDemoClasses<T extends User$teacherDemoClassesArgs<ExtArgs> = {}>(args?: Subset<T, User$teacherDemoClassesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    studentDemoClasses<T extends User$studentDemoClassesArgs<ExtArgs> = {}>(args?: Subset<T, User$studentDemoClassesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemoClassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     teacherHomework<T extends User$teacherHomeworkArgs<ExtArgs> = {}>(args?: Subset<T, User$teacherHomeworkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentHomework<T extends User$studentHomeworkArgs<ExtArgs> = {}>(args?: Subset<T, User$studentHomeworkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     teacherSchedules<T extends User$teacherSchedulesArgs<ExtArgs> = {}>(args?: Subset<T, User$teacherSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClassSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -19331,54 +17998,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AssignedScalarFieldEnum | AssignedScalarFieldEnum[]
-  }
-
-  /**
-   * User.teacherDemoClasses
-   */
-  export type User$teacherDemoClassesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    where?: DemoClassWhereInput
-    orderBy?: DemoClassOrderByWithRelationInput | DemoClassOrderByWithRelationInput[]
-    cursor?: DemoClassWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: DemoClassScalarFieldEnum | DemoClassScalarFieldEnum[]
-  }
-
-  /**
-   * User.studentDemoClasses
-   */
-  export type User$studentDemoClassesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DemoClass
-     */
-    select?: DemoClassSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DemoClass
-     */
-    omit?: DemoClassOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DemoClassInclude<ExtArgs> | null
-    where?: DemoClassWhereInput
-    orderBy?: DemoClassOrderByWithRelationInput | DemoClassOrderByWithRelationInput[]
-    cursor?: DemoClassWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: DemoClassScalarFieldEnum | DemoClassScalarFieldEnum[]
   }
 
   /**
@@ -20617,6 +19236,8 @@ export namespace Prisma {
     teacherId: 'teacherId',
     studentId: 'studentId',
     assignedBy: 'assignedBy',
+    isDemo: 'isDemo',
+    isConfirmed: 'isConfirmed',
     startDate: 'startDate',
     endDate: 'endDate',
     createdAt: 'createdAt',
@@ -20686,19 +19307,6 @@ export namespace Prisma {
   };
 
   export type ClassScheduleOverrideScalarFieldEnum = (typeof ClassScheduleOverrideScalarFieldEnum)[keyof typeof ClassScheduleOverrideScalarFieldEnum]
-
-
-  export const DemoClassScalarFieldEnum: {
-    id: 'id',
-    tuitionPostId: 'tuitionPostId',
-    teacherId: 'teacherId',
-    studentId: 'studentId',
-    assignedId: 'assignedId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type DemoClassScalarFieldEnum = (typeof DemoClassScalarFieldEnum)[keyof typeof DemoClassScalarFieldEnum]
 
 
   export const LookupScalarFieldEnum: {
@@ -20869,6 +19477,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -20921,13 +19536,6 @@ export namespace Prisma {
    * Reference to a field of type 'Mode[]'
    */
   export type ListEnumModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Mode[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -20999,6 +19607,8 @@ export namespace Prisma {
     teacherId?: IntFilter<"Assigned"> | number
     studentId?: IntFilter<"Assigned"> | number
     assignedBy?: IntFilter<"Assigned"> | number
+    isDemo?: BoolFilter<"Assigned"> | boolean
+    isConfirmed?: BoolFilter<"Assigned"> | boolean
     startDate?: DateTimeFilter<"Assigned"> | Date | string
     endDate?: DateTimeNullableFilter<"Assigned"> | Date | string | null
     createdAt?: DateTimeFilter<"Assigned"> | Date | string
@@ -21006,7 +19616,6 @@ export namespace Prisma {
     tuitionPost?: XOR<TuitionPostScalarRelationFilter, TuitionPostWhereInput>
     teacher?: XOR<UserScalarRelationFilter, UserWhereInput>
     student?: XOR<UserScalarRelationFilter, UserWhereInput>
-    demoClass?: XOR<DemoClassNullableScalarRelationFilter, DemoClassWhereInput> | null
     classSchedule?: XOR<ClassScheduleNullableScalarRelationFilter, ClassScheduleWhereInput> | null
   }
 
@@ -21016,6 +19625,8 @@ export namespace Prisma {
     teacherId?: SortOrder
     studentId?: SortOrder
     assignedBy?: SortOrder
+    isDemo?: SortOrder
+    isConfirmed?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -21023,7 +19634,6 @@ export namespace Prisma {
     tuitionPost?: TuitionPostOrderByWithRelationInput
     teacher?: UserOrderByWithRelationInput
     student?: UserOrderByWithRelationInput
-    demoClass?: DemoClassOrderByWithRelationInput
     classSchedule?: ClassScheduleOrderByWithRelationInput
   }
 
@@ -21036,6 +19646,8 @@ export namespace Prisma {
     teacherId?: IntFilter<"Assigned"> | number
     studentId?: IntFilter<"Assigned"> | number
     assignedBy?: IntFilter<"Assigned"> | number
+    isDemo?: BoolFilter<"Assigned"> | boolean
+    isConfirmed?: BoolFilter<"Assigned"> | boolean
     startDate?: DateTimeFilter<"Assigned"> | Date | string
     endDate?: DateTimeNullableFilter<"Assigned"> | Date | string | null
     createdAt?: DateTimeFilter<"Assigned"> | Date | string
@@ -21043,7 +19655,6 @@ export namespace Prisma {
     tuitionPost?: XOR<TuitionPostScalarRelationFilter, TuitionPostWhereInput>
     teacher?: XOR<UserScalarRelationFilter, UserWhereInput>
     student?: XOR<UserScalarRelationFilter, UserWhereInput>
-    demoClass?: XOR<DemoClassNullableScalarRelationFilter, DemoClassWhereInput> | null
     classSchedule?: XOR<ClassScheduleNullableScalarRelationFilter, ClassScheduleWhereInput> | null
   }, "id">
 
@@ -21053,6 +19664,8 @@ export namespace Prisma {
     teacherId?: SortOrder
     studentId?: SortOrder
     assignedBy?: SortOrder
+    isDemo?: SortOrder
+    isConfirmed?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -21073,6 +19686,8 @@ export namespace Prisma {
     teacherId?: IntWithAggregatesFilter<"Assigned"> | number
     studentId?: IntWithAggregatesFilter<"Assigned"> | number
     assignedBy?: IntWithAggregatesFilter<"Assigned"> | number
+    isDemo?: BoolWithAggregatesFilter<"Assigned"> | boolean
+    isConfirmed?: BoolWithAggregatesFilter<"Assigned"> | boolean
     startDate?: DateTimeWithAggregatesFilter<"Assigned"> | Date | string
     endDate?: DateTimeNullableWithAggregatesFilter<"Assigned"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Assigned"> | Date | string
@@ -21422,82 +20037,6 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"ClassScheduleOverride"> | Date | string
   }
 
-  export type DemoClassWhereInput = {
-    AND?: DemoClassWhereInput | DemoClassWhereInput[]
-    OR?: DemoClassWhereInput[]
-    NOT?: DemoClassWhereInput | DemoClassWhereInput[]
-    id?: IntFilter<"DemoClass"> | number
-    tuitionPostId?: IntFilter<"DemoClass"> | number
-    teacherId?: IntFilter<"DemoClass"> | number
-    studentId?: IntFilter<"DemoClass"> | number
-    assignedId?: IntNullableFilter<"DemoClass"> | number | null
-    createdAt?: DateTimeFilter<"DemoClass"> | Date | string
-    updatedAt?: DateTimeFilter<"DemoClass"> | Date | string
-    tuitionPost?: XOR<TuitionPostScalarRelationFilter, TuitionPostWhereInput>
-    teacher?: XOR<UserScalarRelationFilter, UserWhereInput>
-    student?: XOR<UserScalarRelationFilter, UserWhereInput>
-    assigned?: XOR<AssignedNullableScalarRelationFilter, AssignedWhereInput> | null
-  }
-
-  export type DemoClassOrderByWithRelationInput = {
-    id?: SortOrder
-    tuitionPostId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-    assignedId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    tuitionPost?: TuitionPostOrderByWithRelationInput
-    teacher?: UserOrderByWithRelationInput
-    student?: UserOrderByWithRelationInput
-    assigned?: AssignedOrderByWithRelationInput
-  }
-
-  export type DemoClassWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    assignedId?: number
-    AND?: DemoClassWhereInput | DemoClassWhereInput[]
-    OR?: DemoClassWhereInput[]
-    NOT?: DemoClassWhereInput | DemoClassWhereInput[]
-    tuitionPostId?: IntFilter<"DemoClass"> | number
-    teacherId?: IntFilter<"DemoClass"> | number
-    studentId?: IntFilter<"DemoClass"> | number
-    createdAt?: DateTimeFilter<"DemoClass"> | Date | string
-    updatedAt?: DateTimeFilter<"DemoClass"> | Date | string
-    tuitionPost?: XOR<TuitionPostScalarRelationFilter, TuitionPostWhereInput>
-    teacher?: XOR<UserScalarRelationFilter, UserWhereInput>
-    student?: XOR<UserScalarRelationFilter, UserWhereInput>
-    assigned?: XOR<AssignedNullableScalarRelationFilter, AssignedWhereInput> | null
-  }, "id" | "assignedId">
-
-  export type DemoClassOrderByWithAggregationInput = {
-    id?: SortOrder
-    tuitionPostId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-    assignedId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: DemoClassCountOrderByAggregateInput
-    _avg?: DemoClassAvgOrderByAggregateInput
-    _max?: DemoClassMaxOrderByAggregateInput
-    _min?: DemoClassMinOrderByAggregateInput
-    _sum?: DemoClassSumOrderByAggregateInput
-  }
-
-  export type DemoClassScalarWhereWithAggregatesInput = {
-    AND?: DemoClassScalarWhereWithAggregatesInput | DemoClassScalarWhereWithAggregatesInput[]
-    OR?: DemoClassScalarWhereWithAggregatesInput[]
-    NOT?: DemoClassScalarWhereWithAggregatesInput | DemoClassScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"DemoClass"> | number
-    tuitionPostId?: IntWithAggregatesFilter<"DemoClass"> | number
-    teacherId?: IntWithAggregatesFilter<"DemoClass"> | number
-    studentId?: IntWithAggregatesFilter<"DemoClass"> | number
-    assignedId?: IntNullableWithAggregatesFilter<"DemoClass"> | number | null
-    createdAt?: DateTimeWithAggregatesFilter<"DemoClass"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"DemoClass"> | Date | string
-  }
-
   export type LookupWhereInput = {
     AND?: LookupWhereInput | LookupWhereInput[]
     OR?: LookupWhereInput[]
@@ -21806,7 +20345,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectListRelationFilter
     applications?: TuitionApplicationListRelationFilter
     assigned?: AssignedListRelationFilter
-    demoClasses?: DemoClassListRelationFilter
   }
 
   export type TuitionPostOrderByWithRelationInput = {
@@ -21830,7 +20368,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectOrderByRelationAggregateInput
     applications?: TuitionApplicationOrderByRelationAggregateInput
     assigned?: AssignedOrderByRelationAggregateInput
-    demoClasses?: DemoClassOrderByRelationAggregateInput
   }
 
   export type TuitionPostWhereUniqueInput = Prisma.AtLeast<{
@@ -21857,7 +20394,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectListRelationFilter
     applications?: TuitionApplicationListRelationFilter
     assigned?: AssignedListRelationFilter
-    demoClasses?: DemoClassListRelationFilter
   }, "id" | "postId">
 
   export type TuitionPostOrderByWithAggregationInput = {
@@ -22055,8 +20591,6 @@ export namespace Prisma {
     applications?: TuitionApplicationListRelationFilter
     teacherAssignments?: AssignedListRelationFilter
     studentAssignments?: AssignedListRelationFilter
-    teacherDemoClasses?: DemoClassListRelationFilter
-    studentDemoClasses?: DemoClassListRelationFilter
     teacherHomework?: AssignmentListRelationFilter
     studentHomework?: AssignmentListRelationFilter
     teacherSchedules?: ClassScheduleListRelationFilter
@@ -22083,8 +20617,6 @@ export namespace Prisma {
     applications?: TuitionApplicationOrderByRelationAggregateInput
     teacherAssignments?: AssignedOrderByRelationAggregateInput
     studentAssignments?: AssignedOrderByRelationAggregateInput
-    teacherDemoClasses?: DemoClassOrderByRelationAggregateInput
-    studentDemoClasses?: DemoClassOrderByRelationAggregateInput
     teacherHomework?: AssignmentOrderByRelationAggregateInput
     studentHomework?: AssignmentOrderByRelationAggregateInput
     teacherSchedules?: ClassScheduleOrderByRelationAggregateInput
@@ -22114,8 +20646,6 @@ export namespace Prisma {
     applications?: TuitionApplicationListRelationFilter
     teacherAssignments?: AssignedListRelationFilter
     studentAssignments?: AssignedListRelationFilter
-    teacherDemoClasses?: DemoClassListRelationFilter
-    studentDemoClasses?: DemoClassListRelationFilter
     teacherHomework?: AssignmentListRelationFilter
     studentHomework?: AssignmentListRelationFilter
     teacherSchedules?: ClassScheduleListRelationFilter
@@ -22219,6 +20749,8 @@ export namespace Prisma {
 
   export type AssignedCreateInput = {
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
@@ -22226,7 +20758,6 @@ export namespace Prisma {
     tuitionPost: TuitionPostCreateNestedOneWithoutAssignedInput
     teacher: UserCreateNestedOneWithoutTeacherAssignmentsInput
     student: UserCreateNestedOneWithoutStudentAssignmentsInput
-    demoClass?: DemoClassCreateNestedOneWithoutAssignedInput
     classSchedule?: ClassScheduleCreateNestedOneWithoutAssignmentInput
   }
 
@@ -22236,16 +20767,19 @@ export namespace Prisma {
     teacherId: number
     studentId: number
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    demoClass?: DemoClassUncheckedCreateNestedOneWithoutAssignedInput
     classSchedule?: ClassScheduleUncheckedCreateNestedOneWithoutAssignmentInput
   }
 
   export type AssignedUpdateInput = {
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22253,7 +20787,6 @@ export namespace Prisma {
     tuitionPost?: TuitionPostUpdateOneRequiredWithoutAssignedNestedInput
     teacher?: UserUpdateOneRequiredWithoutTeacherAssignmentsNestedInput
     student?: UserUpdateOneRequiredWithoutStudentAssignmentsNestedInput
-    demoClass?: DemoClassUpdateOneWithoutAssignedNestedInput
     classSchedule?: ClassScheduleUpdateOneWithoutAssignmentNestedInput
   }
 
@@ -22263,11 +20796,12 @@ export namespace Prisma {
     teacherId?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    demoClass?: DemoClassUncheckedUpdateOneWithoutAssignedNestedInput
     classSchedule?: ClassScheduleUncheckedUpdateOneWithoutAssignmentNestedInput
   }
 
@@ -22277,6 +20811,8 @@ export namespace Prisma {
     teacherId: number
     studentId: number
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
@@ -22285,6 +20821,8 @@ export namespace Prisma {
 
   export type AssignedUpdateManyMutationInput = {
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22297,6 +20835,8 @@ export namespace Prisma {
     teacherId?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22640,69 +21180,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DemoClassCreateInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tuitionPost: TuitionPostCreateNestedOneWithoutDemoClassesInput
-    teacher: UserCreateNestedOneWithoutTeacherDemoClassesInput
-    student: UserCreateNestedOneWithoutStudentDemoClassesInput
-    assigned?: AssignedCreateNestedOneWithoutDemoClassInput
-  }
-
-  export type DemoClassUncheckedCreateInput = {
-    id?: number
-    tuitionPostId: number
-    teacherId: number
-    studentId: number
-    assignedId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DemoClassUpdateInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tuitionPost?: TuitionPostUpdateOneRequiredWithoutDemoClassesNestedInput
-    teacher?: UserUpdateOneRequiredWithoutTeacherDemoClassesNestedInput
-    student?: UserUpdateOneRequiredWithoutStudentDemoClassesNestedInput
-    assigned?: AssignedUpdateOneWithoutDemoClassNestedInput
-  }
-
-  export type DemoClassUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    tuitionPostId?: IntFieldUpdateOperationsInput | number
-    teacherId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    assignedId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DemoClassCreateManyInput = {
-    id?: number
-    tuitionPostId: number
-    teacherId: number
-    studentId: number
-    assignedId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DemoClassUpdateManyMutationInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DemoClassUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    tuitionPostId?: IntFieldUpdateOperationsInput | number
-    teacherId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    assignedId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type LookupCreateInput = {
     name: string
     value: string
@@ -23014,7 +21491,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectCreateNestedManyWithoutTuitionPostInput
     applications?: TuitionApplicationCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostUncheckedCreateInput = {
@@ -23035,7 +21511,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUncheckedCreateNestedManyWithoutTuitionPostInput
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedUncheckedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassUncheckedCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostUpdateInput = {
@@ -23055,7 +21530,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUpdateManyWithoutTuitionPostNestedInput
     applications?: TuitionApplicationUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type TuitionPostUncheckedUpdateInput = {
@@ -23076,7 +21550,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUncheckedUpdateManyWithoutTuitionPostNestedInput
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUncheckedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUncheckedUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type TuitionPostCreateManyInput = {
@@ -23254,8 +21727,6 @@ export namespace Prisma {
     applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
@@ -23282,8 +21753,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
@@ -23309,8 +21778,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
@@ -23337,8 +21804,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
@@ -23452,6 +21917,11 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -23484,11 +21954,6 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
-  export type DemoClassNullableScalarRelationFilter = {
-    is?: DemoClassWhereInput | null
-    isNot?: DemoClassWhereInput | null
-  }
-
   export type ClassScheduleNullableScalarRelationFilter = {
     is?: ClassScheduleWhereInput | null
     isNot?: ClassScheduleWhereInput | null
@@ -23505,6 +21970,8 @@ export namespace Prisma {
     teacherId?: SortOrder
     studentId?: SortOrder
     assignedBy?: SortOrder
+    isDemo?: SortOrder
+    isConfirmed?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     createdAt?: SortOrder
@@ -23525,6 +21992,8 @@ export namespace Prisma {
     teacherId?: SortOrder
     studentId?: SortOrder
     assignedBy?: SortOrder
+    isDemo?: SortOrder
+    isConfirmed?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     createdAt?: SortOrder
@@ -23537,6 +22006,8 @@ export namespace Prisma {
     teacherId?: SortOrder
     studentId?: SortOrder
     assignedBy?: SortOrder
+    isDemo?: SortOrder
+    isConfirmed?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     createdAt?: SortOrder
@@ -23565,6 +22036,14 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -23960,62 +22439,6 @@ export namespace Prisma {
     classScheduleId?: SortOrder
   }
 
-  export type AssignedNullableScalarRelationFilter = {
-    is?: AssignedWhereInput | null
-    isNot?: AssignedWhereInput | null
-  }
-
-  export type DemoClassCountOrderByAggregateInput = {
-    id?: SortOrder
-    tuitionPostId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-    assignedId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type DemoClassAvgOrderByAggregateInput = {
-    id?: SortOrder
-    tuitionPostId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-    assignedId?: SortOrder
-  }
-
-  export type DemoClassMaxOrderByAggregateInput = {
-    id?: SortOrder
-    tuitionPostId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-    assignedId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type DemoClassMinOrderByAggregateInput = {
-    id?: SortOrder
-    tuitionPostId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-    assignedId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type DemoClassSumOrderByAggregateInput = {
-    id?: SortOrder
-    tuitionPostId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-    assignedId?: SortOrder
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type TuitionPostListRelationFilter = {
     every?: TuitionPostWhereInput
     some?: TuitionPostWhereInput
@@ -24086,14 +22509,6 @@ export namespace Prisma {
 
   export type LookupSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumRoleFilter<$PrismaModel = never> = {
@@ -24263,17 +22678,7 @@ export namespace Prisma {
     none?: AssignedWhereInput
   }
 
-  export type DemoClassListRelationFilter = {
-    every?: DemoClassWhereInput
-    some?: DemoClassWhereInput
-    none?: DemoClassWhereInput
-  }
-
   export type AssignedOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type DemoClassOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -24597,22 +23002,10 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type DemoClassCreateNestedOneWithoutAssignedInput = {
-    create?: XOR<DemoClassCreateWithoutAssignedInput, DemoClassUncheckedCreateWithoutAssignedInput>
-    connectOrCreate?: DemoClassCreateOrConnectWithoutAssignedInput
-    connect?: DemoClassWhereUniqueInput
-  }
-
   export type ClassScheduleCreateNestedOneWithoutAssignmentInput = {
     create?: XOR<ClassScheduleCreateWithoutAssignmentInput, ClassScheduleUncheckedCreateWithoutAssignmentInput>
     connectOrCreate?: ClassScheduleCreateOrConnectWithoutAssignmentInput
     connect?: ClassScheduleWhereUniqueInput
-  }
-
-  export type DemoClassUncheckedCreateNestedOneWithoutAssignedInput = {
-    create?: XOR<DemoClassCreateWithoutAssignedInput, DemoClassUncheckedCreateWithoutAssignedInput>
-    connectOrCreate?: DemoClassCreateOrConnectWithoutAssignedInput
-    connect?: DemoClassWhereUniqueInput
   }
 
   export type ClassScheduleUncheckedCreateNestedOneWithoutAssignmentInput = {
@@ -24627,6 +23020,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -24661,16 +23058,6 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStudentAssignmentsInput, UserUpdateWithoutStudentAssignmentsInput>, UserUncheckedUpdateWithoutStudentAssignmentsInput>
   }
 
-  export type DemoClassUpdateOneWithoutAssignedNestedInput = {
-    create?: XOR<DemoClassCreateWithoutAssignedInput, DemoClassUncheckedCreateWithoutAssignedInput>
-    connectOrCreate?: DemoClassCreateOrConnectWithoutAssignedInput
-    upsert?: DemoClassUpsertWithoutAssignedInput
-    disconnect?: DemoClassWhereInput | boolean
-    delete?: DemoClassWhereInput | boolean
-    connect?: DemoClassWhereUniqueInput
-    update?: XOR<XOR<DemoClassUpdateToOneWithWhereWithoutAssignedInput, DemoClassUpdateWithoutAssignedInput>, DemoClassUncheckedUpdateWithoutAssignedInput>
-  }
-
   export type ClassScheduleUpdateOneWithoutAssignmentNestedInput = {
     create?: XOR<ClassScheduleCreateWithoutAssignmentInput, ClassScheduleUncheckedCreateWithoutAssignmentInput>
     connectOrCreate?: ClassScheduleCreateOrConnectWithoutAssignmentInput
@@ -24679,16 +23066,6 @@ export namespace Prisma {
     delete?: ClassScheduleWhereInput | boolean
     connect?: ClassScheduleWhereUniqueInput
     update?: XOR<XOR<ClassScheduleUpdateToOneWithWhereWithoutAssignmentInput, ClassScheduleUpdateWithoutAssignmentInput>, ClassScheduleUncheckedUpdateWithoutAssignmentInput>
-  }
-
-  export type DemoClassUncheckedUpdateOneWithoutAssignedNestedInput = {
-    create?: XOR<DemoClassCreateWithoutAssignedInput, DemoClassUncheckedCreateWithoutAssignedInput>
-    connectOrCreate?: DemoClassCreateOrConnectWithoutAssignedInput
-    upsert?: DemoClassUpsertWithoutAssignedInput
-    disconnect?: DemoClassWhereInput | boolean
-    delete?: DemoClassWhereInput | boolean
-    connect?: DemoClassWhereUniqueInput
-    update?: XOR<XOR<DemoClassUpdateToOneWithWhereWithoutAssignedInput, DemoClassUpdateWithoutAssignedInput>, DemoClassUncheckedUpdateWithoutAssignedInput>
   }
 
   export type ClassScheduleUncheckedUpdateOneWithoutAssignmentNestedInput = {
@@ -24958,64 +23335,6 @@ export namespace Prisma {
     update?: XOR<XOR<ClassScheduleUpdateToOneWithWhereWithoutOverridesInput, ClassScheduleUpdateWithoutOverridesInput>, ClassScheduleUncheckedUpdateWithoutOverridesInput>
   }
 
-  export type TuitionPostCreateNestedOneWithoutDemoClassesInput = {
-    create?: XOR<TuitionPostCreateWithoutDemoClassesInput, TuitionPostUncheckedCreateWithoutDemoClassesInput>
-    connectOrCreate?: TuitionPostCreateOrConnectWithoutDemoClassesInput
-    connect?: TuitionPostWhereUniqueInput
-  }
-
-  export type UserCreateNestedOneWithoutTeacherDemoClassesInput = {
-    create?: XOR<UserCreateWithoutTeacherDemoClassesInput, UserUncheckedCreateWithoutTeacherDemoClassesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTeacherDemoClassesInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type UserCreateNestedOneWithoutStudentDemoClassesInput = {
-    create?: XOR<UserCreateWithoutStudentDemoClassesInput, UserUncheckedCreateWithoutStudentDemoClassesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutStudentDemoClassesInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type AssignedCreateNestedOneWithoutDemoClassInput = {
-    create?: XOR<AssignedCreateWithoutDemoClassInput, AssignedUncheckedCreateWithoutDemoClassInput>
-    connectOrCreate?: AssignedCreateOrConnectWithoutDemoClassInput
-    connect?: AssignedWhereUniqueInput
-  }
-
-  export type TuitionPostUpdateOneRequiredWithoutDemoClassesNestedInput = {
-    create?: XOR<TuitionPostCreateWithoutDemoClassesInput, TuitionPostUncheckedCreateWithoutDemoClassesInput>
-    connectOrCreate?: TuitionPostCreateOrConnectWithoutDemoClassesInput
-    upsert?: TuitionPostUpsertWithoutDemoClassesInput
-    connect?: TuitionPostWhereUniqueInput
-    update?: XOR<XOR<TuitionPostUpdateToOneWithWhereWithoutDemoClassesInput, TuitionPostUpdateWithoutDemoClassesInput>, TuitionPostUncheckedUpdateWithoutDemoClassesInput>
-  }
-
-  export type UserUpdateOneRequiredWithoutTeacherDemoClassesNestedInput = {
-    create?: XOR<UserCreateWithoutTeacherDemoClassesInput, UserUncheckedCreateWithoutTeacherDemoClassesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTeacherDemoClassesInput
-    upsert?: UserUpsertWithoutTeacherDemoClassesInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTeacherDemoClassesInput, UserUpdateWithoutTeacherDemoClassesInput>, UserUncheckedUpdateWithoutTeacherDemoClassesInput>
-  }
-
-  export type UserUpdateOneRequiredWithoutStudentDemoClassesNestedInput = {
-    create?: XOR<UserCreateWithoutStudentDemoClassesInput, UserUncheckedCreateWithoutStudentDemoClassesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutStudentDemoClassesInput
-    upsert?: UserUpsertWithoutStudentDemoClassesInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStudentDemoClassesInput, UserUpdateWithoutStudentDemoClassesInput>, UserUncheckedUpdateWithoutStudentDemoClassesInput>
-  }
-
-  export type AssignedUpdateOneWithoutDemoClassNestedInput = {
-    create?: XOR<AssignedCreateWithoutDemoClassInput, AssignedUncheckedCreateWithoutDemoClassInput>
-    connectOrCreate?: AssignedCreateOrConnectWithoutDemoClassInput
-    upsert?: AssignedUpsertWithoutDemoClassInput
-    disconnect?: AssignedWhereInput | boolean
-    delete?: AssignedWhereInput | boolean
-    connect?: AssignedWhereUniqueInput
-    update?: XOR<XOR<AssignedUpdateToOneWithWhereWithoutDemoClassInput, AssignedUpdateWithoutDemoClassInput>, AssignedUncheckedUpdateWithoutDemoClassInput>
-  }
-
   export type TuitionPostCreateNestedManyWithoutStatusInput = {
     create?: XOR<TuitionPostCreateWithoutStatusInput, TuitionPostUncheckedCreateWithoutStatusInput> | TuitionPostCreateWithoutStatusInput[] | TuitionPostUncheckedCreateWithoutStatusInput[]
     connectOrCreate?: TuitionPostCreateOrConnectWithoutStatusInput | TuitionPostCreateOrConnectWithoutStatusInput[]
@@ -25112,10 +23431,6 @@ export namespace Prisma {
     connectOrCreate?: TuitionPostSubjectCreateOrConnectWithoutSubjectInput | TuitionPostSubjectCreateOrConnectWithoutSubjectInput[]
     createMany?: TuitionPostSubjectCreateManySubjectInputEnvelope
     connect?: TuitionPostSubjectWhereUniqueInput | TuitionPostSubjectWhereUniqueInput[]
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type TuitionPostUpdateManyWithoutStatusNestedInput = {
@@ -25389,13 +23704,6 @@ export namespace Prisma {
     connect?: AssignedWhereUniqueInput | AssignedWhereUniqueInput[]
   }
 
-  export type DemoClassCreateNestedManyWithoutTuitionPostInput = {
-    create?: XOR<DemoClassCreateWithoutTuitionPostInput, DemoClassUncheckedCreateWithoutTuitionPostInput> | DemoClassCreateWithoutTuitionPostInput[] | DemoClassUncheckedCreateWithoutTuitionPostInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutTuitionPostInput | DemoClassCreateOrConnectWithoutTuitionPostInput[]
-    createMany?: DemoClassCreateManyTuitionPostInputEnvelope
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-  }
-
   export type TuitionPostSubjectUncheckedCreateNestedManyWithoutTuitionPostInput = {
     create?: XOR<TuitionPostSubjectCreateWithoutTuitionPostInput, TuitionPostSubjectUncheckedCreateWithoutTuitionPostInput> | TuitionPostSubjectCreateWithoutTuitionPostInput[] | TuitionPostSubjectUncheckedCreateWithoutTuitionPostInput[]
     connectOrCreate?: TuitionPostSubjectCreateOrConnectWithoutTuitionPostInput | TuitionPostSubjectCreateOrConnectWithoutTuitionPostInput[]
@@ -25415,13 +23723,6 @@ export namespace Prisma {
     connectOrCreate?: AssignedCreateOrConnectWithoutTuitionPostInput | AssignedCreateOrConnectWithoutTuitionPostInput[]
     createMany?: AssignedCreateManyTuitionPostInputEnvelope
     connect?: AssignedWhereUniqueInput | AssignedWhereUniqueInput[]
-  }
-
-  export type DemoClassUncheckedCreateNestedManyWithoutTuitionPostInput = {
-    create?: XOR<DemoClassCreateWithoutTuitionPostInput, DemoClassUncheckedCreateWithoutTuitionPostInput> | DemoClassCreateWithoutTuitionPostInput[] | DemoClassUncheckedCreateWithoutTuitionPostInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutTuitionPostInput | DemoClassCreateOrConnectWithoutTuitionPostInput[]
-    createMany?: DemoClassCreateManyTuitionPostInputEnvelope
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
   }
 
   export type NullableDecimalFieldUpdateOperationsInput = {
@@ -25505,20 +23806,6 @@ export namespace Prisma {
     deleteMany?: AssignedScalarWhereInput | AssignedScalarWhereInput[]
   }
 
-  export type DemoClassUpdateManyWithoutTuitionPostNestedInput = {
-    create?: XOR<DemoClassCreateWithoutTuitionPostInput, DemoClassUncheckedCreateWithoutTuitionPostInput> | DemoClassCreateWithoutTuitionPostInput[] | DemoClassUncheckedCreateWithoutTuitionPostInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutTuitionPostInput | DemoClassCreateOrConnectWithoutTuitionPostInput[]
-    upsert?: DemoClassUpsertWithWhereUniqueWithoutTuitionPostInput | DemoClassUpsertWithWhereUniqueWithoutTuitionPostInput[]
-    createMany?: DemoClassCreateManyTuitionPostInputEnvelope
-    set?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    disconnect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    delete?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    update?: DemoClassUpdateWithWhereUniqueWithoutTuitionPostInput | DemoClassUpdateWithWhereUniqueWithoutTuitionPostInput[]
-    updateMany?: DemoClassUpdateManyWithWhereWithoutTuitionPostInput | DemoClassUpdateManyWithWhereWithoutTuitionPostInput[]
-    deleteMany?: DemoClassScalarWhereInput | DemoClassScalarWhereInput[]
-  }
-
   export type TuitionPostSubjectUncheckedUpdateManyWithoutTuitionPostNestedInput = {
     create?: XOR<TuitionPostSubjectCreateWithoutTuitionPostInput, TuitionPostSubjectUncheckedCreateWithoutTuitionPostInput> | TuitionPostSubjectCreateWithoutTuitionPostInput[] | TuitionPostSubjectUncheckedCreateWithoutTuitionPostInput[]
     connectOrCreate?: TuitionPostSubjectCreateOrConnectWithoutTuitionPostInput | TuitionPostSubjectCreateOrConnectWithoutTuitionPostInput[]
@@ -25559,20 +23846,6 @@ export namespace Prisma {
     update?: AssignedUpdateWithWhereUniqueWithoutTuitionPostInput | AssignedUpdateWithWhereUniqueWithoutTuitionPostInput[]
     updateMany?: AssignedUpdateManyWithWhereWithoutTuitionPostInput | AssignedUpdateManyWithWhereWithoutTuitionPostInput[]
     deleteMany?: AssignedScalarWhereInput | AssignedScalarWhereInput[]
-  }
-
-  export type DemoClassUncheckedUpdateManyWithoutTuitionPostNestedInput = {
-    create?: XOR<DemoClassCreateWithoutTuitionPostInput, DemoClassUncheckedCreateWithoutTuitionPostInput> | DemoClassCreateWithoutTuitionPostInput[] | DemoClassUncheckedCreateWithoutTuitionPostInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutTuitionPostInput | DemoClassCreateOrConnectWithoutTuitionPostInput[]
-    upsert?: DemoClassUpsertWithWhereUniqueWithoutTuitionPostInput | DemoClassUpsertWithWhereUniqueWithoutTuitionPostInput[]
-    createMany?: DemoClassCreateManyTuitionPostInputEnvelope
-    set?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    disconnect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    delete?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    update?: DemoClassUpdateWithWhereUniqueWithoutTuitionPostInput | DemoClassUpdateWithWhereUniqueWithoutTuitionPostInput[]
-    updateMany?: DemoClassUpdateManyWithWhereWithoutTuitionPostInput | DemoClassUpdateManyWithWhereWithoutTuitionPostInput[]
-    deleteMany?: DemoClassScalarWhereInput | DemoClassScalarWhereInput[]
   }
 
   export type TuitionPostCreateNestedOneWithoutApplicationsInput = {
@@ -25692,20 +23965,6 @@ export namespace Prisma {
     connect?: AssignedWhereUniqueInput | AssignedWhereUniqueInput[]
   }
 
-  export type DemoClassCreateNestedManyWithoutTeacherInput = {
-    create?: XOR<DemoClassCreateWithoutTeacherInput, DemoClassUncheckedCreateWithoutTeacherInput> | DemoClassCreateWithoutTeacherInput[] | DemoClassUncheckedCreateWithoutTeacherInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutTeacherInput | DemoClassCreateOrConnectWithoutTeacherInput[]
-    createMany?: DemoClassCreateManyTeacherInputEnvelope
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-  }
-
-  export type DemoClassCreateNestedManyWithoutStudentInput = {
-    create?: XOR<DemoClassCreateWithoutStudentInput, DemoClassUncheckedCreateWithoutStudentInput> | DemoClassCreateWithoutStudentInput[] | DemoClassUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutStudentInput | DemoClassCreateOrConnectWithoutStudentInput[]
-    createMany?: DemoClassCreateManyStudentInputEnvelope
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-  }
-
   export type AssignmentCreateNestedManyWithoutTeacherInput = {
     create?: XOR<AssignmentCreateWithoutTeacherInput, AssignmentUncheckedCreateWithoutTeacherInput> | AssignmentCreateWithoutTeacherInput[] | AssignmentUncheckedCreateWithoutTeacherInput[]
     connectOrCreate?: AssignmentCreateOrConnectWithoutTeacherInput | AssignmentCreateOrConnectWithoutTeacherInput[]
@@ -25779,20 +24038,6 @@ export namespace Prisma {
     connectOrCreate?: AssignedCreateOrConnectWithoutStudentInput | AssignedCreateOrConnectWithoutStudentInput[]
     createMany?: AssignedCreateManyStudentInputEnvelope
     connect?: AssignedWhereUniqueInput | AssignedWhereUniqueInput[]
-  }
-
-  export type DemoClassUncheckedCreateNestedManyWithoutTeacherInput = {
-    create?: XOR<DemoClassCreateWithoutTeacherInput, DemoClassUncheckedCreateWithoutTeacherInput> | DemoClassCreateWithoutTeacherInput[] | DemoClassUncheckedCreateWithoutTeacherInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutTeacherInput | DemoClassCreateOrConnectWithoutTeacherInput[]
-    createMany?: DemoClassCreateManyTeacherInputEnvelope
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-  }
-
-  export type DemoClassUncheckedCreateNestedManyWithoutStudentInput = {
-    create?: XOR<DemoClassCreateWithoutStudentInput, DemoClassUncheckedCreateWithoutStudentInput> | DemoClassCreateWithoutStudentInput[] | DemoClassUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutStudentInput | DemoClassCreateOrConnectWithoutStudentInput[]
-    createMany?: DemoClassCreateManyStudentInputEnvelope
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
   }
 
   export type AssignmentUncheckedCreateNestedManyWithoutTeacherInput = {
@@ -25915,34 +24160,6 @@ export namespace Prisma {
     update?: AssignedUpdateWithWhereUniqueWithoutStudentInput | AssignedUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: AssignedUpdateManyWithWhereWithoutStudentInput | AssignedUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: AssignedScalarWhereInput | AssignedScalarWhereInput[]
-  }
-
-  export type DemoClassUpdateManyWithoutTeacherNestedInput = {
-    create?: XOR<DemoClassCreateWithoutTeacherInput, DemoClassUncheckedCreateWithoutTeacherInput> | DemoClassCreateWithoutTeacherInput[] | DemoClassUncheckedCreateWithoutTeacherInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutTeacherInput | DemoClassCreateOrConnectWithoutTeacherInput[]
-    upsert?: DemoClassUpsertWithWhereUniqueWithoutTeacherInput | DemoClassUpsertWithWhereUniqueWithoutTeacherInput[]
-    createMany?: DemoClassCreateManyTeacherInputEnvelope
-    set?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    disconnect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    delete?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    update?: DemoClassUpdateWithWhereUniqueWithoutTeacherInput | DemoClassUpdateWithWhereUniqueWithoutTeacherInput[]
-    updateMany?: DemoClassUpdateManyWithWhereWithoutTeacherInput | DemoClassUpdateManyWithWhereWithoutTeacherInput[]
-    deleteMany?: DemoClassScalarWhereInput | DemoClassScalarWhereInput[]
-  }
-
-  export type DemoClassUpdateManyWithoutStudentNestedInput = {
-    create?: XOR<DemoClassCreateWithoutStudentInput, DemoClassUncheckedCreateWithoutStudentInput> | DemoClassCreateWithoutStudentInput[] | DemoClassUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutStudentInput | DemoClassCreateOrConnectWithoutStudentInput[]
-    upsert?: DemoClassUpsertWithWhereUniqueWithoutStudentInput | DemoClassUpsertWithWhereUniqueWithoutStudentInput[]
-    createMany?: DemoClassCreateManyStudentInputEnvelope
-    set?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    disconnect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    delete?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    update?: DemoClassUpdateWithWhereUniqueWithoutStudentInput | DemoClassUpdateWithWhereUniqueWithoutStudentInput[]
-    updateMany?: DemoClassUpdateManyWithWhereWithoutStudentInput | DemoClassUpdateManyWithWhereWithoutStudentInput[]
-    deleteMany?: DemoClassScalarWhereInput | DemoClassScalarWhereInput[]
   }
 
   export type AssignmentUpdateManyWithoutTeacherNestedInput = {
@@ -26091,34 +24308,6 @@ export namespace Prisma {
     deleteMany?: AssignedScalarWhereInput | AssignedScalarWhereInput[]
   }
 
-  export type DemoClassUncheckedUpdateManyWithoutTeacherNestedInput = {
-    create?: XOR<DemoClassCreateWithoutTeacherInput, DemoClassUncheckedCreateWithoutTeacherInput> | DemoClassCreateWithoutTeacherInput[] | DemoClassUncheckedCreateWithoutTeacherInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutTeacherInput | DemoClassCreateOrConnectWithoutTeacherInput[]
-    upsert?: DemoClassUpsertWithWhereUniqueWithoutTeacherInput | DemoClassUpsertWithWhereUniqueWithoutTeacherInput[]
-    createMany?: DemoClassCreateManyTeacherInputEnvelope
-    set?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    disconnect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    delete?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    update?: DemoClassUpdateWithWhereUniqueWithoutTeacherInput | DemoClassUpdateWithWhereUniqueWithoutTeacherInput[]
-    updateMany?: DemoClassUpdateManyWithWhereWithoutTeacherInput | DemoClassUpdateManyWithWhereWithoutTeacherInput[]
-    deleteMany?: DemoClassScalarWhereInput | DemoClassScalarWhereInput[]
-  }
-
-  export type DemoClassUncheckedUpdateManyWithoutStudentNestedInput = {
-    create?: XOR<DemoClassCreateWithoutStudentInput, DemoClassUncheckedCreateWithoutStudentInput> | DemoClassCreateWithoutStudentInput[] | DemoClassUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: DemoClassCreateOrConnectWithoutStudentInput | DemoClassCreateOrConnectWithoutStudentInput[]
-    upsert?: DemoClassUpsertWithWhereUniqueWithoutStudentInput | DemoClassUpsertWithWhereUniqueWithoutStudentInput[]
-    createMany?: DemoClassCreateManyStudentInputEnvelope
-    set?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    disconnect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    delete?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    connect?: DemoClassWhereUniqueInput | DemoClassWhereUniqueInput[]
-    update?: DemoClassUpdateWithWhereUniqueWithoutStudentInput | DemoClassUpdateWithWhereUniqueWithoutStudentInput[]
-    updateMany?: DemoClassUpdateManyWithWhereWithoutStudentInput | DemoClassUpdateManyWithWhereWithoutStudentInput[]
-    deleteMany?: DemoClassScalarWhereInput | DemoClassScalarWhereInput[]
-  }
-
   export type AssignmentUncheckedUpdateManyWithoutTeacherNestedInput = {
     create?: XOR<AssignmentCreateWithoutTeacherInput, AssignmentUncheckedCreateWithoutTeacherInput> | AssignmentCreateWithoutTeacherInput[] | AssignmentUncheckedCreateWithoutTeacherInput[]
     connectOrCreate?: AssignmentCreateOrConnectWithoutTeacherInput | AssignmentCreateOrConnectWithoutTeacherInput[]
@@ -26200,6 +24389,11 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -26247,6 +24441,14 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -26394,19 +24596,6 @@ export namespace Prisma {
     _max?: NestedEnumModeFilter<$PrismaModel>
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type NestedEnumRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
     in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
@@ -26484,7 +24673,6 @@ export namespace Prisma {
     area?: LookupCreateNestedOneWithoutTuitionPostAreaInput
     subjects?: TuitionPostSubjectCreateNestedManyWithoutTuitionPostInput
     applications?: TuitionApplicationCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostUncheckedCreateWithoutAssignedInput = {
@@ -26504,7 +24692,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     subjects?: TuitionPostSubjectUncheckedCreateNestedManyWithoutTuitionPostInput
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassUncheckedCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostCreateOrConnectWithoutAssignedInput = {
@@ -26530,8 +24717,6 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostCreateNestedManyWithoutPostedByUserInput
     applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
@@ -26557,8 +24742,6 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostUncheckedCreateNestedManyWithoutPostedByUserInput
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
@@ -26588,8 +24771,6 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostCreateNestedManyWithoutPostedByUserInput
     applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
@@ -26615,8 +24796,6 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostUncheckedCreateNestedManyWithoutPostedByUserInput
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
@@ -26626,28 +24805,6 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutStudentAssignmentsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutStudentAssignmentsInput, UserUncheckedCreateWithoutStudentAssignmentsInput>
-  }
-
-  export type DemoClassCreateWithoutAssignedInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tuitionPost: TuitionPostCreateNestedOneWithoutDemoClassesInput
-    teacher: UserCreateNestedOneWithoutTeacherDemoClassesInput
-    student: UserCreateNestedOneWithoutStudentDemoClassesInput
-  }
-
-  export type DemoClassUncheckedCreateWithoutAssignedInput = {
-    id?: number
-    tuitionPostId: number
-    teacherId: number
-    studentId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DemoClassCreateOrConnectWithoutAssignedInput = {
-    where: DemoClassWhereUniqueInput
-    create: XOR<DemoClassCreateWithoutAssignedInput, DemoClassUncheckedCreateWithoutAssignedInput>
   }
 
   export type ClassScheduleCreateWithoutAssignmentInput = {
@@ -26709,7 +24866,6 @@ export namespace Prisma {
     area?: LookupUpdateOneWithoutTuitionPostAreaNestedInput
     subjects?: TuitionPostSubjectUpdateManyWithoutTuitionPostNestedInput
     applications?: TuitionApplicationUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type TuitionPostUncheckedUpdateWithoutAssignedInput = {
@@ -26729,7 +24885,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subjects?: TuitionPostSubjectUncheckedUpdateManyWithoutTuitionPostNestedInput
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUncheckedUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type UserUpsertWithoutTeacherAssignmentsInput = {
@@ -26761,8 +24916,6 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostUpdateManyWithoutPostedByUserNestedInput
     applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
@@ -26788,8 +24941,6 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostUncheckedUpdateManyWithoutPostedByUserNestedInput
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
@@ -26825,8 +24976,6 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostUpdateManyWithoutPostedByUserNestedInput
     applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
@@ -26852,40 +25001,10 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostUncheckedUpdateManyWithoutPostedByUserNestedInput
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
-  }
-
-  export type DemoClassUpsertWithoutAssignedInput = {
-    update: XOR<DemoClassUpdateWithoutAssignedInput, DemoClassUncheckedUpdateWithoutAssignedInput>
-    create: XOR<DemoClassCreateWithoutAssignedInput, DemoClassUncheckedCreateWithoutAssignedInput>
-    where?: DemoClassWhereInput
-  }
-
-  export type DemoClassUpdateToOneWithWhereWithoutAssignedInput = {
-    where?: DemoClassWhereInput
-    data: XOR<DemoClassUpdateWithoutAssignedInput, DemoClassUncheckedUpdateWithoutAssignedInput>
-  }
-
-  export type DemoClassUpdateWithoutAssignedInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tuitionPost?: TuitionPostUpdateOneRequiredWithoutDemoClassesNestedInput
-    teacher?: UserUpdateOneRequiredWithoutTeacherDemoClassesNestedInput
-    student?: UserUpdateOneRequiredWithoutStudentDemoClassesNestedInput
-  }
-
-  export type DemoClassUncheckedUpdateWithoutAssignedInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    tuitionPostId?: IntFieldUpdateOperationsInput | number
-    teacherId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ClassScheduleUpsertWithoutAssignmentInput = {
@@ -26945,8 +25064,6 @@ export namespace Prisma {
     applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
@@ -26972,8 +25089,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
@@ -27003,8 +25118,6 @@ export namespace Prisma {
     applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
@@ -27030,8 +25143,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
@@ -27136,8 +25247,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
@@ -27163,8 +25272,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
@@ -27200,8 +25307,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
@@ -27227,8 +25332,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
@@ -27312,6 +25415,8 @@ export namespace Prisma {
 
   export type AssignedCreateWithoutClassScheduleInput = {
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
@@ -27319,7 +25424,6 @@ export namespace Prisma {
     tuitionPost: TuitionPostCreateNestedOneWithoutAssignedInput
     teacher: UserCreateNestedOneWithoutTeacherAssignmentsInput
     student: UserCreateNestedOneWithoutStudentAssignmentsInput
-    demoClass?: DemoClassCreateNestedOneWithoutAssignedInput
   }
 
   export type AssignedUncheckedCreateWithoutClassScheduleInput = {
@@ -27328,11 +25432,12 @@ export namespace Prisma {
     teacherId: number
     studentId: number
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    demoClass?: DemoClassUncheckedCreateNestedOneWithoutAssignedInput
   }
 
   export type AssignedCreateOrConnectWithoutClassScheduleInput = {
@@ -27359,8 +25464,6 @@ export namespace Prisma {
     applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
@@ -27386,8 +25489,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
@@ -27417,8 +25518,6 @@ export namespace Prisma {
     applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
@@ -27444,8 +25543,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
@@ -27519,6 +25616,8 @@ export namespace Prisma {
 
   export type AssignedUpdateWithoutClassScheduleInput = {
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27526,7 +25625,6 @@ export namespace Prisma {
     tuitionPost?: TuitionPostUpdateOneRequiredWithoutAssignedNestedInput
     teacher?: UserUpdateOneRequiredWithoutTeacherAssignmentsNestedInput
     student?: UserUpdateOneRequiredWithoutStudentAssignmentsNestedInput
-    demoClass?: DemoClassUpdateOneWithoutAssignedNestedInput
   }
 
   export type AssignedUncheckedUpdateWithoutClassScheduleInput = {
@@ -27535,11 +25633,12 @@ export namespace Prisma {
     teacherId?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    demoClass?: DemoClassUncheckedUpdateOneWithoutAssignedNestedInput
   }
 
   export type UserUpsertWithoutTeacherSchedulesInput = {
@@ -27572,8 +25671,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
@@ -27599,8 +25696,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
@@ -27636,8 +25731,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
@@ -27663,8 +25756,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
@@ -27936,410 +26027,6 @@ export namespace Prisma {
     subjects?: ClassScheduleSubjectUncheckedUpdateManyWithoutClassScheduleNestedInput
   }
 
-  export type TuitionPostCreateWithoutDemoClassesInput = {
-    postId: string
-    title: string
-    description?: string | null
-    budget?: Decimal | DecimalJsLike | number | string | null
-    mode: $Enums.Mode
-    days?: TuitionPostCreatedaysInput | $Enums.Day[]
-    startTime: string
-    endTime: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    postedByUser: UserCreateNestedOneWithoutTuitionPostsInput
-    status?: LookupCreateNestedOneWithoutTuitionStatusesInput
-    area?: LookupCreateNestedOneWithoutTuitionPostAreaInput
-    subjects?: TuitionPostSubjectCreateNestedManyWithoutTuitionPostInput
-    applications?: TuitionApplicationCreateNestedManyWithoutTuitionPostInput
-    assigned?: AssignedCreateNestedManyWithoutTuitionPostInput
-  }
-
-  export type TuitionPostUncheckedCreateWithoutDemoClassesInput = {
-    id?: number
-    postId: string
-    postedBy: number
-    title: string
-    description?: string | null
-    budget?: Decimal | DecimalJsLike | number | string | null
-    mode: $Enums.Mode
-    areaId: number
-    days?: TuitionPostCreatedaysInput | $Enums.Day[]
-    startTime: string
-    endTime: string
-    statusId?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    subjects?: TuitionPostSubjectUncheckedCreateNestedManyWithoutTuitionPostInput
-    applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTuitionPostInput
-    assigned?: AssignedUncheckedCreateNestedManyWithoutTuitionPostInput
-  }
-
-  export type TuitionPostCreateOrConnectWithoutDemoClassesInput = {
-    where: TuitionPostWhereUniqueInput
-    create: XOR<TuitionPostCreateWithoutDemoClassesInput, TuitionPostUncheckedCreateWithoutDemoClassesInput>
-  }
-
-  export type UserCreateWithoutTeacherDemoClassesInput = {
-    userId?: string | null
-    name: string
-    email: string
-    password: string
-    address?: string | null
-    contact?: string | null
-    gender?: $Enums.Gender | null
-    role: $Enums.Role
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
-    teacherProfile?: TeacherProfileCreateNestedOneWithoutUserInput
-    studentProfile?: StudentProfileCreateNestedOneWithoutUserInput
-    tuitionPosts?: TuitionPostCreateNestedManyWithoutPostedByUserInput
-    applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
-    teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
-    studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
-    teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
-    studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
-    teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
-    studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
-  }
-
-  export type UserUncheckedCreateWithoutTeacherDemoClassesInput = {
-    id?: number
-    userId?: string | null
-    name: string
-    email: string
-    password: string
-    address?: string | null
-    contact?: string | null
-    gender?: $Enums.Gender | null
-    role: $Enums.Role
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
-    teacherProfile?: TeacherProfileUncheckedCreateNestedOneWithoutUserInput
-    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutUserInput
-    tuitionPosts?: TuitionPostUncheckedCreateNestedManyWithoutPostedByUserInput
-    applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
-    teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
-    studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
-    teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
-    studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
-    teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
-    studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
-  }
-
-  export type UserCreateOrConnectWithoutTeacherDemoClassesInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutTeacherDemoClassesInput, UserUncheckedCreateWithoutTeacherDemoClassesInput>
-  }
-
-  export type UserCreateWithoutStudentDemoClassesInput = {
-    userId?: string | null
-    name: string
-    email: string
-    password: string
-    address?: string | null
-    contact?: string | null
-    gender?: $Enums.Gender | null
-    role: $Enums.Role
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
-    teacherProfile?: TeacherProfileCreateNestedOneWithoutUserInput
-    studentProfile?: StudentProfileCreateNestedOneWithoutUserInput
-    tuitionPosts?: TuitionPostCreateNestedManyWithoutPostedByUserInput
-    applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
-    teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
-    studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
-    studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
-    teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
-    studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
-  }
-
-  export type UserUncheckedCreateWithoutStudentDemoClassesInput = {
-    id?: number
-    userId?: string | null
-    name: string
-    email: string
-    password: string
-    address?: string | null
-    contact?: string | null
-    gender?: $Enums.Gender | null
-    role: $Enums.Role
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
-    teacherProfile?: TeacherProfileUncheckedCreateNestedOneWithoutUserInput
-    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutUserInput
-    tuitionPosts?: TuitionPostUncheckedCreateNestedManyWithoutPostedByUserInput
-    applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
-    teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
-    studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
-    studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
-    teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
-    studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
-  }
-
-  export type UserCreateOrConnectWithoutStudentDemoClassesInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutStudentDemoClassesInput, UserUncheckedCreateWithoutStudentDemoClassesInput>
-  }
-
-  export type AssignedCreateWithoutDemoClassInput = {
-    assignedBy: number
-    startDate?: Date | string
-    endDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tuitionPost: TuitionPostCreateNestedOneWithoutAssignedInput
-    teacher: UserCreateNestedOneWithoutTeacherAssignmentsInput
-    student: UserCreateNestedOneWithoutStudentAssignmentsInput
-    classSchedule?: ClassScheduleCreateNestedOneWithoutAssignmentInput
-  }
-
-  export type AssignedUncheckedCreateWithoutDemoClassInput = {
-    id?: number
-    tuitionPostId: number
-    teacherId: number
-    studentId: number
-    assignedBy: number
-    startDate?: Date | string
-    endDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    classSchedule?: ClassScheduleUncheckedCreateNestedOneWithoutAssignmentInput
-  }
-
-  export type AssignedCreateOrConnectWithoutDemoClassInput = {
-    where: AssignedWhereUniqueInput
-    create: XOR<AssignedCreateWithoutDemoClassInput, AssignedUncheckedCreateWithoutDemoClassInput>
-  }
-
-  export type TuitionPostUpsertWithoutDemoClassesInput = {
-    update: XOR<TuitionPostUpdateWithoutDemoClassesInput, TuitionPostUncheckedUpdateWithoutDemoClassesInput>
-    create: XOR<TuitionPostCreateWithoutDemoClassesInput, TuitionPostUncheckedCreateWithoutDemoClassesInput>
-    where?: TuitionPostWhereInput
-  }
-
-  export type TuitionPostUpdateToOneWithWhereWithoutDemoClassesInput = {
-    where?: TuitionPostWhereInput
-    data: XOR<TuitionPostUpdateWithoutDemoClassesInput, TuitionPostUncheckedUpdateWithoutDemoClassesInput>
-  }
-
-  export type TuitionPostUpdateWithoutDemoClassesInput = {
-    postId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    mode?: EnumModeFieldUpdateOperationsInput | $Enums.Mode
-    days?: TuitionPostUpdatedaysInput | $Enums.Day[]
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postedByUser?: UserUpdateOneRequiredWithoutTuitionPostsNestedInput
-    status?: LookupUpdateOneRequiredWithoutTuitionStatusesNestedInput
-    area?: LookupUpdateOneWithoutTuitionPostAreaNestedInput
-    subjects?: TuitionPostSubjectUpdateManyWithoutTuitionPostNestedInput
-    applications?: TuitionApplicationUpdateManyWithoutTuitionPostNestedInput
-    assigned?: AssignedUpdateManyWithoutTuitionPostNestedInput
-  }
-
-  export type TuitionPostUncheckedUpdateWithoutDemoClassesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    postId?: StringFieldUpdateOperationsInput | string
-    postedBy?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    budget?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    mode?: EnumModeFieldUpdateOperationsInput | $Enums.Mode
-    areaId?: IntFieldUpdateOperationsInput | number
-    days?: TuitionPostUpdatedaysInput | $Enums.Day[]
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
-    statusId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    subjects?: TuitionPostSubjectUncheckedUpdateManyWithoutTuitionPostNestedInput
-    applications?: TuitionApplicationUncheckedUpdateManyWithoutTuitionPostNestedInput
-    assigned?: AssignedUncheckedUpdateManyWithoutTuitionPostNestedInput
-  }
-
-  export type UserUpsertWithoutTeacherDemoClassesInput = {
-    update: XOR<UserUpdateWithoutTeacherDemoClassesInput, UserUncheckedUpdateWithoutTeacherDemoClassesInput>
-    create: XOR<UserCreateWithoutTeacherDemoClassesInput, UserUncheckedCreateWithoutTeacherDemoClassesInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutTeacherDemoClassesInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutTeacherDemoClassesInput, UserUncheckedUpdateWithoutTeacherDemoClassesInput>
-  }
-
-  export type UserUpdateWithoutTeacherDemoClassesInput = {
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
-    teacherProfile?: TeacherProfileUpdateOneWithoutUserNestedInput
-    studentProfile?: StudentProfileUpdateOneWithoutUserNestedInput
-    tuitionPosts?: TuitionPostUpdateManyWithoutPostedByUserNestedInput
-    applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
-    teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
-    studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
-    teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
-    studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
-    teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
-    studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutTeacherDemoClassesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
-    teacherProfile?: TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
-    studentProfile?: StudentProfileUncheckedUpdateOneWithoutUserNestedInput
-    tuitionPosts?: TuitionPostUncheckedUpdateManyWithoutPostedByUserNestedInput
-    applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
-    teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
-    studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
-    teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
-    studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
-    teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
-    studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
-  }
-
-  export type UserUpsertWithoutStudentDemoClassesInput = {
-    update: XOR<UserUpdateWithoutStudentDemoClassesInput, UserUncheckedUpdateWithoutStudentDemoClassesInput>
-    create: XOR<UserCreateWithoutStudentDemoClassesInput, UserUncheckedCreateWithoutStudentDemoClassesInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutStudentDemoClassesInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutStudentDemoClassesInput, UserUncheckedUpdateWithoutStudentDemoClassesInput>
-  }
-
-  export type UserUpdateWithoutStudentDemoClassesInput = {
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
-    teacherProfile?: TeacherProfileUpdateOneWithoutUserNestedInput
-    studentProfile?: StudentProfileUpdateOneWithoutUserNestedInput
-    tuitionPosts?: TuitionPostUpdateManyWithoutPostedByUserNestedInput
-    applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
-    teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
-    studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
-    studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
-    teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
-    studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutStudentDemoClassesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
-    teacherProfile?: TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
-    studentProfile?: StudentProfileUncheckedUpdateOneWithoutUserNestedInput
-    tuitionPosts?: TuitionPostUncheckedUpdateManyWithoutPostedByUserNestedInput
-    applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
-    teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
-    studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
-    studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
-    teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
-    studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
-  }
-
-  export type AssignedUpsertWithoutDemoClassInput = {
-    update: XOR<AssignedUpdateWithoutDemoClassInput, AssignedUncheckedUpdateWithoutDemoClassInput>
-    create: XOR<AssignedCreateWithoutDemoClassInput, AssignedUncheckedCreateWithoutDemoClassInput>
-    where?: AssignedWhereInput
-  }
-
-  export type AssignedUpdateToOneWithWhereWithoutDemoClassInput = {
-    where?: AssignedWhereInput
-    data: XOR<AssignedUpdateWithoutDemoClassInput, AssignedUncheckedUpdateWithoutDemoClassInput>
-  }
-
-  export type AssignedUpdateWithoutDemoClassInput = {
-    assignedBy?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tuitionPost?: TuitionPostUpdateOneRequiredWithoutAssignedNestedInput
-    teacher?: UserUpdateOneRequiredWithoutTeacherAssignmentsNestedInput
-    student?: UserUpdateOneRequiredWithoutStudentAssignmentsNestedInput
-    classSchedule?: ClassScheduleUpdateOneWithoutAssignmentNestedInput
-  }
-
-  export type AssignedUncheckedUpdateWithoutDemoClassInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    tuitionPostId?: IntFieldUpdateOperationsInput | number
-    teacherId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    assignedBy?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    classSchedule?: ClassScheduleUncheckedUpdateOneWithoutAssignmentNestedInput
-  }
-
   export type TuitionPostCreateWithoutStatusInput = {
     postId: string
     title: string
@@ -28356,7 +26043,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectCreateNestedManyWithoutTuitionPostInput
     applications?: TuitionApplicationCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostUncheckedCreateWithoutStatusInput = {
@@ -28376,7 +26062,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUncheckedCreateNestedManyWithoutTuitionPostInput
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedUncheckedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassUncheckedCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostCreateOrConnectWithoutStatusInput = {
@@ -28524,7 +26209,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectCreateNestedManyWithoutTuitionPostInput
     applications?: TuitionApplicationCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostUncheckedCreateWithoutAreaInput = {
@@ -28544,7 +26228,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUncheckedCreateNestedManyWithoutTuitionPostInput
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedUncheckedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassUncheckedCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostCreateOrConnectWithoutAreaInput = {
@@ -28790,8 +26473,6 @@ export namespace Prisma {
     applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
@@ -28817,8 +26498,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
@@ -28859,8 +26538,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
@@ -28886,8 +26563,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
@@ -28912,8 +26587,6 @@ export namespace Prisma {
     applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
@@ -28939,8 +26612,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
@@ -28981,8 +26652,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
@@ -29008,8 +26677,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
@@ -29034,8 +26701,6 @@ export namespace Prisma {
     applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
@@ -29061,8 +26726,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
@@ -29188,13 +26851,14 @@ export namespace Prisma {
 
   export type AssignedCreateWithoutTuitionPostInput = {
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     teacher: UserCreateNestedOneWithoutTeacherAssignmentsInput
     student: UserCreateNestedOneWithoutStudentAssignmentsInput
-    demoClass?: DemoClassCreateNestedOneWithoutAssignedInput
     classSchedule?: ClassScheduleCreateNestedOneWithoutAssignmentInput
   }
 
@@ -29203,11 +26867,12 @@ export namespace Prisma {
     teacherId: number
     studentId: number
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    demoClass?: DemoClassUncheckedCreateNestedOneWithoutAssignedInput
     classSchedule?: ClassScheduleUncheckedCreateNestedOneWithoutAssignmentInput
   }
 
@@ -29218,33 +26883,6 @@ export namespace Prisma {
 
   export type AssignedCreateManyTuitionPostInputEnvelope = {
     data: AssignedCreateManyTuitionPostInput | AssignedCreateManyTuitionPostInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type DemoClassCreateWithoutTuitionPostInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    teacher: UserCreateNestedOneWithoutTeacherDemoClassesInput
-    student: UserCreateNestedOneWithoutStudentDemoClassesInput
-    assigned?: AssignedCreateNestedOneWithoutDemoClassInput
-  }
-
-  export type DemoClassUncheckedCreateWithoutTuitionPostInput = {
-    id?: number
-    teacherId: number
-    studentId: number
-    assignedId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DemoClassCreateOrConnectWithoutTuitionPostInput = {
-    where: DemoClassWhereUniqueInput
-    create: XOR<DemoClassCreateWithoutTuitionPostInput, DemoClassUncheckedCreateWithoutTuitionPostInput>
-  }
-
-  export type DemoClassCreateManyTuitionPostInputEnvelope = {
-    data: DemoClassCreateManyTuitionPostInput | DemoClassCreateManyTuitionPostInput[]
     skipDuplicates?: boolean
   }
 
@@ -29277,8 +26915,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
@@ -29304,8 +26940,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
@@ -29445,39 +27079,12 @@ export namespace Prisma {
     teacherId?: IntFilter<"Assigned"> | number
     studentId?: IntFilter<"Assigned"> | number
     assignedBy?: IntFilter<"Assigned"> | number
+    isDemo?: BoolFilter<"Assigned"> | boolean
+    isConfirmed?: BoolFilter<"Assigned"> | boolean
     startDate?: DateTimeFilter<"Assigned"> | Date | string
     endDate?: DateTimeNullableFilter<"Assigned"> | Date | string | null
     createdAt?: DateTimeFilter<"Assigned"> | Date | string
     updatedAt?: DateTimeFilter<"Assigned"> | Date | string
-  }
-
-  export type DemoClassUpsertWithWhereUniqueWithoutTuitionPostInput = {
-    where: DemoClassWhereUniqueInput
-    update: XOR<DemoClassUpdateWithoutTuitionPostInput, DemoClassUncheckedUpdateWithoutTuitionPostInput>
-    create: XOR<DemoClassCreateWithoutTuitionPostInput, DemoClassUncheckedCreateWithoutTuitionPostInput>
-  }
-
-  export type DemoClassUpdateWithWhereUniqueWithoutTuitionPostInput = {
-    where: DemoClassWhereUniqueInput
-    data: XOR<DemoClassUpdateWithoutTuitionPostInput, DemoClassUncheckedUpdateWithoutTuitionPostInput>
-  }
-
-  export type DemoClassUpdateManyWithWhereWithoutTuitionPostInput = {
-    where: DemoClassScalarWhereInput
-    data: XOR<DemoClassUpdateManyMutationInput, DemoClassUncheckedUpdateManyWithoutTuitionPostInput>
-  }
-
-  export type DemoClassScalarWhereInput = {
-    AND?: DemoClassScalarWhereInput | DemoClassScalarWhereInput[]
-    OR?: DemoClassScalarWhereInput[]
-    NOT?: DemoClassScalarWhereInput | DemoClassScalarWhereInput[]
-    id?: IntFilter<"DemoClass"> | number
-    tuitionPostId?: IntFilter<"DemoClass"> | number
-    teacherId?: IntFilter<"DemoClass"> | number
-    studentId?: IntFilter<"DemoClass"> | number
-    assignedId?: IntNullableFilter<"DemoClass"> | number | null
-    createdAt?: DateTimeFilter<"DemoClass"> | Date | string
-    updatedAt?: DateTimeFilter<"DemoClass"> | Date | string
   }
 
   export type TuitionPostCreateWithoutApplicationsInput = {
@@ -29496,7 +27103,6 @@ export namespace Prisma {
     area?: LookupCreateNestedOneWithoutTuitionPostAreaInput
     subjects?: TuitionPostSubjectCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostUncheckedCreateWithoutApplicationsInput = {
@@ -29516,7 +27122,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     subjects?: TuitionPostSubjectUncheckedCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedUncheckedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassUncheckedCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostCreateOrConnectWithoutApplicationsInput = {
@@ -29542,8 +27147,6 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostCreateNestedManyWithoutPostedByUserInput
     teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
@@ -29569,8 +27172,6 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostUncheckedCreateNestedManyWithoutPostedByUserInput
     teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
@@ -29641,7 +27242,6 @@ export namespace Prisma {
     area?: LookupUpdateOneWithoutTuitionPostAreaNestedInput
     subjects?: TuitionPostSubjectUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type TuitionPostUncheckedUpdateWithoutApplicationsInput = {
@@ -29661,7 +27261,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subjects?: TuitionPostSubjectUncheckedUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUncheckedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUncheckedUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type UserUpsertWithoutApplicationsInput = {
@@ -29693,8 +27292,6 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostUpdateManyWithoutPostedByUserNestedInput
     teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
@@ -29720,8 +27317,6 @@ export namespace Prisma {
     tuitionPosts?: TuitionPostUncheckedUpdateManyWithoutPostedByUserNestedInput
     teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
@@ -29782,7 +27377,6 @@ export namespace Prisma {
     area?: LookupCreateNestedOneWithoutTuitionPostAreaInput
     applications?: TuitionApplicationCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostUncheckedCreateWithoutSubjectsInput = {
@@ -29802,7 +27396,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedUncheckedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassUncheckedCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostCreateOrConnectWithoutSubjectsInput = {
@@ -29869,7 +27462,6 @@ export namespace Prisma {
     area?: LookupUpdateOneWithoutTuitionPostAreaNestedInput
     applications?: TuitionApplicationUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type TuitionPostUncheckedUpdateWithoutSubjectsInput = {
@@ -29889,7 +27481,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUncheckedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUncheckedUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type LookupUpsertWithoutSubjectsInput = {
@@ -30023,7 +27614,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectCreateNestedManyWithoutTuitionPostInput
     applications?: TuitionApplicationCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostUncheckedCreateWithoutPostedByUserInput = {
@@ -30043,7 +27633,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUncheckedCreateNestedManyWithoutTuitionPostInput
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTuitionPostInput
     assigned?: AssignedUncheckedCreateNestedManyWithoutTuitionPostInput
-    demoClasses?: DemoClassUncheckedCreateNestedManyWithoutTuitionPostInput
   }
 
   export type TuitionPostCreateOrConnectWithoutPostedByUserInput = {
@@ -30087,13 +27676,14 @@ export namespace Prisma {
 
   export type AssignedCreateWithoutTeacherInput = {
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tuitionPost: TuitionPostCreateNestedOneWithoutAssignedInput
     student: UserCreateNestedOneWithoutStudentAssignmentsInput
-    demoClass?: DemoClassCreateNestedOneWithoutAssignedInput
     classSchedule?: ClassScheduleCreateNestedOneWithoutAssignmentInput
   }
 
@@ -30102,11 +27692,12 @@ export namespace Prisma {
     tuitionPostId: number
     studentId: number
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    demoClass?: DemoClassUncheckedCreateNestedOneWithoutAssignedInput
     classSchedule?: ClassScheduleUncheckedCreateNestedOneWithoutAssignmentInput
   }
 
@@ -30122,13 +27713,14 @@ export namespace Prisma {
 
   export type AssignedCreateWithoutStudentInput = {
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tuitionPost: TuitionPostCreateNestedOneWithoutAssignedInput
     teacher: UserCreateNestedOneWithoutTeacherAssignmentsInput
-    demoClass?: DemoClassCreateNestedOneWithoutAssignedInput
     classSchedule?: ClassScheduleCreateNestedOneWithoutAssignmentInput
   }
 
@@ -30137,11 +27729,12 @@ export namespace Prisma {
     tuitionPostId: number
     teacherId: number
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    demoClass?: DemoClassUncheckedCreateNestedOneWithoutAssignedInput
     classSchedule?: ClassScheduleUncheckedCreateNestedOneWithoutAssignmentInput
   }
 
@@ -30152,60 +27745,6 @@ export namespace Prisma {
 
   export type AssignedCreateManyStudentInputEnvelope = {
     data: AssignedCreateManyStudentInput | AssignedCreateManyStudentInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type DemoClassCreateWithoutTeacherInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tuitionPost: TuitionPostCreateNestedOneWithoutDemoClassesInput
-    student: UserCreateNestedOneWithoutStudentDemoClassesInput
-    assigned?: AssignedCreateNestedOneWithoutDemoClassInput
-  }
-
-  export type DemoClassUncheckedCreateWithoutTeacherInput = {
-    id?: number
-    tuitionPostId: number
-    studentId: number
-    assignedId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DemoClassCreateOrConnectWithoutTeacherInput = {
-    where: DemoClassWhereUniqueInput
-    create: XOR<DemoClassCreateWithoutTeacherInput, DemoClassUncheckedCreateWithoutTeacherInput>
-  }
-
-  export type DemoClassCreateManyTeacherInputEnvelope = {
-    data: DemoClassCreateManyTeacherInput | DemoClassCreateManyTeacherInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type DemoClassCreateWithoutStudentInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tuitionPost: TuitionPostCreateNestedOneWithoutDemoClassesInput
-    teacher: UserCreateNestedOneWithoutTeacherDemoClassesInput
-    assigned?: AssignedCreateNestedOneWithoutDemoClassInput
-  }
-
-  export type DemoClassUncheckedCreateWithoutStudentInput = {
-    id?: number
-    tuitionPostId: number
-    teacherId: number
-    assignedId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DemoClassCreateOrConnectWithoutStudentInput = {
-    where: DemoClassWhereUniqueInput
-    create: XOR<DemoClassCreateWithoutStudentInput, DemoClassUncheckedCreateWithoutStudentInput>
-  }
-
-  export type DemoClassCreateManyStudentInputEnvelope = {
-    data: DemoClassCreateManyStudentInput | DemoClassCreateManyStudentInput[]
     skipDuplicates?: boolean
   }
 
@@ -30530,38 +28069,6 @@ export namespace Prisma {
     data: XOR<AssignedUpdateManyMutationInput, AssignedUncheckedUpdateManyWithoutStudentInput>
   }
 
-  export type DemoClassUpsertWithWhereUniqueWithoutTeacherInput = {
-    where: DemoClassWhereUniqueInput
-    update: XOR<DemoClassUpdateWithoutTeacherInput, DemoClassUncheckedUpdateWithoutTeacherInput>
-    create: XOR<DemoClassCreateWithoutTeacherInput, DemoClassUncheckedCreateWithoutTeacherInput>
-  }
-
-  export type DemoClassUpdateWithWhereUniqueWithoutTeacherInput = {
-    where: DemoClassWhereUniqueInput
-    data: XOR<DemoClassUpdateWithoutTeacherInput, DemoClassUncheckedUpdateWithoutTeacherInput>
-  }
-
-  export type DemoClassUpdateManyWithWhereWithoutTeacherInput = {
-    where: DemoClassScalarWhereInput
-    data: XOR<DemoClassUpdateManyMutationInput, DemoClassUncheckedUpdateManyWithoutTeacherInput>
-  }
-
-  export type DemoClassUpsertWithWhereUniqueWithoutStudentInput = {
-    where: DemoClassWhereUniqueInput
-    update: XOR<DemoClassUpdateWithoutStudentInput, DemoClassUncheckedUpdateWithoutStudentInput>
-    create: XOR<DemoClassCreateWithoutStudentInput, DemoClassUncheckedCreateWithoutStudentInput>
-  }
-
-  export type DemoClassUpdateWithWhereUniqueWithoutStudentInput = {
-    where: DemoClassWhereUniqueInput
-    data: XOR<DemoClassUpdateWithoutStudentInput, DemoClassUncheckedUpdateWithoutStudentInput>
-  }
-
-  export type DemoClassUpdateManyWithWhereWithoutStudentInput = {
-    where: DemoClassScalarWhereInput
-    data: XOR<DemoClassUpdateManyMutationInput, DemoClassUncheckedUpdateManyWithoutStudentInput>
-  }
-
   export type AssignmentUpsertWithWhereUniqueWithoutTeacherInput = {
     where: AssignmentWhereUniqueInput
     update: XOR<AssignmentUpdateWithoutTeacherInput, AssignmentUncheckedUpdateWithoutTeacherInput>
@@ -30660,8 +28167,6 @@ export namespace Prisma {
     applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
@@ -30687,8 +28192,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
     teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
     studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
-    teacherDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutTeacherInput
-    studentDemoClasses?: DemoClassUncheckedCreateNestedManyWithoutStudentInput
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
@@ -30729,8 +28232,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
@@ -30756,8 +28257,6 @@ export namespace Prisma {
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
     teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
     studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
-    teacherDemoClasses?: DemoClassUncheckedUpdateManyWithoutTeacherNestedInput
-    studentDemoClasses?: DemoClassUncheckedUpdateManyWithoutStudentNestedInput
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
@@ -30930,7 +28429,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUpdateManyWithoutTuitionPostNestedInput
     applications?: TuitionApplicationUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type TuitionPostUncheckedUpdateWithoutStatusInput = {
@@ -30950,7 +28448,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUncheckedUpdateManyWithoutTuitionPostNestedInput
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUncheckedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUncheckedUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type TuitionPostUncheckedUpdateManyWithoutStatusInput = {
@@ -31120,7 +28617,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUpdateManyWithoutTuitionPostNestedInput
     applications?: TuitionApplicationUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type TuitionPostUncheckedUpdateWithoutAreaInput = {
@@ -31140,7 +28636,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUncheckedUpdateManyWithoutTuitionPostNestedInput
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUncheckedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUncheckedUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type TuitionPostUncheckedUpdateManyWithoutAreaInput = {
@@ -31207,17 +28702,10 @@ export namespace Prisma {
     teacherId: number
     studentId: number
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DemoClassCreateManyTuitionPostInput = {
-    id?: number
-    teacherId: number
-    studentId: number
-    assignedId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -31267,13 +28755,14 @@ export namespace Prisma {
 
   export type AssignedUpdateWithoutTuitionPostInput = {
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teacher?: UserUpdateOneRequiredWithoutTeacherAssignmentsNestedInput
     student?: UserUpdateOneRequiredWithoutStudentAssignmentsNestedInput
-    demoClass?: DemoClassUpdateOneWithoutAssignedNestedInput
     classSchedule?: ClassScheduleUpdateOneWithoutAssignmentNestedInput
   }
 
@@ -31282,11 +28771,12 @@ export namespace Prisma {
     teacherId?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    demoClass?: DemoClassUncheckedUpdateOneWithoutAssignedNestedInput
     classSchedule?: ClassScheduleUncheckedUpdateOneWithoutAssignmentNestedInput
   }
 
@@ -31295,34 +28785,10 @@ export namespace Prisma {
     teacherId?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DemoClassUpdateWithoutTuitionPostInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    teacher?: UserUpdateOneRequiredWithoutTeacherDemoClassesNestedInput
-    student?: UserUpdateOneRequiredWithoutStudentDemoClassesNestedInput
-    assigned?: AssignedUpdateOneWithoutDemoClassNestedInput
-  }
-
-  export type DemoClassUncheckedUpdateWithoutTuitionPostInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    teacherId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    assignedId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DemoClassUncheckedUpdateManyWithoutTuitionPostInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    teacherId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    assignedId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31365,6 +28831,8 @@ export namespace Prisma {
     tuitionPostId: number
     studentId: number
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
     createdAt?: Date | string
@@ -31376,26 +28844,10 @@ export namespace Prisma {
     tuitionPostId: number
     teacherId: number
     assignedBy: number
+    isDemo?: boolean
+    isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DemoClassCreateManyTeacherInput = {
-    id?: number
-    tuitionPostId: number
-    studentId: number
-    assignedId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DemoClassCreateManyStudentInput = {
-    id?: number
-    tuitionPostId: number
-    teacherId: number
-    assignedId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -31496,7 +28948,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUpdateManyWithoutTuitionPostNestedInput
     applications?: TuitionApplicationUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type TuitionPostUncheckedUpdateWithoutPostedByUserInput = {
@@ -31516,7 +28967,6 @@ export namespace Prisma {
     subjects?: TuitionPostSubjectUncheckedUpdateManyWithoutTuitionPostNestedInput
     applications?: TuitionApplicationUncheckedUpdateManyWithoutTuitionPostNestedInput
     assigned?: AssignedUncheckedUpdateManyWithoutTuitionPostNestedInput
-    demoClasses?: DemoClassUncheckedUpdateManyWithoutTuitionPostNestedInput
   }
 
   export type TuitionPostUncheckedUpdateManyWithoutPostedByUserInput = {
@@ -31566,13 +29016,14 @@ export namespace Prisma {
 
   export type AssignedUpdateWithoutTeacherInput = {
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tuitionPost?: TuitionPostUpdateOneRequiredWithoutAssignedNestedInput
     student?: UserUpdateOneRequiredWithoutStudentAssignmentsNestedInput
-    demoClass?: DemoClassUpdateOneWithoutAssignedNestedInput
     classSchedule?: ClassScheduleUpdateOneWithoutAssignmentNestedInput
   }
 
@@ -31581,11 +29032,12 @@ export namespace Prisma {
     tuitionPostId?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    demoClass?: DemoClassUncheckedUpdateOneWithoutAssignedNestedInput
     classSchedule?: ClassScheduleUncheckedUpdateOneWithoutAssignmentNestedInput
   }
 
@@ -31594,6 +29046,8 @@ export namespace Prisma {
     tuitionPostId?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31602,13 +29056,14 @@ export namespace Prisma {
 
   export type AssignedUpdateWithoutStudentInput = {
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tuitionPost?: TuitionPostUpdateOneRequiredWithoutAssignedNestedInput
     teacher?: UserUpdateOneRequiredWithoutTeacherAssignmentsNestedInput
-    demoClass?: DemoClassUpdateOneWithoutAssignedNestedInput
     classSchedule?: ClassScheduleUpdateOneWithoutAssignmentNestedInput
   }
 
@@ -31617,11 +29072,12 @@ export namespace Prisma {
     tuitionPostId?: IntFieldUpdateOperationsInput | number
     teacherId?: IntFieldUpdateOperationsInput | number
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    demoClass?: DemoClassUncheckedUpdateOneWithoutAssignedNestedInput
     classSchedule?: ClassScheduleUncheckedUpdateOneWithoutAssignmentNestedInput
   }
 
@@ -31630,60 +29086,10 @@ export namespace Prisma {
     tuitionPostId?: IntFieldUpdateOperationsInput | number
     teacherId?: IntFieldUpdateOperationsInput | number
     assignedBy?: IntFieldUpdateOperationsInput | number
+    isDemo?: BoolFieldUpdateOperationsInput | boolean
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DemoClassUpdateWithoutTeacherInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tuitionPost?: TuitionPostUpdateOneRequiredWithoutDemoClassesNestedInput
-    student?: UserUpdateOneRequiredWithoutStudentDemoClassesNestedInput
-    assigned?: AssignedUpdateOneWithoutDemoClassNestedInput
-  }
-
-  export type DemoClassUncheckedUpdateWithoutTeacherInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    tuitionPostId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    assignedId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DemoClassUncheckedUpdateManyWithoutTeacherInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    tuitionPostId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    assignedId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DemoClassUpdateWithoutStudentInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tuitionPost?: TuitionPostUpdateOneRequiredWithoutDemoClassesNestedInput
-    teacher?: UserUpdateOneRequiredWithoutTeacherDemoClassesNestedInput
-    assigned?: AssignedUpdateOneWithoutDemoClassNestedInput
-  }
-
-  export type DemoClassUncheckedUpdateWithoutStudentInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    tuitionPostId?: IntFieldUpdateOperationsInput | number
-    teacherId?: IntFieldUpdateOperationsInput | number
-    assignedId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DemoClassUncheckedUpdateManyWithoutStudentInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    tuitionPostId?: IntFieldUpdateOperationsInput | number
-    teacherId?: IntFieldUpdateOperationsInput | number
-    assignedId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

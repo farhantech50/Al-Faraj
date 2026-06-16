@@ -288,10 +288,13 @@ export const deleteTuitionPost = async (req, res) => {
 export const getTuitionApplicationById = async (req, res) => {
   try {
     const { id } = req.params;
-
+    const teacherId = req.user.id;
     const application = await prisma.tuitionApplication.findUnique({
       where: {
-        id: parseInt(id),
+        tuitionPostId_teacherId: {
+          tuitionPostId: parseInt(id),
+          teacherId: parseInt(teacherId),
+        },
       },
       select: {
         id: true,
@@ -346,7 +349,6 @@ export const getTuitionApplicationById = async (req, res) => {
         },
       },
     });
-
     if (!application) {
       return res.status(404).json({ error: "Application not found" });
     }
@@ -359,82 +361,47 @@ export const getTuitionApplicationById = async (req, res) => {
 };
 export const getTuitionsHavePendingApplications = async (req, res) => {
   try {
-    const applications = await prisma.teacherApplication.findMany({
-      where: { status: 23 },
-      select: { tuitionPostId: true, teacherId: true },
-    });
+    const { mode } = req.query;
 
-    if (applications.length === 0) {
-      return res.status(200).json([]);
-    }
+    const posts = await prisma.tuitionPost.findMany({
+      where: {
+        applications: {
+          some: {
+            statusId: 14,
+          },
+        },
 
-    const teacherIds = [...new Set(applications.map((a) => a.teacherId))];
-    const teachers = await prisma.user.findMany({
-      where: { id: { in: teacherIds } },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        address: true,
-        contact: true,
-        gender: true,
+        ...(mode && { mode }),
+      },
+
+      include: {
+        area: true,
+        status: true,
+
+        applications: {
+          where: {
+            statusId: 14,
+          },
+
+          include: {
+            teacher: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                contact: true,
+              },
+            },
+          },
+        },
+      },
+
+      orderBy: {
+        createdAt: "desc",
       },
     });
 
-    const countMap = {};
-    for (const app of applications) {
-      const postId = app.tuitionPostId;
-      if (!countMap[postId]) {
-        countMap[postId] = { count: 0, teacherDetails: [] };
-      }
-      const teacher = teachers.find((t) => t.id === app.teacherId);
-      countMap[postId].count += 1;
-      if (teacher) countMap[postId].teacherDetails.push(teacher);
-    }
-
-    const tuitionPostIds = Object.keys(countMap).map(Number);
-
-    const posts = await prisma.tuitionPost.findMany({
-      where: { id: { in: tuitionPostIds } },
-      orderBy: { createdAt: "desc" },
-    });
-
-    const areaIds = [...new Set(posts.map((p) => parseInt(p.area)))];
-    const statusIds = [...new Set(posts.map((p) => parseInt(p.status)))];
-    const subjectIdList = [...new Set(posts.flatMap((p) => p.subjects))];
-    const [areas, statuses, subjects] = await Promise.all([
-      prisma.lookup.findMany({
-        where: { id: { in: areaIds } },
-        select: { id: true, value: true },
-      }),
-      prisma.lookup.findMany({
-        where: { id: { in: statusIds } },
-        select: { id: true, value: true },
-      }),
-      prisma.lookup.findMany({
-        where: { id: { in: subjectIdList } },
-        select: { id: true, value: true },
-      }),
-    ]);
-
-    const result = posts.map((post) => {
-      const areaObj = areas.find((a) => a.id === post.area);
-      const statusObj = statuses.find((s) => s.id === post.status);
-      const postSubjects = post.subjects
-        .map((id) => subjects.find((s) => s.id === id))
-        .filter(Boolean);
-
-      return {
-        ...post,
-        area: areaObj ?? post.area,
-        status: statusObj ?? post.status,
-        subjects: postSubjects.map((s) => s),
-        pendingApplicationCount: countMap[post.id]?.count || 0,
-        teacherDetails: countMap[post.id]?.teacherDetails || [],
-      };
-    });
-
-    return res.status(200).json(result);
+    return res.status(200).json(posts);
   } catch (error) {
     console.log("Error in getTuitionsHavePendingApplications", error);
     return res.status(500).json({ error: "Internal server error" });
