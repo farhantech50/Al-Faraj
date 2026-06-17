@@ -120,6 +120,18 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.AnnouncementScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  message: 'message',
+  roles: 'roles',
+  startAt: 'startAt',
+  endAt: 'endAt',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.AssignedScalarFieldEnum = {
   id: 'id',
   tuitionPostId: 'tuitionPostId',
@@ -161,7 +173,6 @@ exports.Prisma.ClassScheduleScalarFieldEnum = {
   days: 'days',
   startTime: 'startTime',
   endTime: 'endTime',
-  mode: 'mode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -170,18 +181,6 @@ exports.Prisma.ClassScheduleSubjectScalarFieldEnum = {
   id: 'id',
   classScheduleId: 'classScheduleId',
   subjectId: 'subjectId'
-};
-
-exports.Prisma.ClassScheduleOverrideScalarFieldEnum = {
-  id: 'id',
-  classScheduleId: 'classScheduleId',
-  originalDate: 'originalDate',
-  newDate: 'newDate',
-  startTime: 'startTime',
-  endTime: 'endTime',
-  mode: 'mode',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.LookupScalarFieldEnum = {
@@ -286,18 +285,20 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
-};
-
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-exports.Mode = exports.$Enums.Mode = {
-  online: 'online',
-  offline: 'offline'
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.Role = exports.$Enums.Role = {
+  admin: 'admin',
+  moderator: 'moderator',
+  teacher: 'teacher',
+  student: 'student'
 };
 
 exports.Day = exports.$Enums.Day = {
@@ -310,11 +311,9 @@ exports.Day = exports.$Enums.Day = {
   sunday: 'sunday'
 };
 
-exports.Role = exports.$Enums.Role = {
-  admin: 'admin',
-  moderator: 'moderator',
-  teacher: 'teacher',
-  student: 'student'
+exports.Mode = exports.$Enums.Mode = {
+  online: 'online',
+  offline: 'offline'
 };
 
 exports.Gender = exports.$Enums.Gender = {
@@ -324,11 +323,11 @@ exports.Gender = exports.$Enums.Gender = {
 };
 
 exports.Prisma.ModelName = {
+  Announcement: 'Announcement',
   Assigned: 'Assigned',
   Assignment: 'Assignment',
   ClassSchedule: 'ClassSchedule',
   ClassScheduleSubject: 'ClassScheduleSubject',
-  ClassScheduleOverride: 'ClassScheduleOverride',
   Lookup: 'Lookup',
   RolePermission: 'RolePermission',
   StudentProfile: 'StudentProfile',

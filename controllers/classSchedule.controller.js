@@ -4,7 +4,7 @@ import { startOfDay, endOfDay } from "date-fns";
 export const updateClassSchedule = async (req, res) => {
   try {
     const { id } = req.params;
-    const { days, startTime, endTime, medium } = req.body;
+    const { days, startTime, endTime } = req.body;
 
     const existing = await prisma.classSchedule.findUnique({
       where: { id: parseInt(id) },
@@ -20,7 +20,6 @@ export const updateClassSchedule = async (req, res) => {
         ...(days && { days }),
         ...(startTime && { startTime }),
         ...(endTime && { endTime }),
-        ...(medium && { medium }),
       },
     });
 
@@ -30,7 +29,57 @@ export const updateClassSchedule = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+export const getUserClassSchedulesByUserId = async (req, res) => {
+  try {
+    const { userId } = req.query;
 
+    const id = Number(userId);
+
+    if (!id) {
+      return res.status(400).json({
+        error: "userId is required",
+      });
+    }
+
+    const schedules = await prisma.classSchedule.findMany({
+      where: {
+        OR: [{ teacherId: id }, { studentId: id }],
+      },
+      select: {
+        id: true,
+        startTime: true,
+        endTime: true,
+        days: true,
+
+        teacher: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+
+        student: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return res.status(200).json({
+      data: schedules,
+    });
+  } catch (error) {
+    console.log("Error in getUserClassSchedules", error);
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
 export const createScheduleOverride = async (req, res) => {
   try {
     const teacherId = req.user.id;

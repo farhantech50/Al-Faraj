@@ -61,11 +61,9 @@ export const createAssigned = async (req, res) => {
           assignedId: assignment.id,
           teacherId: Number(teacherId),
           studentId: tuitionPost.postedBy,
-
           days: tuitionPost.days,
           startTime: tuitionPost.startTime,
           endTime: tuitionPost.endTime,
-          mode: tuitionPost.mode,
         },
       });
 
@@ -142,123 +140,7 @@ export const deleteAssignment = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
-export const getStudentAssignments = async (req, res) => {
-  try {
-    const studentId = parseInt(req.params.studentId);
 
-    const assignments = await prisma.assignedTeacherStudent.findMany({
-      where: { studentId },
-    });
-
-    if (assignments.length === 0) {
-      return res.status(200).json([]);
-    }
-
-    const result = [];
-
-    for (const assignment of assignments) {
-      const teacher = await prisma.user.findUnique({
-        where: { id: assignment.teacherId },
-        select: { id: true, name: true, email: true, contact: true },
-      });
-
-      const subjects = await prisma.subject.findMany({
-        where: { id: { in: assignment.subjectIds } },
-        select: { id: true, name: true },
-      });
-
-      const schedule = await prisma.classSchedule.findUnique({
-        where: { assignmentId: assignment.id },
-        select: {
-          days: true,
-          startTime: true,
-          endTime: true,
-          medium: true,
-        },
-      });
-
-      const tuitionPost = await prisma.tuitionPost.findUnique({
-        where: { id: assignment.tuitionPostId },
-        select: { budget: true, area: true },
-      });
-
-      result.push({
-        assignmentId: assignment.id,
-        startDate: assignment.startDate,
-        endDate: assignment.endDate,
-        budget: tuitionPost?.budget,
-        area: tuitionPost?.area,
-        teacher,
-        subjects,
-        schedule,
-      });
-    }
-
-    return res.status(200).json(result);
-  } catch (error) {
-    console.log("Error in getStudentAssignments", error);
-    return res.status(500).json({ error: "Internal server error" });
-  }
-};
-
-export const getTeacherAssignments = async (req, res) => {
-  try {
-    const teacherId = parseInt(req.params.teacherId);
-
-    const assignments = await prisma.assignedTeacherStudent.findMany({
-      where: { teacherId },
-    });
-
-    if (assignments.length === 0) {
-      return res.status(200).json([]);
-    }
-
-    const result = [];
-
-    for (const assignment of assignments) {
-      const student = await prisma.user.findUnique({
-        where: { id: assignment.studentId },
-        select: { id: true, name: true, email: true, contact: true },
-      });
-
-      const subjects = await prisma.subject.findMany({
-        where: { id: { in: assignment.subjectIds } },
-        select: { id: true, name: true },
-      });
-
-      const schedule = await prisma.classSchedule.findUnique({
-        where: { assignmentId: assignment.id },
-        select: {
-          days: true,
-          startTime: true,
-          endTime: true,
-          medium: true,
-        },
-      });
-
-      const tuitionPost = await prisma.tuitionPost.findUnique({
-        where: { id: assignment.tuitionPostId },
-        select: { budget: true, area: true },
-      });
-
-      result.push({
-        assignmentId: assignment.id,
-        startDate: assignment.startDate,
-        endDate: assignment.endDate,
-        budget: tuitionPost?.budget,
-        area: tuitionPost?.area,
-        student,
-        subjects,
-        schedule,
-      });
-    }
-
-    return res.status(200).json(result);
-  } catch (error) {
-    console.log("Error in getTeacherAssignments", error);
-    return res.status(500).json({ error: "Internal server error" });
-  }
-};
 export const getAssignedPostDetailsById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -335,5 +217,112 @@ export const getAssignedPostDetailsById = async (req, res) => {
     return res.status(500).json({
       error: "Internal server error",
     });
+  }
+};
+export const getAssignedTuitions = async (req, res) => {
+  try {
+    const { mode, search, page = 1, limit = 10 } = req.query;
+
+    const take = Number(limit);
+    const skip = (Number(page) - 1) * take;
+
+    const where = {};
+
+    if (mode) {
+      where.tuitionPost = {
+        mode,
+      };
+    }
+
+    if (search) {
+      where.OR = [
+        {
+          teacher: {
+            userId: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          teacher: {
+            name: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          student: {
+            userId: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        },
+        {
+          student: {
+            name: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        },
+      ];
+    }
+
+    const [assigned, total] = await Promise.all([
+      prisma.assigned.findMany({
+        where,
+        skip,
+        take,
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          teacher: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              contact: true,
+              userId: true,
+            },
+          },
+          student: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              contact: true,
+              userId: true,
+            },
+          },
+          tuitionPost: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              budget: true,
+              mode: true,
+              area: true,
+              subjects: true,
+            },
+          },
+        },
+      }),
+
+      prisma.assigned.count({ where }),
+    ]);
+
+    return res.status(200).json({
+      data: assigned,
+      total,
+      page: Number(page),
+      totalPages: Math.ceil(total / take),
+    });
+  } catch (error) {
+    console.log("Error in getAssignedTuitions", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };

@@ -8,8 +8,7 @@ model ClassSchedule {
   days         Day[]
   startTime    String
   endTime      String
-  mode         Mode
-
+  
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

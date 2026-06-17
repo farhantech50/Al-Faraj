@@ -1247,7 +1247,7 @@
         }
       }
     },
-    "/api/assign/student/{studentId}": {
+    "/api/assign/all": {
       "get": {
         "tags": [
           "Assign"
@@ -1255,9 +1255,29 @@
         "description": "",
         "parameters": [
           {
-            "name": "studentId",
-            "in": "path",
-            "required": true,
+            "name": "mode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
             "schema": {
               "type": "string"
             }
@@ -2351,87 +2371,6 @@
                   "endTime": {
                     "type": "string",
                     "example": "18:00"
-                  },
-                  "medium": {
-                    "type": "string",
-                    "enum": [
-                      "online",
-                      "home_tuition"
-                    ],
-                    "example": "online"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/class-schedule/override": {
-      "post": {
-        "tags": [
-          "Schedule"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "teacherId": {
-                    "type": "integer",
-                    "example": 1
-                  },
-                  "classScheduleId": {
-                    "type": "integer",
-                    "example": 1
-                  },
-                  "date": {
-                    "type": "string",
-                    "example": "2026-05-06"
-                  },
-                  "startTime": {
-                    "type": "string",
-                    "example": "17:00"
-                  },
-                  "endTime": {
-                    "type": "string",
-                    "example": "19:00"
-                  },
-                  "medium": {
-                    "type": "string",
-                    "example": "online"
                   }
                 }
               }
@@ -2463,6 +2402,47 @@
           },
           {
             "name": "teacherId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/class-schedule/user": {
+      "get": {
+        "tags": [
+          "Schedule"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
             "in": "query",
             "schema": {
               "type": "string"
@@ -3200,6 +3180,144 @@
         "tags": [
           "Dashboard"
         ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/announcements/create": {
+      "post": {
+        "tags": [
+          "Announcement"
+        ],
+        "summary": "Create announcement",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "message",
+                  "roles",
+                  "startAt",
+                  "endAt"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "System Maintenance"
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "System will be unavailable at 10 PM"
+                  },
+                  "roles": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "teacher",
+                      "student"
+                    ]
+                  },
+                  "startAt": {
+                    "type": "string",
+                    "example": "2026-06-17T10:00:00"
+                  },
+                  "endAt": {
+                    "type": "string",
+                    "example": "2026-06-17T12:00:00"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/announcements/active": {
+      "get": {
+        "tags": [
+          "Announcement"
+        ],
+        "summary": "Get active announcements for user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/announcements/all": {
+      "get": {
+        "tags": [
+          "Announcement"
+        ],
+        "summary": "Get all announcements",
         "description": "",
         "parameters": [
           {

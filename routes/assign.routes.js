@@ -3,7 +3,7 @@ import {
   createAssigned,
   deleteAssignment,
   getAssignedPostDetailsById,
-  getStudentAssignments,
+  getAssignedTuitions,
 } from "../controllers/assign.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
 
@@ -46,12 +46,12 @@ router.delete(
   },
 );
 router.get(
-  "/student/:studentId",
+  "/all",
   protect,
-  authorizeRoles("admin", "moderator", "student"),
+  authorizeRoles("admin", "moderator"),
   (req, res, next) => {
     /* #swagger.tags = ['Assign'] */
-    getStudentAssignments(req, res, next);
+    getAssignedTuitions(req, res, next);
   },
 );
 router.get(
