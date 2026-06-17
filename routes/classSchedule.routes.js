@@ -2,9 +2,12 @@ import express from "express";
 import {
   createScheduleOverride,
   getStudentSchedule,
+  getStudentUpcomingClass,
   getTeacherSchedule,
+  getTeacherUpcomingClass,
   getUserClassSchedulesByUserId,
   updateClassSchedule,
+  updateMeetingLink,
 } from "../controllers/classSchedule.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
 
@@ -12,7 +15,7 @@ const router = express.Router();
 router.put(
   "/update/:id",
   protect,
-  authorizeRoles("admin", "moderator"),
+  authorizeRoles("admin", "moderator", "teacher", "student"),
   (req, res, next) => {
     /* #swagger.tags = ['Schedule']
        #swagger.requestBody = {
@@ -62,4 +65,51 @@ router.get(
     getStudentSchedule(req, res, next);
   },
 );
+router.get(
+  "/teacher/upcomingClass",
+  protect,
+  authorizeRoles("teacher", "admin", "moderator"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Schedule'] */
+    getTeacherUpcomingClass(req, res, next);
+  },
+);
+router.get(
+  "/student/upcomingClass",
+  protect,
+  authorizeRoles("student", "admin", "moderator"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Schedule'] */
+    getStudentUpcomingClass(req, res, next);
+  },
+);
+router.patch("/:id", protect, (req, res, next) => {
+  /* #swagger.tags = ['Schedule'] */
+
+  /* #swagger.parameters['id'] = {
+      in: 'path',
+      description: 'Class Schedule ID',
+      required: true,
+      type: 'integer'
+  } */
+
+  /* #swagger.requestBody = {
+      required: true,
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              meetingLink: {
+                type: "string",
+                example: "https://zoom.us/j/123456789"
+              }
+            }
+          }
+        }
+      }
+  } */
+
+  updateMeetingLink(req, res, next);
+});
 export default router;

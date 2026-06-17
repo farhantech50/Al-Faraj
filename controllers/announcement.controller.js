@@ -36,8 +36,6 @@ export const getActiveAnnouncements = async (req, res) => {
           has: req.user.role,
         },
 
-        isActive: true,
-
         startAt: {
           lte: now,
         },

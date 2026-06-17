@@ -361,3 +361,228 @@ export const getStudentSchedule = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+export const updateMeetingLink = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { meetingLink } = req.body;
+
+    const schedule = await prisma.classSchedule.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!schedule) {
+      return res.status(404).json({
+        error: "Schedule not found",
+      });
+    }
+
+    const updated = await prisma.classSchedule.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        meetingLink,
+      },
+    });
+
+    return res.status(200).json(updated);
+  } catch (error) {
+    console.log("updateMeetingLink", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+export const getTeacherUpcomingClass = async (req, res) => {
+  try {
+    const teacherId = req.user.id;
+
+    const schedules = await prisma.classSchedule.findMany({
+      where: {
+        teacherId,
+      },
+      include: {
+        student: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            contact: true,
+          },
+        },
+        assignment: {
+          include: {
+            tuitionPost: {
+              select: {
+                area: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!schedules.length) {
+      return res.status(200).json(null);
+    }
+    const dayMap = {
+      sunday: 0,
+      monday: 1,
+      tuesday: 2,
+      wednesday: 3,
+      thursday: 4,
+      friday: 5,
+      saturday: 6,
+    };
+
+    const now = new Date();
+
+    let upcomingClass = null;
+
+    for (const schedule of schedules) {
+      for (const day of schedule.days) {
+        const nextDate = new Date(now);
+        const targetDay = dayMap[day];
+
+        const diff = (targetDay - now.getDay() + 7) % 7;
+
+        nextDate.setDate(now.getDate() + diff);
+
+        const [hours, minutes] = schedule.startTime.split(":");
+
+        nextDate.setHours(Number(hours), Number(minutes), 0, 0);
+
+        if (nextDate > now) {
+          if (!upcomingClass || nextDate < upcomingClass.dateTime) {
+            upcomingClass = {
+              dateTime: nextDate,
+              schedule,
+            };
+          }
+        }
+      }
+    }
+
+    if (!upcomingClass) {
+      return res.status(200).json(null);
+    }
+
+    const schedule = upcomingClass.schedule;
+
+    return res.status(200).json({
+      id: schedule.id,
+      date: upcomingClass.dateTime.toISOString().split("T")[0],
+      student: schedule.student,
+      area: schedule.area,
+      startTime: schedule.startTime,
+      medium: schedule.medium,
+      area: schedule.assignment.tuitionPost.area.value,
+      zoomLink: schedule.zoomLink || null,
+    });
+  } catch (error) {
+    console.log("Error in getTeacherUpcomingClass", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
+export const getStudentUpcomingClass = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+
+    const schedules = await prisma.classSchedule.findMany({
+      where: {
+        studentId,
+      },
+      include: {
+        teacher: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            contact: true,
+          },
+        },
+        assignment: {
+          include: {
+            tuitionPost: {
+              select: {
+                subjects: true,
+                mode: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!schedules.length) {
+      return res.status(200).json(null);
+    }
+
+    const dayMap = {
+      sunday: 0,
+      monday: 1,
+      tuesday: 2,
+      wednesday: 3,
+      thursday: 4,
+      friday: 5,
+      saturday: 6,
+    };
+
+    const now = new Date();
+
+    let upcomingClass = null;
+
+    for (const schedule of schedules) {
+      for (const day of schedule.days) {
+        const nextDate = new Date(now);
+        const targetDay = dayMap[day];
+
+        const diff = (targetDay - now.getDay() + 7) % 7;
+
+        nextDate.setDate(now.getDate() + diff);
+
+        const [hours, minutes] = schedule.startTime.split(":");
+
+        nextDate.setHours(Number(hours), Number(minutes), 0, 0);
+
+        if (nextDate > now) {
+          if (!upcomingClass || nextDate < upcomingClass.dateTime) {
+            upcomingClass = {
+              dateTime: nextDate,
+              schedule,
+            };
+          }
+        }
+      }
+    }
+
+    if (!upcomingClass) {
+      return res.status(200).json(null);
+    }
+
+    const schedule = upcomingClass.schedule;
+
+    return res.status(200).json({
+      id: schedule.id,
+      date: upcomingClass.dateTime.toISOString().split("T")[0],
+      teacher: schedule.teacher,
+      startTime: schedule.startTime,
+      medium: schedule.medium,
+      area: schedule.assignment.tuitionPost.area.value,
+      zoomLink: schedule.zoomLink || null,
+    });
+  } catch (error) {
+    console.log("Error in getStudentUpcomingClass", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
