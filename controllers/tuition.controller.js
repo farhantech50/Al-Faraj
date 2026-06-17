@@ -169,6 +169,11 @@ export const getAllTuitionPosts = async (req, res) => {
               value: true,
             },
           },
+          subjects: {
+            include: {
+              subject: true,
+            },
+          },
         },
       }),
       prisma.tuitionPost.count({ where }),
@@ -362,7 +367,6 @@ export const getTuitionApplicationById = async (req, res) => {
 export const getTuitionsHavePendingApplications = async (req, res) => {
   try {
     const { mode } = req.query;
-
     const posts = await prisma.tuitionPost.findMany({
       where: {
         applications: {
@@ -400,7 +404,6 @@ export const getTuitionsHavePendingApplications = async (req, res) => {
         createdAt: "desc",
       },
     });
-
     return res.status(200).json(posts);
   } catch (error) {
     console.log("Error in getTuitionsHavePendingApplications", error);
