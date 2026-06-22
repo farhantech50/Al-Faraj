@@ -5,8 +5,13 @@ import cookieParser from "cookie-parser";
 import routes from "./routes/index.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "./config/swagger-output.json" with { type: "json" };
+import https from "https";
+import fs from "fs";
+import { Server } from "socket.io";
+import jwt from "jsonwebtoken";
 
 const app = express();
+
 const PORT = process.env.PORT;
 
 app.use(
@@ -23,22 +28,74 @@ app.use(
         ) {
           const token =
             response.body
-              .FzZVVybCIswfnBvc3RncmVzO68vcG9zdGdyZXM6cG9zdGdyZXNAbG9jYWxob3N0OjUxMjE0L3RlbX;
+              .FzZVVybCIswfnBvc3RncmVzO68vcG9zdGdyZXNAbG9jYWxob3N0OjUxMjE0L3RlbX;
+
           const swagger = window.ui;
           swagger.preauthorizeApiKey("bearerAuth", `${token}`);
         }
+
         return response;
       },
     },
   }),
 );
-app.use(cors());
+
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(routes);
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
+const sslOptions = {
+  key: fs.readFileSync("./cert/server.key"),
+  cert: fs.readFileSync("./cert/server.crt"),
+};
+
+const server = https.createServer(sslOptions, app);
+
+const io = new Server(server, {
+  cors: {
+    origin: true,
+    credentials: true,
+  },
 });
+io.use((socket, next) => {
+  try {
+    const token = socket.handshake.auth.token;
+
+    if (!token) {
+      return next(new Error("Authentication error"));
+    }
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    socket.user = decoded;
+
+    next();
+  } catch (error) {
+    next(new Error("Invalid token"));
+  }
+});
+
+io.on("connection", (socket) => {
+  socket.join(`user_${socket.user.id}`);
+
+  console.log(`User ${socket.user.id} joined room user_${socket.user.id}`);
+
+  socket.on("disconnect", () => {
+    console.log("Socket disconnected:", socket.id);
+  });
+});
+
+app.set("io", io);
+
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`HTTPS Server running on port ${PORT}`);
+});
+
+export { io };

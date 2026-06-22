@@ -104,6 +104,22 @@ export const createAssigned = async (req, res) => {
           statusId: 16,
         },
       });
+      // SOCKET NOTIFICATION
+      const io = req.app.get("io");
+
+      io.to(`user_${teacherId}`).emit("notification", {
+        title: "New Tuition Assigned",
+
+        message: `You have been assigned a new tuition`,
+
+        type: "assignment",
+
+        data: {
+          assignmentId: assignment.id,
+
+          tuitionPostId: Number(tuitionPostId),
+        },
+      });
 
       return [assignment, schedule];
     });

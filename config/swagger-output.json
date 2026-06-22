@@ -7,11 +7,11 @@
   },
   "servers": [
     {
-      "url": "http://localhost:5001",
+      "url": "https://localhost:5001",
       "description": "Localhost"
     },
     {
-      "url": "http://192.168.68.120:5001"
+      "url": "https://192.168.68.120:5001"
     }
   ],
   "paths": {
