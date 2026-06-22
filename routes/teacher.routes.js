@@ -7,7 +7,6 @@ import {
   getAllTeachers,
   getMyApplications,
   applyToTuitionPost,
-  getAssignedStudents,
   findTeacherApplicationStatusCounts,
 } from "../controllers/teacher.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";

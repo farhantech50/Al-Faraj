@@ -367,11 +367,14 @@ export const getTuitionApplicationById = async (req, res) => {
 export const getTuitionsHavePendingApplications = async (req, res) => {
   try {
     const { mode } = req.query;
+
     const posts = await prisma.tuitionPost.findMany({
       where: {
         applications: {
           some: {
-            statusId: 14,
+            statusId: {
+              in: [14, 15, 16],
+            },
           },
         },
 
@@ -381,12 +384,14 @@ export const getTuitionsHavePendingApplications = async (req, res) => {
       include: {
         area: true,
         status: true,
-
-        applications: {
-          where: {
-            statusId: 14,
+        postedByUser: {
+          select: {
+            userId: true,
+            role: true,
+            name: true,
           },
-
+        },
+        applications: {
           include: {
             teacher: {
               select: {
@@ -404,10 +409,14 @@ export const getTuitionsHavePendingApplications = async (req, res) => {
         createdAt: "desc",
       },
     });
+
     return res.status(200).json(posts);
   } catch (error) {
     console.log("Error in getTuitionsHavePendingApplications", error);
-    return res.status(500).json({ error: "Internal server error" });
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
   }
 };
 export const deleteTeacherApplication = async (req, res) => {

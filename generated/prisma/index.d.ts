@@ -3569,6 +3569,7 @@ export namespace Prisma {
     isConfirmed: boolean | null
     startDate: Date | null
     endDate: Date | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3583,6 +3584,7 @@ export namespace Prisma {
     isConfirmed: boolean | null
     startDate: Date | null
     endDate: Date | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3597,6 +3599,7 @@ export namespace Prisma {
     isConfirmed: number
     startDate: number
     endDate: number
+    isActive: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -3629,6 +3632,7 @@ export namespace Prisma {
     isConfirmed?: true
     startDate?: true
     endDate?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3643,6 +3647,7 @@ export namespace Prisma {
     isConfirmed?: true
     startDate?: true
     endDate?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3657,6 +3662,7 @@ export namespace Prisma {
     isConfirmed?: true
     startDate?: true
     endDate?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3758,6 +3764,7 @@ export namespace Prisma {
     isConfirmed: boolean
     startDate: Date
     endDate: Date | null
+    isActive: boolean
     createdAt: Date
     updatedAt: Date
     _count: AssignedCountAggregateOutputType | null
@@ -3791,6 +3798,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: boolean
     endDate?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
@@ -3809,6 +3817,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: boolean
     endDate?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
@@ -3826,6 +3835,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: boolean
     endDate?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
@@ -3843,11 +3853,12 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: boolean
     endDate?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type AssignedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tuitionPostId" | "teacherId" | "studentId" | "assignedBy" | "isDemo" | "isConfirmed" | "startDate" | "endDate" | "createdAt" | "updatedAt", ExtArgs["result"]["assigned"]>
+  export type AssignedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tuitionPostId" | "teacherId" | "studentId" | "assignedBy" | "isDemo" | "isConfirmed" | "startDate" | "endDate" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["assigned"]>
   export type AssignedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tuitionPost?: boolean | TuitionPostDefaultArgs<ExtArgs>
     teacher?: boolean | UserDefaultArgs<ExtArgs>
@@ -3883,6 +3894,7 @@ export namespace Prisma {
       isConfirmed: boolean
       startDate: Date
       endDate: Date | null
+      isActive: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["assigned"]>
@@ -4321,6 +4333,7 @@ export namespace Prisma {
     readonly isConfirmed: FieldRef<"Assigned", 'Boolean'>
     readonly startDate: FieldRef<"Assigned", 'DateTime'>
     readonly endDate: FieldRef<"Assigned", 'DateTime'>
+    readonly isActive: FieldRef<"Assigned", 'Boolean'>
     readonly createdAt: FieldRef<"Assigned", 'DateTime'>
     readonly updatedAt: FieldRef<"Assigned", 'DateTime'>
   }
@@ -6116,6 +6129,7 @@ export namespace Prisma {
     studentId: number | null
     startTime: string | null
     endTime: string | null
+    meetingLink: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6127,6 +6141,7 @@ export namespace Prisma {
     studentId: number | null
     startTime: string | null
     endTime: string | null
+    meetingLink: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6139,6 +6154,7 @@ export namespace Prisma {
     days: number
     startTime: number
     endTime: number
+    meetingLink: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -6166,6 +6182,7 @@ export namespace Prisma {
     studentId?: true
     startTime?: true
     endTime?: true
+    meetingLink?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6177,6 +6194,7 @@ export namespace Prisma {
     studentId?: true
     startTime?: true
     endTime?: true
+    meetingLink?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6189,6 +6207,7 @@ export namespace Prisma {
     days?: true
     startTime?: true
     endTime?: true
+    meetingLink?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6288,6 +6307,7 @@ export namespace Prisma {
     days: $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink: string | null
     createdAt: Date
     updatedAt: Date
     _count: ClassScheduleCountAggregateOutputType | null
@@ -6319,6 +6339,7 @@ export namespace Prisma {
     days?: boolean
     startTime?: boolean
     endTime?: boolean
+    meetingLink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     assignment?: boolean | AssignedDefaultArgs<ExtArgs>
@@ -6336,6 +6357,7 @@ export namespace Prisma {
     days?: boolean
     startTime?: boolean
     endTime?: boolean
+    meetingLink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     assignment?: boolean | AssignedDefaultArgs<ExtArgs>
@@ -6351,6 +6373,7 @@ export namespace Prisma {
     days?: boolean
     startTime?: boolean
     endTime?: boolean
+    meetingLink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     assignment?: boolean | AssignedDefaultArgs<ExtArgs>
@@ -6366,11 +6389,12 @@ export namespace Prisma {
     days?: boolean
     startTime?: boolean
     endTime?: boolean
+    meetingLink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ClassScheduleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assignedId" | "teacherId" | "studentId" | "days" | "startTime" | "endTime" | "createdAt" | "updatedAt", ExtArgs["result"]["classSchedule"]>
+  export type ClassScheduleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assignedId" | "teacherId" | "studentId" | "days" | "startTime" | "endTime" | "meetingLink" | "createdAt" | "updatedAt", ExtArgs["result"]["classSchedule"]>
   export type ClassScheduleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     assignment?: boolean | AssignedDefaultArgs<ExtArgs>
     teacher?: boolean | UserDefaultArgs<ExtArgs>
@@ -6405,6 +6429,7 @@ export namespace Prisma {
       days: $Enums.Day[]
       startTime: string
       endTime: string
+      meetingLink: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["classSchedule"]>
@@ -6841,6 +6866,7 @@ export namespace Prisma {
     readonly days: FieldRef<"ClassSchedule", 'Day[]'>
     readonly startTime: FieldRef<"ClassSchedule", 'String'>
     readonly endTime: FieldRef<"ClassSchedule", 'String'>
+    readonly meetingLink: FieldRef<"ClassSchedule", 'String'>
     readonly createdAt: FieldRef<"ClassSchedule", 'DateTime'>
     readonly updatedAt: FieldRef<"ClassSchedule", 'DateTime'>
   }
@@ -19234,6 +19260,7 @@ export namespace Prisma {
     isConfirmed: 'isConfirmed',
     startDate: 'startDate',
     endDate: 'endDate',
+    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -19271,6 +19298,7 @@ export namespace Prisma {
     days: 'days',
     startTime: 'startTime',
     endTime: 'endTime',
+    meetingLink: 'meetingLink',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -19666,6 +19694,7 @@ export namespace Prisma {
     isConfirmed?: BoolFilter<"Assigned"> | boolean
     startDate?: DateTimeFilter<"Assigned"> | Date | string
     endDate?: DateTimeNullableFilter<"Assigned"> | Date | string | null
+    isActive?: BoolFilter<"Assigned"> | boolean
     createdAt?: DateTimeFilter<"Assigned"> | Date | string
     updatedAt?: DateTimeFilter<"Assigned"> | Date | string
     tuitionPost?: XOR<TuitionPostScalarRelationFilter, TuitionPostWhereInput>
@@ -19684,6 +19713,7 @@ export namespace Prisma {
     isConfirmed?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrderInput | SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tuitionPost?: TuitionPostOrderByWithRelationInput
@@ -19705,6 +19735,7 @@ export namespace Prisma {
     isConfirmed?: BoolFilter<"Assigned"> | boolean
     startDate?: DateTimeFilter<"Assigned"> | Date | string
     endDate?: DateTimeNullableFilter<"Assigned"> | Date | string | null
+    isActive?: BoolFilter<"Assigned"> | boolean
     createdAt?: DateTimeFilter<"Assigned"> | Date | string
     updatedAt?: DateTimeFilter<"Assigned"> | Date | string
     tuitionPost?: XOR<TuitionPostScalarRelationFilter, TuitionPostWhereInput>
@@ -19723,6 +19754,7 @@ export namespace Prisma {
     isConfirmed?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrderInput | SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: AssignedCountOrderByAggregateInput
@@ -19745,6 +19777,7 @@ export namespace Prisma {
     isConfirmed?: BoolWithAggregatesFilter<"Assigned"> | boolean
     startDate?: DateTimeWithAggregatesFilter<"Assigned"> | Date | string
     endDate?: DateTimeNullableWithAggregatesFilter<"Assigned"> | Date | string | null
+    isActive?: BoolWithAggregatesFilter<"Assigned"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Assigned"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Assigned"> | Date | string
   }
@@ -19881,6 +19914,7 @@ export namespace Prisma {
     days?: EnumDayNullableListFilter<"ClassSchedule">
     startTime?: StringFilter<"ClassSchedule"> | string
     endTime?: StringFilter<"ClassSchedule"> | string
+    meetingLink?: StringNullableFilter<"ClassSchedule"> | string | null
     createdAt?: DateTimeFilter<"ClassSchedule"> | Date | string
     updatedAt?: DateTimeFilter<"ClassSchedule"> | Date | string
     assignment?: XOR<AssignedScalarRelationFilter, AssignedWhereInput>
@@ -19897,6 +19931,7 @@ export namespace Prisma {
     days?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    meetingLink?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignment?: AssignedOrderByWithRelationInput
@@ -19916,6 +19951,7 @@ export namespace Prisma {
     days?: EnumDayNullableListFilter<"ClassSchedule">
     startTime?: StringFilter<"ClassSchedule"> | string
     endTime?: StringFilter<"ClassSchedule"> | string
+    meetingLink?: StringNullableFilter<"ClassSchedule"> | string | null
     createdAt?: DateTimeFilter<"ClassSchedule"> | Date | string
     updatedAt?: DateTimeFilter<"ClassSchedule"> | Date | string
     assignment?: XOR<AssignedScalarRelationFilter, AssignedWhereInput>
@@ -19932,6 +19968,7 @@ export namespace Prisma {
     days?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    meetingLink?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ClassScheduleCountOrderByAggregateInput
@@ -19952,6 +19989,7 @@ export namespace Prisma {
     days?: EnumDayNullableListFilter<"ClassSchedule">
     startTime?: StringWithAggregatesFilter<"ClassSchedule"> | string
     endTime?: StringWithAggregatesFilter<"ClassSchedule"> | string
+    meetingLink?: StringNullableWithAggregatesFilter<"ClassSchedule"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ClassSchedule"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ClassSchedule"> | Date | string
   }
@@ -20809,6 +20847,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tuitionPost: TuitionPostCreateNestedOneWithoutAssignedInput
@@ -20827,6 +20866,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     classSchedule?: ClassScheduleUncheckedCreateNestedOneWithoutAssignmentInput
@@ -20838,6 +20878,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tuitionPost?: TuitionPostUpdateOneRequiredWithoutAssignedNestedInput
@@ -20856,6 +20897,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     classSchedule?: ClassScheduleUncheckedUpdateOneWithoutAssignmentNestedInput
@@ -20871,6 +20913,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -20881,6 +20924,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20895,6 +20939,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21029,6 +21074,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignment: AssignedCreateNestedOneWithoutClassScheduleInput
@@ -21045,6 +21091,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     subjects?: ClassScheduleSubjectUncheckedCreateNestedManyWithoutClassScheduleInput
@@ -21054,6 +21101,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignment?: AssignedUpdateOneRequiredWithoutClassScheduleNestedInput
@@ -21070,6 +21118,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subjects?: ClassScheduleSubjectUncheckedUpdateManyWithoutClassScheduleNestedInput
@@ -21083,6 +21132,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -21091,6 +21141,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21103,6 +21154,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -22056,6 +22108,7 @@ export namespace Prisma {
     isConfirmed?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22078,6 +22131,7 @@ export namespace Prisma {
     isConfirmed?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22092,6 +22146,7 @@ export namespace Prisma {
     isConfirmed?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22297,6 +22352,7 @@ export namespace Prisma {
     days?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    meetingLink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22315,6 +22371,7 @@ export namespace Prisma {
     studentId?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    meetingLink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22326,6 +22383,7 @@ export namespace Prisma {
     studentId?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    meetingLink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -24912,6 +24970,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     teacher: UserCreateNestedOneWithoutTeacherSchedulesInput
@@ -24926,6 +24985,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     subjects?: ClassScheduleSubjectUncheckedCreateNestedManyWithoutClassScheduleInput
@@ -25123,6 +25183,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teacher?: UserUpdateOneRequiredWithoutTeacherSchedulesNestedInput
@@ -25137,6 +25198,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subjects?: ClassScheduleSubjectUncheckedUpdateManyWithoutClassScheduleNestedInput
@@ -25524,6 +25586,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tuitionPost: TuitionPostCreateNestedOneWithoutAssignedInput
@@ -25541,6 +25604,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -25698,6 +25762,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tuitionPost?: TuitionPostUpdateOneRequiredWithoutAssignedNestedInput
@@ -25715,6 +25780,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -25872,6 +25938,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignment: AssignedCreateNestedOneWithoutClassScheduleInput
@@ -25887,6 +25954,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -25943,6 +26011,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignment?: AssignedUpdateOneRequiredWithoutClassScheduleNestedInput
@@ -25958,6 +26027,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -26838,6 +26908,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     teacher: UserCreateNestedOneWithoutTeacherAssignmentsInput
@@ -26854,6 +26925,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     classSchedule?: ClassScheduleUncheckedCreateNestedOneWithoutAssignmentInput
@@ -27068,6 +27140,7 @@ export namespace Prisma {
     isConfirmed?: BoolFilter<"Assigned"> | boolean
     startDate?: DateTimeFilter<"Assigned"> | Date | string
     endDate?: DateTimeNullableFilter<"Assigned"> | Date | string | null
+    isActive?: BoolFilter<"Assigned"> | boolean
     createdAt?: DateTimeFilter<"Assigned"> | Date | string
     updatedAt?: DateTimeFilter<"Assigned"> | Date | string
   }
@@ -27669,6 +27742,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tuitionPost: TuitionPostCreateNestedOneWithoutAssignedInput
@@ -27685,6 +27759,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     classSchedule?: ClassScheduleUncheckedCreateNestedOneWithoutAssignmentInput
@@ -27706,6 +27781,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tuitionPost: TuitionPostCreateNestedOneWithoutAssignedInput
@@ -27722,6 +27798,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     classSchedule?: ClassScheduleUncheckedCreateNestedOneWithoutAssignmentInput
@@ -27831,6 +27908,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignment: AssignedCreateNestedOneWithoutClassScheduleInput
@@ -27845,6 +27923,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     subjects?: ClassScheduleSubjectUncheckedCreateNestedManyWithoutClassScheduleInput
@@ -27864,6 +27943,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignment: AssignedCreateNestedOneWithoutClassScheduleInput
@@ -27878,6 +27958,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     subjects?: ClassScheduleSubjectUncheckedCreateNestedManyWithoutClassScheduleInput
@@ -28141,6 +28222,7 @@ export namespace Prisma {
     days?: EnumDayNullableListFilter<"ClassSchedule">
     startTime?: StringFilter<"ClassSchedule"> | string
     endTime?: StringFilter<"ClassSchedule"> | string
+    meetingLink?: StringNullableFilter<"ClassSchedule"> | string | null
     createdAt?: DateTimeFilter<"ClassSchedule"> | Date | string
     updatedAt?: DateTimeFilter<"ClassSchedule"> | Date | string
   }
@@ -28710,6 +28792,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -28763,6 +28846,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teacher?: UserUpdateOneRequiredWithoutTeacherAssignmentsNestedInput
@@ -28779,6 +28863,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     classSchedule?: ClassScheduleUncheckedUpdateOneWithoutAssignmentNestedInput
@@ -28793,6 +28878,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -28839,6 +28925,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -28852,6 +28939,7 @@ export namespace Prisma {
     isConfirmed?: boolean
     startDate?: Date | string
     endDate?: Date | string | null
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -28899,6 +28987,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -28910,6 +28999,7 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
+    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -29033,6 +29123,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tuitionPost?: TuitionPostUpdateOneRequiredWithoutAssignedNestedInput
@@ -29049,6 +29140,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     classSchedule?: ClassScheduleUncheckedUpdateOneWithoutAssignmentNestedInput
@@ -29063,6 +29155,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -29073,6 +29166,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tuitionPost?: TuitionPostUpdateOneRequiredWithoutAssignedNestedInput
@@ -29089,6 +29183,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     classSchedule?: ClassScheduleUncheckedUpdateOneWithoutAssignmentNestedInput
@@ -29103,6 +29198,7 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -29217,6 +29313,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignment?: AssignedUpdateOneRequiredWithoutClassScheduleNestedInput
@@ -29231,6 +29328,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subjects?: ClassScheduleSubjectUncheckedUpdateManyWithoutClassScheduleNestedInput
@@ -29243,6 +29341,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -29251,6 +29350,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignment?: AssignedUpdateOneRequiredWithoutClassScheduleNestedInput
@@ -29265,6 +29365,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subjects?: ClassScheduleSubjectUncheckedUpdateManyWithoutClassScheduleNestedInput
@@ -29277,6 +29378,7 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
+    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

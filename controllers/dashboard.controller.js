@@ -7,6 +7,8 @@ export const getAdminDashboardCardStats = async (req, res) => {
       totalTeachers,
       pendingApplications,
       pendingTuitionPosts,
+      shortlistedCandidates,
+      demoClasses,
     ] = await Promise.all([
       prisma.user.count({
         where: {
@@ -33,6 +35,19 @@ export const getAdminDashboardCardStats = async (req, res) => {
           statusId: 1,
         },
       }),
+
+      prisma.tuitionApplication.count({
+        where: {
+          statusId: 15,
+        },
+      }),
+
+      prisma.assigned.count({
+        where: {
+          isActive: true,
+          isDemo: true,
+        },
+      }),
     ]);
 
     return res.status(200).json([
@@ -45,12 +60,20 @@ export const getAdminDashboardCardStats = async (req, res) => {
         count: totalTeachers,
       },
       {
-        label: "Pending Applications",
+        label: "New Job Applications",
         count: pendingApplications,
       },
       {
-        label: "Pending Tuition Posts",
+        label: "Tuition Post Request",
         count: pendingTuitionPosts,
+      },
+      {
+        label: "Shortlisted Candidates",
+        count: shortlistedCandidates,
+      },
+      {
+        label: "Demo Classes",
+        count: demoClasses,
       },
     ]);
   } catch (error) {

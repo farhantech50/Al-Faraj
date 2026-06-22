@@ -142,6 +142,7 @@ exports.Prisma.AssignedScalarFieldEnum = {
   isConfirmed: 'isConfirmed',
   startDate: 'startDate',
   endDate: 'endDate',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -173,6 +174,7 @@ exports.Prisma.ClassScheduleScalarFieldEnum = {
   days: 'days',
   startTime: 'startTime',
   endTime: 'endTime',
+  meetingLink: 'meetingLink',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

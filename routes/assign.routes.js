@@ -1,9 +1,9 @@
 import express from "express";
 import {
   createAssigned,
-  deleteAssignment,
   getAssignedPostDetailsById,
   getAssignedTuitions,
+  unassignTuition,
 } from "../controllers/assign.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
 
@@ -26,7 +26,7 @@ router.post(
                  tuitionPostId: { type: "integer", example: 1 },
                  teacherId: { type: "integer", example: 2 },
                  startDate: { type: "string", example: "2026-06-01" },
-                 endDate: { type: "string", example: "2026-12-01" }
+  
                }
              }
            }
@@ -36,15 +36,7 @@ router.post(
     createAssigned(req, res, next);
   },
 );
-router.delete(
-  "/delete/:id",
-  protect,
-  authorizeRoles("admin", "moderator"),
-  (req, res, next) => {
-    /* #swagger.tags = ['Assign'] */
-    deleteAssignment(req, res, next);
-  },
-);
+
 router.get(
   "/all",
   protect,
@@ -61,6 +53,16 @@ router.get(
   (req, res, next) => {
     /* #swagger.tags = ['Assign'] */
     getAssignedPostDetailsById(req, res, next);
+  },
+);
+
+router.patch(
+  "/unassign/:assignedId",
+  protect,
+  authorizeRoles("admin", "moderator"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Assign'] */
+    unassignTuition(req, res, next);
   },
 );
 

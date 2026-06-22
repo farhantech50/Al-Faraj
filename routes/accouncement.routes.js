@@ -79,5 +79,13 @@ router.get("/all", protect, authorizeRoles("admin"), (req, res, next) => {
 
   getAllAnnouncements(req, res, next);
 });
+router.put("/:id", protect, authorizeRoles("admin"), (req, res, next) => {
+  /* #swagger.tags = ['Announcement'] */
+  updateAnnouncement(req, res, next);
+});
 
+router.delete("/:id", protect, authorizeRoles("admin"), (req, res, next) => {
+  /* #swagger.tags = ['Announcement'] */
+  deleteAnnouncement(req, res, next);
+});
 export default router;

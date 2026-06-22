@@ -299,7 +299,7 @@ export const getStudentSchedule = async (req, res) => {
 
     const [assignments, teachers] = await Promise.all([
       prisma.assigned.findMany({
-        where: { id: { in: assignmentIds } },
+        where: { id: { in: assignmentIds }, isActive: true },
         include: {
           tuitionPost: {
             include: {
@@ -403,6 +403,9 @@ export const getTeacherUpcomingClass = async (req, res) => {
     const schedules = await prisma.classSchedule.findMany({
       where: {
         teacherId,
+        assignment: {
+          isActive: true,
+        },
       },
       include: {
         student: {
@@ -498,6 +501,9 @@ export const getStudentUpcomingClass = async (req, res) => {
     const schedules = await prisma.classSchedule.findMany({
       where: {
         studentId,
+        assignment: {
+          isActive: true,
+        },
       },
       include: {
         teacher: {
