@@ -420,6 +420,7 @@ export const getTeacherUpcomingClass = async (req, res) => {
           include: {
             tuitionPost: {
               select: {
+                mode: true,
                 area: true,
               },
             },
@@ -474,16 +475,16 @@ export const getTeacherUpcomingClass = async (req, res) => {
     }
 
     const schedule = upcomingClass.schedule;
-
+    console.log(schedule);
     return res.status(200).json({
       id: schedule.id,
       date: upcomingClass.dateTime.toISOString().split("T")[0],
       student: schedule.student,
       area: schedule.area,
+      mode: schedule.assignment.tuitionPost.mode,
       startTime: schedule.startTime,
-      medium: schedule.medium,
       area: schedule.assignment.tuitionPost.area.value,
-      zoomLink: schedule.zoomLink || null,
+      meetingLink: schedule.meetingLink || null,
     });
   } catch (error) {
     console.log("Error in getTeacherUpcomingClass", error);
@@ -518,8 +519,9 @@ export const getStudentUpcomingClass = async (req, res) => {
           include: {
             tuitionPost: {
               select: {
-                subjects: true,
+                area: true,
                 mode: true,
+                subjects: true,
               },
             },
           },
@@ -580,9 +582,9 @@ export const getStudentUpcomingClass = async (req, res) => {
       date: upcomingClass.dateTime.toISOString().split("T")[0],
       teacher: schedule.teacher,
       startTime: schedule.startTime,
-      medium: schedule.medium,
-      area: schedule.assignment.tuitionPost.area.value,
-      zoomLink: schedule.zoomLink || null,
+      mode: schedule.assignment.tuitionPost.mode,
+      area: schedule.assignment?.tuitionPost?.area?.value,
+      meetingLink: schedule.meetingLink || null,
     });
   } catch (error) {
     console.log("Error in getStudentUpcomingClass", error);

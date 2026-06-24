@@ -15,7 +15,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(
-  "/api-docs",
+  "/swagger",
   swaggerUi.serve,
   swaggerUi.setup(swaggerFile, {
     persistAuthorization: true,
