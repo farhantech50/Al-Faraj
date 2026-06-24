@@ -475,7 +475,7 @@ export const getTeacherUpcomingClass = async (req, res) => {
     }
 
     const schedule = upcomingClass.schedule;
-    console.log(schedule);
+
     return res.status(200).json({
       id: schedule.id,
       date: upcomingClass.dateTime.toISOString().split("T")[0],

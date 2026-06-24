@@ -1,5 +1,11 @@
 import prisma from "../config/dbConfig.js";
 
+const parseDhakaTime = (dateString) => {
+  if (!dateString) return null;
+
+  return new Date(`${dateString}:00+06:00`);
+};
+
 export const createAnnouncement = async (req, res) => {
   try {
     const { title, message, roles, startAt, endAt } = req.body;
@@ -8,19 +14,16 @@ export const createAnnouncement = async (req, res) => {
       data: {
         title,
         message,
-
         roles,
-
-        startAt: new Date(startAt),
-        endAt: new Date(endAt),
-
+        startAt: parseDhakaTime(startAt),
+        endAt: parseDhakaTime(endAt),
         createdById: req.user.id,
       },
     });
 
-    res.status(201).json(announcement);
+    return res.status(201).json(announcement);
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
     });
   }
@@ -35,24 +38,21 @@ export const getActiveAnnouncements = async (req, res) => {
         roles: {
           has: req.user.role,
         },
-
         startAt: {
           lte: now,
         },
-
         endAt: {
           gte: now,
         },
       },
-
       orderBy: {
         createdAt: "desc",
       },
     });
 
-    res.json(data);
+    return res.status(200).json(data);
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
     });
   }
@@ -87,7 +87,6 @@ export const getAllAnnouncements = async (req, res) => {
     const [data, total] = await Promise.all([
       prisma.announcement.findMany({
         where,
-
         include: {
           createdBy: {
             select: {
@@ -95,11 +94,9 @@ export const getAllAnnouncements = async (req, res) => {
             },
           },
         },
-
         orderBy: {
           createdAt: "desc",
         },
-
         skip,
         take,
       }),
@@ -121,6 +118,7 @@ export const getAllAnnouncements = async (req, res) => {
     });
   }
 };
+
 export const updateAnnouncement = async (req, res) => {
   try {
     const { id } = req.params;
@@ -146,8 +144,8 @@ export const updateAnnouncement = async (req, res) => {
         ...(title && { title }),
         ...(message && { message }),
         ...(roles && { roles }),
-        ...(startAt && { startAt: new Date(startAt) }),
-        ...(endAt && { endAt: new Date(endAt) }),
+        ...(startAt && { startAt: parseDhakaTime(startAt) }),
+        ...(endAt && { endAt: parseDhakaTime(endAt) }),
       },
     });
 

@@ -8,11 +8,12 @@ const doc = {
   },
   servers: [
     {
-      url: "https://localhost:5001",
+      url: "https://localhost:8001",
       description: "Localhost",
     },
     {
-      url: `https://192.168.68.120:5001`,
+      url: `https://192.168.68.120:8001`,
+      description: "Farhan - PC",
     },
   ],
   components: {

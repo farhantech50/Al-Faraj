@@ -28,12 +28,10 @@ app.use(
         ) {
           const token =
             response.body
-              .FzZVVybCIswfnBvc3RncmVzO68vcG9zdGdyZXNAbG9jYWxob3N0OjUxMjE0L3RlbX;
-
+              .FzZVVybCIswfnBvc3RncmVzO68vcG9zdGdyZXM6cG9zdGdyZXNAbG9jYWxob3N0OjUxMjE0L3RlbX;
           const swagger = window.ui;
           swagger.preauthorizeApiKey("bearerAuth", `${token}`);
         }
-
         return response;
       },
     },
