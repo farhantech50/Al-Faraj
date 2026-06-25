@@ -79,6 +79,7 @@ export const loginUser = async (req, res) => {
       permissions,
       [process.env.ACCESS_TOKEN_KEY]: generateAccessToken(
         user.id,
+        user.userId,
         user.role,
         user.name,
         permissions,

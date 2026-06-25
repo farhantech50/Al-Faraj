@@ -73,23 +73,40 @@ io.use((socket, next) => {
     }
     const decoded = jwt.verify(token, process.env.JWT_KEY);
     socket.user = decoded;
-
     next();
   } catch (error) {
     next(new Error("Invalid token"));
   }
 });
 
-io.on("connection", (socket) => {
-  socket.join(`user_${socket.user.id}`);
+const onlineUsers = new Map();
+const broadcastOnlineUsers = () => {
+  const users = [...onlineUsers.values()]
+    .filter((user) => user.role !== "admin")
+    .map((user) => ({
+      id: user.id,
+      role: user.role,
+      mode: user.mode,
+    }));
 
-  console.log(`User ${socket.user.id} joined room user_${socket.user.id}`);
+  io.emit("online-users", users);
+};
+
+io.on("connection", (socket) => {
+  onlineUsers.set(socket.user.id, {
+    id: socket.user.userId,
+    role: socket.user.role,
+    socketId: socket.id,
+    mode: socket.user.mode,
+  });
+  broadcastOnlineUsers();
 
   socket.on("disconnect", () => {
-    console.log("Socket disconnected:", socket.id);
+    onlineUsers.delete(socket.user.id);
+
+    broadcastOnlineUsers();
   });
 });
-
 app.set("io", io);
 
 server.listen(PORT, "0.0.0.0", () => {

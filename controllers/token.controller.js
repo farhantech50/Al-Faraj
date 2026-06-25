@@ -4,6 +4,7 @@ import crypto from "crypto";
 
 export const generateAccessToken = (
   id,
+  userId,
   role,
   name,
   permissions = null,
@@ -11,7 +12,7 @@ export const generateAccessToken = (
   mode,
 ) => {
   return jwt.sign(
-    { id, role, name, permissions, isProfileComplete, mode },
+    { id, userId, role, name, permissions, isProfileComplete, mode },
     process.env.JWT_KEY,
     {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
