@@ -82,7 +82,6 @@ export const loginUser = async (req, res) => {
         user.userId,
         user.role,
         user.name,
-        permissions,
         isProfileComplete,
         mode,
       ),

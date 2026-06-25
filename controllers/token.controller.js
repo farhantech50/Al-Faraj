@@ -7,12 +7,12 @@ export const generateAccessToken = (
   userId,
   role,
   name,
-  permissions = null,
   isProfileComplete,
   mode,
 ) => {
+  console.log(mode);
   return jwt.sign(
-    { id, userId, role, name, permissions, isProfileComplete, mode },
+    { id, userId, role, name, isProfileComplete, mode },
     process.env.JWT_KEY,
     {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
@@ -84,6 +84,22 @@ export const refreshToken = async (req, res) => {
       where: { id: decoded.id },
     });
 
+    let profile = null;
+    let mode = null;
+
+    if (user.role === "student") {
+      profile = await prisma.studentProfile.findUnique({
+        where: { userId: user.id },
+      });
+      mode = profile?.mode || null;
+    }
+
+    if (user.role === "teacher") {
+      profile = await prisma.teacherProfile.findUnique({
+        where: { userId: user.id },
+      });
+      mode = profile?.mode || null;
+    }
     if (!user || !user.isActive) {
       return res.status(401).json({ error: "Unauthorized" });
     }
@@ -99,8 +115,11 @@ export const refreshToken = async (req, res) => {
     return res.status(200).json({
       [process.env.ACCESS_TOKEN_KEY]: generateAccessToken(
         user.id,
+        user.userId,
         user.role,
         user.name,
+        user.isProfileComplete,
+        mode,
       ),
     });
   } catch (error) {

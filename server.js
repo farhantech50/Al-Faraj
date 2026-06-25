@@ -67,7 +67,6 @@ const io = new Server(server, {
 io.use((socket, next) => {
   try {
     const token = socket.handshake.auth.token;
-
     if (!token) {
       return next(new Error("Authentication error"));
     }
@@ -88,7 +87,6 @@ const broadcastOnlineUsers = () => {
       role: user.role,
       mode: user.mode,
     }));
-
   io.emit("online-users", users);
 };
 
@@ -100,7 +98,7 @@ io.on("connection", (socket) => {
     mode: socket.user.mode,
   });
   broadcastOnlineUsers();
-
+  console.log("New User Connected");
   socket.on("disconnect", () => {
     onlineUsers.delete(socket.user.id);
 
