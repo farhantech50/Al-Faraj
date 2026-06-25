@@ -126,7 +126,7 @@ export const updateAnnouncement = async (req, res) => {
 
     const announcement = await prisma.announcement.findUnique({
       where: {
-        id: Number(id),
+        id: id,
       },
     });
 
@@ -138,7 +138,7 @@ export const updateAnnouncement = async (req, res) => {
 
     const updated = await prisma.announcement.update({
       where: {
-        id: Number(id),
+        id: id,
       },
       data: {
         ...(title && { title }),
@@ -163,7 +163,7 @@ export const deleteAnnouncement = async (req, res) => {
 
     const announcement = await prisma.announcement.findUnique({
       where: {
-        id: Number(id),
+        id: id,
       },
     });
 
@@ -175,7 +175,7 @@ export const deleteAnnouncement = async (req, res) => {
 
     await prisma.announcement.delete({
       where: {
-        id: Number(id),
+        id: id,
       },
     });
 

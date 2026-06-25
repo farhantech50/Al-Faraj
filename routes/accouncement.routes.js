@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createAnnouncement,
+  deleteAnnouncement,
   getActiveAnnouncements,
   getAllAnnouncements,
 } from "../controllers/announcement.controller.js";

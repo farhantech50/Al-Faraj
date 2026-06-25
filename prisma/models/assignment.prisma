@@ -17,7 +17,7 @@ model Assignment {
   feedback    String?
   gradedAt    DateTime?
 
-  statusId    Int?
+  statusId    Int? @default(37)
   subjectId   Int?
 
   createdAt   DateTime @default(now())

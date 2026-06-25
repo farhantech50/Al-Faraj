@@ -12,7 +12,7 @@ export const createHomework = async (req, res) => {
         title,
         description,
         dueDate: new Date(dueDate),
-        subject: subjectId,
+        subjectId: Number(subjectId),
       },
     });
 
@@ -54,7 +54,11 @@ export const submitHomework = async (req, res) => {
         fileUrl,
         fileName,
         note: req.body.note,
-        status: 42,
+        status: {
+          connect: {
+            id: 38,
+          },
+        },
       },
     });
 
@@ -100,7 +104,11 @@ export const gradeHomework = async (req, res) => {
         grade,
         feedback,
         gradedAt: new Date(),
-        status: 43,
+        status: {
+          connect: {
+            id: 39,
+          },
+        },
       },
     });
 
@@ -149,6 +157,12 @@ export const getAssignmentsByTeacher = async (req, res) => {
           createdAt: "desc",
         },
         include: {
+          status: {
+            select: {
+              id: true,
+              value: true,
+            },
+          },
           teacher: {
             select: {
               id: true,
@@ -162,47 +176,12 @@ export const getAssignmentsByTeacher = async (req, res) => {
       prisma.assignment.count({ where }),
     ]);
 
-    const statusIds = [
-      ...new Set(assignments.map((a) => a.status).filter(Boolean)),
-    ];
-
-    const subjectIds = [
-      ...new Set(assignments.map((a) => a.subjectId).filter(Boolean)),
-    ];
-
-    const [statuses, subjects] = await Promise.all([
-      prisma.lookup.findMany({
-        where: {
-          id: {
-            in: statusIds,
-          },
-        },
-        select: {
-          id: true,
-          value: true,
-        },
-      }),
-      prisma.lookup.findMany({
-        where: {
-          id: {
-            in: subjectIds,
-          },
-        },
-        select: {
-          id: true,
-          value: true,
-        },
-      }),
-    ]);
-
-    const result = assignments.map((assignment) => ({
-      ...assignment,
-      status:
-        statuses.find((s) => s.id === assignment.status) ?? assignment.status,
-      subject:
-        subjects.find((s) => s.id === assignment.subjectId) ??
-        assignment.subjectId,
-    }));
+    return res.status(200).json({
+      data: assignments,
+      total,
+      page: Number(page) || 1,
+      totalPages: take ? Math.ceil(total / take) : 1,
+    });
 
     return res.status(200).json({
       data: result,
@@ -246,6 +225,12 @@ export const getAssignmentsByStudent = async (req, res) => {
           createdAt: "desc",
         },
         include: {
+          status: {
+            select: {
+              id: true,
+              value: true,
+            },
+          },
           student: {
             select: {
               id: true,
@@ -259,50 +244,8 @@ export const getAssignmentsByStudent = async (req, res) => {
       prisma.assignment.count({ where }),
     ]);
 
-    const statusIds = [
-      ...new Set(assignments.map((a) => a.status).filter(Boolean)),
-    ];
-
-    const subjectIds = [
-      ...new Set(assignments.map((a) => a.subjectId).filter(Boolean)),
-    ];
-
-    const [statuses, subjects] = await Promise.all([
-      prisma.lookup.findMany({
-        where: {
-          id: {
-            in: statusIds,
-          },
-        },
-        select: {
-          id: true,
-          value: true,
-        },
-      }),
-      prisma.lookup.findMany({
-        where: {
-          id: {
-            in: subjectIds,
-          },
-        },
-        select: {
-          id: true,
-          value: true,
-        },
-      }),
-    ]);
-
-    const result = assignments.map((assignment) => ({
-      ...assignment,
-      status:
-        statuses.find((s) => s.id === assignment.status) ?? assignment.status,
-      subject:
-        subjects.find((s) => s.id === assignment.subjectId) ??
-        assignment.subjectId,
-    }));
-
     return res.status(200).json({
-      data: result,
+      data: assignments,
       total,
       page: Number(page) || 1,
       totalPages: take ? Math.ceil(total / take) : 1,
@@ -344,6 +287,12 @@ export const getAllAssignments = async (req, res) => {
           createdAt: "desc",
         },
         include: {
+          status: {
+            select: {
+              id: true,
+              value: true,
+            },
+          },
           student: {
             select: {
               id: true,
@@ -365,50 +314,8 @@ export const getAllAssignments = async (req, res) => {
       prisma.assignment.count({ where }),
     ]);
 
-    const statusIds = [
-      ...new Set(assignments.map((a) => a.status).filter(Boolean)),
-    ];
-
-    const subjectIds = [
-      ...new Set(assignments.map((a) => a.subject).filter(Boolean)),
-    ];
-
-    const [statuses, subjects] = await Promise.all([
-      prisma.lookup.findMany({
-        where: {
-          id: {
-            in: statusIds,
-          },
-        },
-        select: {
-          id: true,
-          value: true,
-        },
-      }),
-      prisma.lookup.findMany({
-        where: {
-          id: {
-            in: subjectIds,
-          },
-        },
-        select: {
-          id: true,
-          value: true,
-        },
-      }),
-    ]);
-
-    const result = assignments.map((assignment) => ({
-      ...assignment,
-      status:
-        statuses.find((s) => s.id === assignment.status) ?? assignment.status,
-      subject:
-        subjects.find((s) => s.id === assignment.subject) ??
-        assignment.subjectId,
-    }));
-
     return res.status(200).json({
-      data: result,
+      data: assignments,
       total,
       page: Number(page) || 1,
       totalPages: take ? Math.ceil(total / take) : 1,
