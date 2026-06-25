@@ -8,7 +8,7 @@ model TeacherProfile {
   experienceYears       Int?
   educationalBackground String?
   cvUrl                 String?
-
+  meetingUrl            String?
   mode                  Mode
 
   createdAt             DateTime @default(now())

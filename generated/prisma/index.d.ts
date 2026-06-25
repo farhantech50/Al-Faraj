@@ -6129,7 +6129,6 @@ export namespace Prisma {
     studentId: number | null
     startTime: string | null
     endTime: string | null
-    meetingLink: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6141,7 +6140,6 @@ export namespace Prisma {
     studentId: number | null
     startTime: string | null
     endTime: string | null
-    meetingLink: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6154,7 +6152,6 @@ export namespace Prisma {
     days: number
     startTime: number
     endTime: number
-    meetingLink: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -6182,7 +6179,6 @@ export namespace Prisma {
     studentId?: true
     startTime?: true
     endTime?: true
-    meetingLink?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6194,7 +6190,6 @@ export namespace Prisma {
     studentId?: true
     startTime?: true
     endTime?: true
-    meetingLink?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6207,7 +6202,6 @@ export namespace Prisma {
     days?: true
     startTime?: true
     endTime?: true
-    meetingLink?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6307,7 +6301,6 @@ export namespace Prisma {
     days: $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink: string | null
     createdAt: Date
     updatedAt: Date
     _count: ClassScheduleCountAggregateOutputType | null
@@ -6339,7 +6332,6 @@ export namespace Prisma {
     days?: boolean
     startTime?: boolean
     endTime?: boolean
-    meetingLink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     assignment?: boolean | AssignedDefaultArgs<ExtArgs>
@@ -6357,7 +6349,6 @@ export namespace Prisma {
     days?: boolean
     startTime?: boolean
     endTime?: boolean
-    meetingLink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     assignment?: boolean | AssignedDefaultArgs<ExtArgs>
@@ -6373,7 +6364,6 @@ export namespace Prisma {
     days?: boolean
     startTime?: boolean
     endTime?: boolean
-    meetingLink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     assignment?: boolean | AssignedDefaultArgs<ExtArgs>
@@ -6389,12 +6379,11 @@ export namespace Prisma {
     days?: boolean
     startTime?: boolean
     endTime?: boolean
-    meetingLink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ClassScheduleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assignedId" | "teacherId" | "studentId" | "days" | "startTime" | "endTime" | "meetingLink" | "createdAt" | "updatedAt", ExtArgs["result"]["classSchedule"]>
+  export type ClassScheduleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assignedId" | "teacherId" | "studentId" | "days" | "startTime" | "endTime" | "createdAt" | "updatedAt", ExtArgs["result"]["classSchedule"]>
   export type ClassScheduleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     assignment?: boolean | AssignedDefaultArgs<ExtArgs>
     teacher?: boolean | UserDefaultArgs<ExtArgs>
@@ -6429,7 +6418,6 @@ export namespace Prisma {
       days: $Enums.Day[]
       startTime: string
       endTime: string
-      meetingLink: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["classSchedule"]>
@@ -6866,7 +6854,6 @@ export namespace Prisma {
     readonly days: FieldRef<"ClassSchedule", 'Day[]'>
     readonly startTime: FieldRef<"ClassSchedule", 'String'>
     readonly endTime: FieldRef<"ClassSchedule", 'String'>
-    readonly meetingLink: FieldRef<"ClassSchedule", 'String'>
     readonly createdAt: FieldRef<"ClassSchedule", 'DateTime'>
     readonly updatedAt: FieldRef<"ClassSchedule", 'DateTime'>
   }
@@ -11898,6 +11885,7 @@ export namespace Prisma {
     experienceYears: number | null
     educationalBackground: string | null
     cvUrl: string | null
+    meetingUrl: string | null
     mode: $Enums.Mode | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -11910,6 +11898,7 @@ export namespace Prisma {
     experienceYears: number | null
     educationalBackground: string | null
     cvUrl: string | null
+    meetingUrl: string | null
     mode: $Enums.Mode | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -11922,6 +11911,7 @@ export namespace Prisma {
     experienceYears: number
     educationalBackground: number
     cvUrl: number
+    meetingUrl: number
     mode: number
     createdAt: number
     updatedAt: number
@@ -11948,6 +11938,7 @@ export namespace Prisma {
     experienceYears?: true
     educationalBackground?: true
     cvUrl?: true
+    meetingUrl?: true
     mode?: true
     createdAt?: true
     updatedAt?: true
@@ -11960,6 +11951,7 @@ export namespace Prisma {
     experienceYears?: true
     educationalBackground?: true
     cvUrl?: true
+    meetingUrl?: true
     mode?: true
     createdAt?: true
     updatedAt?: true
@@ -11972,6 +11964,7 @@ export namespace Prisma {
     experienceYears?: true
     educationalBackground?: true
     cvUrl?: true
+    meetingUrl?: true
     mode?: true
     createdAt?: true
     updatedAt?: true
@@ -12071,6 +12064,7 @@ export namespace Prisma {
     experienceYears: number | null
     educationalBackground: string | null
     cvUrl: string | null
+    meetingUrl: string | null
     mode: $Enums.Mode
     createdAt: Date
     updatedAt: Date
@@ -12102,6 +12096,7 @@ export namespace Prisma {
     experienceYears?: boolean
     educationalBackground?: boolean
     cvUrl?: boolean
+    meetingUrl?: boolean
     mode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -12115,6 +12110,7 @@ export namespace Prisma {
     experienceYears?: boolean
     educationalBackground?: boolean
     cvUrl?: boolean
+    meetingUrl?: boolean
     mode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -12128,6 +12124,7 @@ export namespace Prisma {
     experienceYears?: boolean
     educationalBackground?: boolean
     cvUrl?: boolean
+    meetingUrl?: boolean
     mode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -12141,12 +12138,13 @@ export namespace Prisma {
     experienceYears?: boolean
     educationalBackground?: boolean
     cvUrl?: boolean
+    meetingUrl?: boolean
     mode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TeacherProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bio" | "experienceYears" | "educationalBackground" | "cvUrl" | "mode" | "createdAt" | "updatedAt", ExtArgs["result"]["teacherProfile"]>
+  export type TeacherProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bio" | "experienceYears" | "educationalBackground" | "cvUrl" | "meetingUrl" | "mode" | "createdAt" | "updatedAt", ExtArgs["result"]["teacherProfile"]>
   export type TeacherProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -12169,6 +12167,7 @@ export namespace Prisma {
       experienceYears: number | null
       educationalBackground: string | null
       cvUrl: string | null
+      meetingUrl: string | null
       mode: $Enums.Mode
       createdAt: Date
       updatedAt: Date
@@ -12602,6 +12601,7 @@ export namespace Prisma {
     readonly experienceYears: FieldRef<"TeacherProfile", 'Int'>
     readonly educationalBackground: FieldRef<"TeacherProfile", 'String'>
     readonly cvUrl: FieldRef<"TeacherProfile", 'String'>
+    readonly meetingUrl: FieldRef<"TeacherProfile", 'String'>
     readonly mode: FieldRef<"TeacherProfile", 'Mode'>
     readonly createdAt: FieldRef<"TeacherProfile", 'DateTime'>
     readonly updatedAt: FieldRef<"TeacherProfile", 'DateTime'>
@@ -19298,7 +19298,6 @@ export namespace Prisma {
     days: 'days',
     startTime: 'startTime',
     endTime: 'endTime',
-    meetingLink: 'meetingLink',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -19359,6 +19358,7 @@ export namespace Prisma {
     experienceYears: 'experienceYears',
     educationalBackground: 'educationalBackground',
     cvUrl: 'cvUrl',
+    meetingUrl: 'meetingUrl',
     mode: 'mode',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -19914,7 +19914,6 @@ export namespace Prisma {
     days?: EnumDayNullableListFilter<"ClassSchedule">
     startTime?: StringFilter<"ClassSchedule"> | string
     endTime?: StringFilter<"ClassSchedule"> | string
-    meetingLink?: StringNullableFilter<"ClassSchedule"> | string | null
     createdAt?: DateTimeFilter<"ClassSchedule"> | Date | string
     updatedAt?: DateTimeFilter<"ClassSchedule"> | Date | string
     assignment?: XOR<AssignedScalarRelationFilter, AssignedWhereInput>
@@ -19931,7 +19930,6 @@ export namespace Prisma {
     days?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    meetingLink?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignment?: AssignedOrderByWithRelationInput
@@ -19951,7 +19949,6 @@ export namespace Prisma {
     days?: EnumDayNullableListFilter<"ClassSchedule">
     startTime?: StringFilter<"ClassSchedule"> | string
     endTime?: StringFilter<"ClassSchedule"> | string
-    meetingLink?: StringNullableFilter<"ClassSchedule"> | string | null
     createdAt?: DateTimeFilter<"ClassSchedule"> | Date | string
     updatedAt?: DateTimeFilter<"ClassSchedule"> | Date | string
     assignment?: XOR<AssignedScalarRelationFilter, AssignedWhereInput>
@@ -19968,7 +19965,6 @@ export namespace Prisma {
     days?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    meetingLink?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ClassScheduleCountOrderByAggregateInput
@@ -19989,7 +19985,6 @@ export namespace Prisma {
     days?: EnumDayNullableListFilter<"ClassSchedule">
     startTime?: StringWithAggregatesFilter<"ClassSchedule"> | string
     endTime?: StringWithAggregatesFilter<"ClassSchedule"> | string
-    meetingLink?: StringNullableWithAggregatesFilter<"ClassSchedule"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ClassSchedule"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ClassSchedule"> | Date | string
   }
@@ -20262,6 +20257,7 @@ export namespace Prisma {
     experienceYears?: IntNullableFilter<"TeacherProfile"> | number | null
     educationalBackground?: StringNullableFilter<"TeacherProfile"> | string | null
     cvUrl?: StringNullableFilter<"TeacherProfile"> | string | null
+    meetingUrl?: StringNullableFilter<"TeacherProfile"> | string | null
     mode?: EnumModeFilter<"TeacherProfile"> | $Enums.Mode
     createdAt?: DateTimeFilter<"TeacherProfile"> | Date | string
     updatedAt?: DateTimeFilter<"TeacherProfile"> | Date | string
@@ -20275,6 +20271,7 @@ export namespace Prisma {
     experienceYears?: SortOrderInput | SortOrder
     educationalBackground?: SortOrderInput | SortOrder
     cvUrl?: SortOrderInput | SortOrder
+    meetingUrl?: SortOrderInput | SortOrder
     mode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20291,6 +20288,7 @@ export namespace Prisma {
     experienceYears?: IntNullableFilter<"TeacherProfile"> | number | null
     educationalBackground?: StringNullableFilter<"TeacherProfile"> | string | null
     cvUrl?: StringNullableFilter<"TeacherProfile"> | string | null
+    meetingUrl?: StringNullableFilter<"TeacherProfile"> | string | null
     mode?: EnumModeFilter<"TeacherProfile"> | $Enums.Mode
     createdAt?: DateTimeFilter<"TeacherProfile"> | Date | string
     updatedAt?: DateTimeFilter<"TeacherProfile"> | Date | string
@@ -20304,6 +20302,7 @@ export namespace Prisma {
     experienceYears?: SortOrderInput | SortOrder
     educationalBackground?: SortOrderInput | SortOrder
     cvUrl?: SortOrderInput | SortOrder
+    meetingUrl?: SortOrderInput | SortOrder
     mode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20324,6 +20323,7 @@ export namespace Prisma {
     experienceYears?: IntNullableWithAggregatesFilter<"TeacherProfile"> | number | null
     educationalBackground?: StringNullableWithAggregatesFilter<"TeacherProfile"> | string | null
     cvUrl?: StringNullableWithAggregatesFilter<"TeacherProfile"> | string | null
+    meetingUrl?: StringNullableWithAggregatesFilter<"TeacherProfile"> | string | null
     mode?: EnumModeWithAggregatesFilter<"TeacherProfile"> | $Enums.Mode
     createdAt?: DateTimeWithAggregatesFilter<"TeacherProfile"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TeacherProfile"> | Date | string
@@ -21074,7 +21074,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignment: AssignedCreateNestedOneWithoutClassScheduleInput
@@ -21091,7 +21090,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     subjects?: ClassScheduleSubjectUncheckedCreateNestedManyWithoutClassScheduleInput
@@ -21101,7 +21099,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignment?: AssignedUpdateOneRequiredWithoutClassScheduleNestedInput
@@ -21118,7 +21115,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subjects?: ClassScheduleSubjectUncheckedUpdateManyWithoutClassScheduleNestedInput
@@ -21132,7 +21128,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -21141,7 +21136,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21154,7 +21148,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21416,6 +21409,7 @@ export namespace Prisma {
     experienceYears?: number | null
     educationalBackground?: string | null
     cvUrl?: string | null
+    meetingUrl?: string | null
     mode: $Enums.Mode
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21429,6 +21423,7 @@ export namespace Prisma {
     experienceYears?: number | null
     educationalBackground?: string | null
     cvUrl?: string | null
+    meetingUrl?: string | null
     mode: $Enums.Mode
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21439,6 +21434,7 @@ export namespace Prisma {
     experienceYears?: NullableIntFieldUpdateOperationsInput | number | null
     educationalBackground?: NullableStringFieldUpdateOperationsInput | string | null
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumModeFieldUpdateOperationsInput | $Enums.Mode
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21452,6 +21448,7 @@ export namespace Prisma {
     experienceYears?: NullableIntFieldUpdateOperationsInput | number | null
     educationalBackground?: NullableStringFieldUpdateOperationsInput | string | null
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumModeFieldUpdateOperationsInput | $Enums.Mode
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21464,6 +21461,7 @@ export namespace Prisma {
     experienceYears?: number | null
     educationalBackground?: string | null
     cvUrl?: string | null
+    meetingUrl?: string | null
     mode: $Enums.Mode
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21474,6 +21472,7 @@ export namespace Prisma {
     experienceYears?: NullableIntFieldUpdateOperationsInput | number | null
     educationalBackground?: NullableStringFieldUpdateOperationsInput | string | null
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumModeFieldUpdateOperationsInput | $Enums.Mode
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21486,6 +21485,7 @@ export namespace Prisma {
     experienceYears?: NullableIntFieldUpdateOperationsInput | number | null
     educationalBackground?: NullableStringFieldUpdateOperationsInput | string | null
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumModeFieldUpdateOperationsInput | $Enums.Mode
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22352,7 +22352,6 @@ export namespace Prisma {
     days?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    meetingLink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22371,7 +22370,6 @@ export namespace Prisma {
     studentId?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    meetingLink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22383,7 +22381,6 @@ export namespace Prisma {
     studentId?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
-    meetingLink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22638,6 +22635,7 @@ export namespace Prisma {
     experienceYears?: SortOrder
     educationalBackground?: SortOrder
     cvUrl?: SortOrder
+    meetingUrl?: SortOrder
     mode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22656,6 +22654,7 @@ export namespace Prisma {
     experienceYears?: SortOrder
     educationalBackground?: SortOrder
     cvUrl?: SortOrder
+    meetingUrl?: SortOrder
     mode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22668,6 +22667,7 @@ export namespace Prisma {
     experienceYears?: SortOrder
     educationalBackground?: SortOrder
     cvUrl?: SortOrder
+    meetingUrl?: SortOrder
     mode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -24970,7 +24970,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     teacher: UserCreateNestedOneWithoutTeacherSchedulesInput
@@ -24985,7 +24984,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     subjects?: ClassScheduleSubjectUncheckedCreateNestedManyWithoutClassScheduleInput
@@ -25183,7 +25181,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teacher?: UserUpdateOneRequiredWithoutTeacherSchedulesNestedInput
@@ -25198,7 +25195,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subjects?: ClassScheduleSubjectUncheckedUpdateManyWithoutClassScheduleNestedInput
@@ -25938,7 +25934,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignment: AssignedCreateNestedOneWithoutClassScheduleInput
@@ -25954,7 +25949,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -26011,7 +26005,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignment?: AssignedUpdateOneRequiredWithoutClassScheduleNestedInput
@@ -26027,7 +26020,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -27611,6 +27603,7 @@ export namespace Prisma {
     experienceYears?: number | null
     educationalBackground?: string | null
     cvUrl?: string | null
+    meetingUrl?: string | null
     mode: $Enums.Mode
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27622,6 +27615,7 @@ export namespace Prisma {
     experienceYears?: number | null
     educationalBackground?: string | null
     cvUrl?: string | null
+    meetingUrl?: string | null
     mode: $Enums.Mode
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27908,7 +27902,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignment: AssignedCreateNestedOneWithoutClassScheduleInput
@@ -27923,7 +27916,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     subjects?: ClassScheduleSubjectUncheckedCreateNestedManyWithoutClassScheduleInput
@@ -27943,7 +27935,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     assignment: AssignedCreateNestedOneWithoutClassScheduleInput
@@ -27958,7 +27949,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     subjects?: ClassScheduleSubjectUncheckedCreateNestedManyWithoutClassScheduleInput
@@ -28049,6 +28039,7 @@ export namespace Prisma {
     experienceYears?: NullableIntFieldUpdateOperationsInput | number | null
     educationalBackground?: NullableStringFieldUpdateOperationsInput | string | null
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumModeFieldUpdateOperationsInput | $Enums.Mode
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28060,6 +28051,7 @@ export namespace Prisma {
     experienceYears?: NullableIntFieldUpdateOperationsInput | number | null
     educationalBackground?: NullableStringFieldUpdateOperationsInput | string | null
     cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumModeFieldUpdateOperationsInput | $Enums.Mode
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28222,7 +28214,6 @@ export namespace Prisma {
     days?: EnumDayNullableListFilter<"ClassSchedule">
     startTime?: StringFilter<"ClassSchedule"> | string
     endTime?: StringFilter<"ClassSchedule"> | string
-    meetingLink?: StringNullableFilter<"ClassSchedule"> | string | null
     createdAt?: DateTimeFilter<"ClassSchedule"> | Date | string
     updatedAt?: DateTimeFilter<"ClassSchedule"> | Date | string
   }
@@ -28987,7 +28978,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -28999,7 +28989,6 @@ export namespace Prisma {
     days?: ClassScheduleCreatedaysInput | $Enums.Day[]
     startTime: string
     endTime: string
-    meetingLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -29313,7 +29302,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignment?: AssignedUpdateOneRequiredWithoutClassScheduleNestedInput
@@ -29328,7 +29316,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subjects?: ClassScheduleSubjectUncheckedUpdateManyWithoutClassScheduleNestedInput
@@ -29341,7 +29328,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -29350,7 +29336,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignment?: AssignedUpdateOneRequiredWithoutClassScheduleNestedInput
@@ -29365,7 +29350,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subjects?: ClassScheduleSubjectUncheckedUpdateManyWithoutClassScheduleNestedInput
@@ -29378,7 +29362,6 @@ export namespace Prisma {
     days?: ClassScheduleUpdatedaysInput | $Enums.Day[]
     startTime?: StringFieldUpdateOperationsInput | string
     endTime?: StringFieldUpdateOperationsInput | string
-    meetingLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

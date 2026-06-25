@@ -84,12 +84,12 @@ model ClassSchedule {
   teacherId  Int
   studentId  Int
 
-  days        Day[]
-  startTime   String
-  endTime     String
-  meetingLink String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  days      Day[]
+  startTime String
+  endTime   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   assignment Assigned @relation(fields: [assignedId], references: [id], onDelete: Cascade, name: "AssignedClassSchedule")
 
@@ -198,8 +198,8 @@ model TeacherProfile {
   experienceYears       Int?
   educationalBackground String?
   cvUrl                 String?
-
-  mode Mode
+  meetingUrl            String?
+  mode                  Mode
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

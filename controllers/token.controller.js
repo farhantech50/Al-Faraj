@@ -10,7 +10,6 @@ export const generateAccessToken = (
   isProfileComplete,
   mode,
 ) => {
-  console.log(mode);
   return jwt.sign(
     { id, userId, role, name, isProfileComplete, mode },
     process.env.JWT_KEY,

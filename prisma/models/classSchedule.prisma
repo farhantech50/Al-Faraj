@@ -8,7 +8,7 @@ model ClassSchedule {
   days         Day[]
   startTime    String
   endTime      String
-  meetingLink   String?
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

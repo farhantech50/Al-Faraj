@@ -416,6 +416,19 @@ export const getTeacherUpcomingClass = async (req, res) => {
             contact: true,
           },
         },
+        teacher: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            contact: true,
+            teacherProfile: {
+              select: {
+                meetingUrl: true,
+              },
+            },
+          },
+        },
         assignment: {
           include: {
             tuitionPost: {
@@ -432,6 +445,7 @@ export const getTeacherUpcomingClass = async (req, res) => {
     if (!schedules.length) {
       return res.status(200).json(null);
     }
+
     const dayMap = {
       sunday: 0,
       monday: 1,
@@ -443,32 +457,40 @@ export const getTeacherUpcomingClass = async (req, res) => {
     };
 
     const now = new Date();
-
-    let upcomingClass = null;
+    const candidates = [];
 
     for (const schedule of schedules) {
       for (const day of schedule.days) {
-        const nextDate = new Date(now);
-        const targetDay = dayMap[day];
+        const targetDay = dayMap[day.toLowerCase()];
 
-        const diff = (targetDay - now.getDay() + 7) % 7;
+        const nextDate = new Date(now);
+
+        let diff = targetDay - now.getDay();
+
+        if (diff < 0) {
+          diff += 7;
+        }
 
         nextDate.setDate(now.getDate() + diff);
 
-        const [hours, minutes] = schedule.startTime.split(":");
+        const [hours, minutes] = schedule.startTime.split(":").map(Number);
 
-        nextDate.setHours(Number(hours), Number(minutes), 0, 0);
+        nextDate.setHours(hours, minutes, 0, 0);
 
-        if (nextDate > now) {
-          if (!upcomingClass || nextDate < upcomingClass.dateTime) {
-            upcomingClass = {
-              dateTime: nextDate,
-              schedule,
-            };
-          }
+        if (nextDate <= now) {
+          nextDate.setDate(nextDate.getDate() + 7);
         }
+
+        candidates.push({
+          dateTime: nextDate,
+          schedule,
+        });
       }
     }
+
+    candidates.sort((a, b) => a.dateTime - b.dateTime);
+
+    const upcomingClass = candidates[0];
 
     if (!upcomingClass) {
       return res.status(200).json(null);
@@ -479,12 +501,13 @@ export const getTeacherUpcomingClass = async (req, res) => {
     return res.status(200).json({
       id: schedule.id,
       date: upcomingClass.dateTime.toISOString().split("T")[0],
+      dateTime: upcomingClass.dateTime,
       student: schedule.student,
-      area: schedule.area,
       mode: schedule.assignment.tuitionPost.mode,
+      area: schedule.assignment.tuitionPost.area?.value || null,
       startTime: schedule.startTime,
-      area: schedule.assignment.tuitionPost.area.value,
-      meetingLink: schedule.meetingLink || null,
+      endTime: schedule.endTime,
+      meetingLink: schedule.teacher.teacherProfile?.meetingUrl || null,
     });
   } catch (error) {
     console.log("Error in getTeacherUpcomingClass", error);
@@ -494,7 +517,6 @@ export const getTeacherUpcomingClass = async (req, res) => {
     });
   }
 };
-
 export const getStudentUpcomingClass = async (req, res) => {
   try {
     const studentId = req.user.id;
@@ -513,6 +535,11 @@ export const getStudentUpcomingClass = async (req, res) => {
             name: true,
             email: true,
             contact: true,
+            teacherProfile: {
+              select: {
+                meetingUrl: true,
+              },
+            },
           },
         },
         assignment: {
@@ -550,23 +577,24 @@ export const getStudentUpcomingClass = async (req, res) => {
     for (const schedule of schedules) {
       for (const day of schedule.days) {
         const nextDate = new Date(now);
-        const targetDay = dayMap[day];
 
-        const diff = (targetDay - now.getDay() + 7) % 7;
+        const targetDay = dayMap[day];
+        let diff = (targetDay - now.getDay() + 7) % 7;
+
+        const [hours, minutes] = schedule.startTime.split(":").map(Number);
 
         nextDate.setDate(now.getDate() + diff);
+        nextDate.setHours(hours, minutes, 0, 0);
 
-        const [hours, minutes] = schedule.startTime.split(":");
+        if (nextDate <= now) {
+          nextDate.setDate(nextDate.getDate() + 7);
+        }
 
-        nextDate.setHours(Number(hours), Number(minutes), 0, 0);
-
-        if (nextDate > now) {
-          if (!upcomingClass || nextDate < upcomingClass.dateTime) {
-            upcomingClass = {
-              dateTime: nextDate,
-              schedule,
-            };
-          }
+        if (!upcomingClass || nextDate < upcomingClass.dateTime) {
+          upcomingClass = {
+            dateTime: nextDate,
+            schedule,
+          };
         }
       }
     }
@@ -584,7 +612,7 @@ export const getStudentUpcomingClass = async (req, res) => {
       startTime: schedule.startTime,
       mode: schedule.assignment.tuitionPost.mode,
       area: schedule.assignment?.tuitionPost?.area?.value,
-      meetingLink: schedule.meetingLink || null,
+      meetingLink: schedule.teacher?.teacherProfile?.meetingUrl || null,
     });
   } catch (error) {
     console.log("Error in getStudentUpcomingClass", error);

@@ -174,7 +174,6 @@ exports.Prisma.ClassScheduleScalarFieldEnum = {
   days: 'days',
   startTime: 'startTime',
   endTime: 'endTime',
-  meetingLink: 'meetingLink',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -220,6 +219,7 @@ exports.Prisma.TeacherProfileScalarFieldEnum = {
   experienceYears: 'experienceYears',
   educationalBackground: 'educationalBackground',
   cvUrl: 'cvUrl',
+  meetingUrl: 'meetingUrl',
   mode: 'mode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

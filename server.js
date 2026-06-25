@@ -98,7 +98,7 @@ io.on("connection", (socket) => {
     mode: socket.user.mode,
   });
   broadcastOnlineUsers();
-  console.log("New User Connected");
+
   socket.on("disconnect", () => {
     onlineUsers.delete(socket.user.id);
 
