@@ -3,8 +3,15 @@ const generateApplicationId = () =>
   `APT-${Date.now().toString().slice(-8)}-${Math.floor(Math.random() * 1000)}`;
 export const createTeacherProfile = async (req, res) => {
   try {
-    const { bio, experienceYears, educationalBackground, cvUrl, mode, userId } =
-      req.body;
+    const {
+      bio,
+      experienceYears,
+      educationalBackground,
+      cvUrl,
+      meetingUrl,
+      mode,
+      userId,
+    } = req.body;
 
     if (!userId) {
       return res.status(400).json({ error: "userId is required" });
@@ -25,6 +32,7 @@ export const createTeacherProfile = async (req, res) => {
         experienceYears,
         educationalBackground,
         cvUrl,
+        meetingUrl,
         mode,
       },
       include: {
@@ -41,8 +49,15 @@ export const createTeacherProfile = async (req, res) => {
 
 export const updateTeacherProfile = async (req, res) => {
   try {
-    const { bio, experienceYears, educationalBackground, cvUrl, mode, userId } =
-      req.body;
+    const {
+      bio,
+      experienceYears,
+      educationalBackground,
+      cvUrl,
+      meetingUrl,
+      mode,
+      userId,
+    } = req.body;
 
     if (!userId) {
       return res.status(400).json({ error: "userId is required" });
@@ -63,6 +78,7 @@ export const updateTeacherProfile = async (req, res) => {
         experienceYears,
         educationalBackground,
         cvUrl,
+        meetingUrl,
         mode,
       },
       include: {
