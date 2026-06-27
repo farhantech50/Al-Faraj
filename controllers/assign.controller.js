@@ -108,16 +108,23 @@ export const createAssigned = async (req, res) => {
       const io = req.app.get("io");
 
       io.to(`user_${teacherId}`).emit("notification", {
-        title: "New Tuition Assigned",
-
-        message: `You have been assigned a new tuition`,
-
+        title: "Demo Class Assigned",
+        message: "A demo class has been assigned to you.",
         type: "assignment",
-
         data: {
           assignmentId: assignment.id,
-
           tuitionPostId: Number(tuitionPostId),
+        },
+      });
+
+      io.to(`user_${studentId}`).emit("notification", {
+        title: "Teacher Assigned",
+        message: `${teacher.name} has been assigned for your demo class.`,
+        type: "assignment",
+        data: {
+          assignmentId: assignment.id,
+          tuitionPostId: Number(tuitionPostId),
+          teacherId: Number(teacherId),
         },
       });
 

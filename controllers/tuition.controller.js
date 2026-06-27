@@ -392,7 +392,13 @@ export const getTuitionsHavePendingApplications = async (req, res) => {
           },
         },
         applications: {
+          where: {
+            statusId: {
+              in: [14, 15, 16],
+            },
+          },
           include: {
+            status: true,
             teacher: {
               select: {
                 id: true,
