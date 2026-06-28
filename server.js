@@ -39,7 +39,7 @@ app.use(
 );
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://tuition-frontend-exmp2dqrw-farhantech50s-projects.vercel.app/",
+  "https://tuition-frontend-one.vercel.app/",
 ];
 app.use(
   cors({
