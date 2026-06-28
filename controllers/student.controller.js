@@ -334,65 +334,6 @@ export const getMyTuitionPosts = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
-// export const getMyTuitionPosts = async (req, res) => {
-//   try {
-//     const studentId = req.user.id;
-//     const { search, page, limit } = req.query;
-
-//     const take = limit ? Number(limit) : 10;
-//     const skip = page ? (Number(page) - 1) * take : 0;
-
-//     const where = {
-//       postedBy: studentId,
-
-//       ...(search && {
-//         OR: [
-//           { title: { contains: search, mode: "insensitive" } },
-//           { description: { contains: search, mode: "insensitive" } },
-//         ],
-//       }),
-//     };
-
-//     const [posts, total] = await Promise.all([
-//       prisma.tuitionPost.findMany({
-//         where,
-//         skip,
-//         take,
-//         orderBy: { createdAt: "desc" },
-
-//         include: {
-//           area: true,
-//           status: true,
-//           subjects: {
-//             select: {
-//               subject: true,
-//             },
-//           },
-
-//           applications: {
-//             include: {
-//               teacher: {
-//                 select: {
-//                   id: true,
-//                   name: true,
-//                   email: true,
-//                   contact: true,
-//                 },
-//               },
-//             },
-//           },
-//         },
-//       }),
-
-//       prisma.tuitionPost.count({ where }),
-//     ]);
-
-//     return res.status(200).json({ data: posts, total });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ error: "Internal server error" });
-//   }
-// };
 
 export const findStudentApplicationStatusCounts = async (req, res) => {
   try {
@@ -445,5 +386,87 @@ export const findStudentApplicationStatusCounts = async (req, res) => {
   } catch (error) {
     console.log("Error in findStudentApplicationStatusCounts", error);
     return res.status(500).json({ error: "Internal server error" });
+  }
+};
+export const confirmDemoTeacher = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+
+    const { applicationId, statusId } = req.body;
+
+    if (![17, 18].includes(Number(statusId))) {
+      return res.status(400).json({
+        error: "Invalid status",
+      });
+    }
+
+    const application = await prisma.tuitionApplication.findUnique({
+      where: {
+        id: Number(applicationId),
+      },
+      include: {
+        tuitionPost: {
+          include: {
+            assigned: true,
+          },
+        },
+      },
+    });
+
+    if (!application) {
+      return res.status(404).json({
+        error: "Application not found",
+      });
+    }
+
+    const assignment = application.tuitionPost.assigned;
+    if (!assignment) {
+      return res.status(404).json({
+        error: "Assignment not found",
+      });
+    }
+
+    if (assignment[0].studentId !== studentId) {
+      return res.status(403).json({
+        error: "Unauthorized",
+      });
+    }
+
+    const [updatedApplication, updatedAssignment] = await prisma.$transaction([
+      prisma.tuitionApplication.update({
+        where: {
+          id: Number(application.id),
+        },
+        data: {
+          statusId: Number(statusId),
+        },
+      }),
+
+      prisma.assigned.update({
+        where: {
+          id: assignment[0].id,
+        },
+        data: {
+          isConfirmed: Number(statusId) === 17,
+          isDemo: false,
+          isActive: Number(statusId) === 17,
+        },
+      }),
+    ]);
+
+    return res.status(200).json({
+      message:
+        Number(statusId) === 17
+          ? "Teacher confirmed successfully."
+          : "Teacher rejected successfully.",
+      application: updatedApplication,
+      assignment: updatedAssignment,
+    });
+  } catch (error) {
+    console.log("Error in confirmDemoTeacher", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
   }
 };

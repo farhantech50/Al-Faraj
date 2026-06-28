@@ -171,7 +171,13 @@ export const getTeacherSchedule = async (req, res) => {
     ];
 
     const schedules = await prisma.classSchedule.findMany({
-      where: { teacherId: teacherIdInt },
+      where: {
+        teacherId: teacherIdInt,
+        assignment: {
+          isActive: true,
+        },
+      },
+
       include: {
         assignment: {
           include: {

@@ -7,6 +7,7 @@ import {
   getAllStudents,
   getMyTuitionPosts,
   findStudentApplicationStatusCounts,
+  confirmDemoTeacher,
 } from "../controllers/student.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
 
@@ -128,4 +129,13 @@ router.get(
   },
 );
 
+router.post(
+  "/confirm-teacher",
+  protect,
+  authorizeRoles("admin", "moderator", "student"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Student'] */
+    confirmDemoTeacher(req, res, next);
+  },
+);
 export default router;
