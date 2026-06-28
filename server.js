@@ -37,10 +37,18 @@ app.use(
     },
   }),
 );
-
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://tuition-frontend-exmp2dqrw-farhantech50s-projects.vercel.app",
+];
 app.use(
   cors({
-    origin: true,
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   }),
 );
