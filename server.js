@@ -38,8 +38,10 @@ app.use(
   }),
 );
 const allowedOrigins = [
-  "http://localhost:3000",
-  "https://tuition-frontend-one.vercel.app/",
+  "https://localhost:3000",
+  "https://192.168.68.120:3000",
+  "https://192.168.68.105:3000",
+  "https://tuition-frontend-one.vercel.app",
 ];
 app.use(
   cors({
