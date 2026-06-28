@@ -1,5 +1,5 @@
 import prisma from "../config/dbConfig.js";
-
+import { getTeacherMonthlyIncome } from "../services/paymentService.js";
 export const getAdminDashboardCardStats = async (req, res) => {
   try {
     const [
@@ -85,73 +85,117 @@ export const getAdminDashboardCardStats = async (req, res) => {
   }
 };
 
-export const getAdminDashboardChartStats = async (req, res) => {
+export const getTeacherDashboardCardStats = async (req, res) => {
   try {
-    const today = new Date();
+    const teacherId = req.user.id;
 
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay());
-    startOfWeek.setHours(0, 0, 0, 0);
-
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6);
-    endOfWeek.setHours(23, 59, 59, 999);
-
-    const teacherStats = await prisma.user.findMany({
-      where: {
-        role: "teacher",
-        isActive: true,
-      },
-      select: {
-        id: true,
-        name: true,
-        teacherAssignments: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-
-    const teacherTuitions = teacherStats.map((teacher) => ({
-      name: teacher.name,
-      count: teacher.teacherAssignments.length,
-    }));
-
-    const weeklyPosts = [];
-
-    const currentDate = new Date(startOfWeek);
-
-    while (currentDate <= endOfWeek) {
-      const start = new Date(currentDate);
-      start.setHours(0, 0, 0, 0);
-
-      const end = new Date(currentDate);
-      end.setHours(23, 59, 59, 999);
-
-      const count = await prisma.tuitionPost.count({
+    const [
+      activeTuitions,
+      appliedTuitions,
+      pendingApplications,
+      currentMonthIncome,
+    ] = await Promise.all([
+      prisma.assigned.count({
         where: {
-          createdAt: {
-            gte: start,
-            lte: end,
-          },
+          teacherId,
+          isActive: true,
+          isDemo: false,
+          isConfirmed: true,
         },
-      });
+      }),
 
-      weeklyPosts.push({
-        date: start.toISOString().split("T")[0],
-        count,
-      });
+      prisma.tuitionApplication.count({
+        where: {
+          teacherId,
+        },
+      }),
 
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
+      prisma.tuitionApplication.count({
+        where: {
+          teacherId,
+          statusId: 14,
+        },
+      }),
 
-    return res.status(200).json({
-      teacherTuitions,
-      weeklyPosts,
-    });
+      getTeacherMonthlyIncome(
+        teacherId,
+        new Date().getFullYear(),
+        new Date().getMonth() + 1,
+      ),
+    ]);
+
+    return res.status(200).json([
+      {
+        label: "Active Tuitions",
+        count: activeTuitions,
+      },
+      {
+        label: "Applied Tuitions",
+        count: appliedTuitions,
+      },
+      {
+        label: "Pending Applications",
+        count: pendingApplications,
+      },
+      {
+        label: "Current Month Earning",
+        count: currentMonthIncome.total,
+      },
+    ]);
   } catch (error) {
-    console.log("Error in getAdminDashboardChartStats", error);
+    console.log("Error in getTeacherDashboardCardStats", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+export const getStudentDashboardCardStats = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+
+    const [totalTuitions, demoTuitions, assignedTuitions] = await Promise.all([
+      prisma.assigned.count({
+        where: {
+          studentId,
+          isActive: true,
+        },
+      }),
+
+      prisma.assigned.count({
+        where: {
+          studentId,
+          isActive: true,
+          isDemo: true,
+        },
+      }),
+
+      prisma.assigned.count({
+        where: {
+          studentId,
+          isActive: true,
+          isDemo: false,
+          isConfirmed: true,
+        },
+      }),
+    ]);
+
+    return res.status(200).json([
+      {
+        label: "Total Tuitions",
+        count: totalTuitions,
+      },
+      {
+        label: "Demo Tuitions",
+        count: demoTuitions,
+      },
+      {
+        label: "Assigned Tuitions",
+        count: assignedTuitions,
+      },
+    ]);
+  } catch (error) {
+    console.log("Error in getStudentDashboardCardStats", error);
 
     return res.status(500).json({
       error: "Internal server error",

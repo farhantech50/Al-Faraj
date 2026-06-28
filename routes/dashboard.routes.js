@@ -2,7 +2,8 @@ import dashboardRoutes from "./dashboard.routes.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
 import {
   getAdminDashboardCardStats,
-  getAdminDashboardChartStats,
+  getStudentDashboardCardStats,
+  getTeacherDashboardCardStats,
 } from "../controllers/dashboard.controller.js";
 import express from "express";
 
@@ -18,12 +19,21 @@ router.get(
   },
 );
 router.get(
-  "/adminDashboardChart",
+  "/teacherDashboardCard",
   protect,
-  authorizeRoles("admin", "moderator"),
+  authorizeRoles("admin", "moderator", "teacher"),
   (req, res, next) => {
     /* #swagger.tags = ['Dashboard'] */
-    getAdminDashboardChartStats(req, res, next);
+    getTeacherDashboardCardStats(req, res, next);
+  },
+);
+router.get(
+  "/studentDashboardCard",
+  protect,
+  authorizeRoles("admin", "moderator", "student"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Dashboard'] */
+    getStudentDashboardCardStats(req, res, next);
   },
 );
 export default router;

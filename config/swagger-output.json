@@ -3107,7 +3107,7 @@
         }
       }
     },
-    "/api/dashboard/adminDashboardChart": {
+    "/api/dashboard/teacherDashboardCard": {
       "get": {
         "tags": [
           "Dashboard"
