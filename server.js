@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import routes from "./routes/index.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "./config/swagger-output.json" with { type: "json" };
+import http from "http";
 import https from "https";
 import fs from "fs";
 import { Server } from "socket.io";
@@ -61,12 +62,34 @@ app.use(cookieParser());
 
 app.use(routes);
 
-const sslOptions = {
-  key: fs.readFileSync("./cert/server.key"),
-  cert: fs.readFileSync("./cert/server.crt"),
-};
+/* ==========================================
+   SERVER CONFIGURATION
 
-const server = https.createServer(sslOptions, app);
+   LOCAL:
+   const USE_HTTPS = true;
+
+   RENDER / NGINX:
+   const USE_HTTPS = false;
+========================================== */
+
+const USE_HTTPS = false;
+
+let server;
+
+if (USE_HTTPS) {
+  console.log("Running in LOCAL mode (HTTPS)");
+
+  const sslOptions = {
+    key: fs.readFileSync("./cert/server.key"),
+    cert: fs.readFileSync("./cert/server.crt"),
+  };
+
+  server = https.createServer(sslOptions, app);
+} else {
+  console.log("Running in PRODUCTION mode (HTTP)");
+
+  server = http.createServer(app);
+}
 
 const io = new Server(server, {
   cors: {
@@ -118,7 +141,7 @@ io.on("connection", (socket) => {
 app.set("io", io);
 
 server.listen(PORT, "0.0.0.0", () => {
-  console.log(`HTTPS Server running on port ${PORT}`);
+  console.log(`${USE_HTTPS ? "HTTPS" : "HTTP"} Server running on port ${PORT}`);
 });
 
 export { io };
