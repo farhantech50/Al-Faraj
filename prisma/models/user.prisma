@@ -32,6 +32,9 @@ model User {
   teacherSchedules ClassSchedule[] @relation("TeacherClassSchedules")
   studentSchedules ClassSchedule[] @relation("StudentClassSchedules")
 
+  teacherLessons Lesson[] @relation("TeacherLessons")
+  studentLessons Lesson[] @relation("StudentLessons")
+
   announcements    Announcement[]
 
   @@map("users")

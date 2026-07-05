@@ -39,6 +39,11 @@ export type ClassSchedule = $Result.DefaultSelection<Prisma.$ClassSchedulePayloa
  */
 export type ClassScheduleSubject = $Result.DefaultSelection<Prisma.$ClassScheduleSubjectPayload>
 /**
+ * Model Lesson
+ * 
+ */
+export type Lesson = $Result.DefaultSelection<Prisma.$LessonPayload>
+/**
  * Model Lookup
  * 
  */
@@ -315,6 +320,16 @@ export class PrismaClient<
     * ```
     */
   get classScheduleSubject(): Prisma.ClassScheduleSubjectDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.lesson`: Exposes CRUD operations for the **Lesson** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Lessons
+    * const lessons = await prisma.lesson.findMany()
+    * ```
+    */
+  get lesson(): Prisma.LessonDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.lookup`: Exposes CRUD operations for the **Lookup** model.
@@ -844,6 +859,7 @@ export namespace Prisma {
     Assignment: 'Assignment',
     ClassSchedule: 'ClassSchedule',
     ClassScheduleSubject: 'ClassScheduleSubject',
+    Lesson: 'Lesson',
     Lookup: 'Lookup',
     RolePermission: 'RolePermission',
     StudentProfile: 'StudentProfile',
@@ -868,7 +884,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "announcement" | "assigned" | "assignment" | "classSchedule" | "classScheduleSubject" | "lookup" | "rolePermission" | "studentProfile" | "teacherProfile" | "tuitionPost" | "tuitionApplication" | "tuitionPostSubject" | "user" | "refreshToken"
+      modelProps: "announcement" | "assigned" | "assignment" | "classSchedule" | "classScheduleSubject" | "lesson" | "lookup" | "rolePermission" | "studentProfile" | "teacherProfile" | "tuitionPost" | "tuitionApplication" | "tuitionPostSubject" | "user" | "refreshToken"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1239,6 +1255,80 @@ export namespace Prisma {
           count: {
             args: Prisma.ClassScheduleSubjectCountArgs<ExtArgs>
             result: $Utils.Optional<ClassScheduleSubjectCountAggregateOutputType> | number
+          }
+        }
+      }
+      Lesson: {
+        payload: Prisma.$LessonPayload<ExtArgs>
+        fields: Prisma.LessonFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LessonFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LessonPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LessonFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LessonPayload>
+          }
+          findFirst: {
+            args: Prisma.LessonFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LessonPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LessonFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LessonPayload>
+          }
+          findMany: {
+            args: Prisma.LessonFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LessonPayload>[]
+          }
+          create: {
+            args: Prisma.LessonCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LessonPayload>
+          }
+          createMany: {
+            args: Prisma.LessonCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LessonCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LessonPayload>[]
+          }
+          delete: {
+            args: Prisma.LessonDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LessonPayload>
+          }
+          update: {
+            args: Prisma.LessonUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LessonPayload>
+          }
+          deleteMany: {
+            args: Prisma.LessonDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LessonUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LessonUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LessonPayload>[]
+          }
+          upsert: {
+            args: Prisma.LessonUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LessonPayload>
+          }
+          aggregate: {
+            args: Prisma.LessonAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLesson>
+          }
+          groupBy: {
+            args: Prisma.LessonGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LessonGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LessonCountArgs<ExtArgs>
+            result: $Utils.Optional<LessonCountAggregateOutputType> | number
           }
         }
       }
@@ -2021,6 +2111,7 @@ export namespace Prisma {
     assignment?: AssignmentOmit
     classSchedule?: ClassScheduleOmit
     classScheduleSubject?: ClassScheduleSubjectOmit
+    lesson?: LessonOmit
     lookup?: LookupOmit
     rolePermission?: RolePermissionOmit
     studentProfile?: StudentProfileOmit
@@ -2284,6 +2375,8 @@ export namespace Prisma {
     studentHomework: number
     teacherSchedules: number
     studentSchedules: number
+    teacherLessons: number
+    studentLessons: number
     announcements: number
   }
 
@@ -2297,6 +2390,8 @@ export namespace Prisma {
     studentHomework?: boolean | UserCountOutputTypeCountStudentHomeworkArgs
     teacherSchedules?: boolean | UserCountOutputTypeCountTeacherSchedulesArgs
     studentSchedules?: boolean | UserCountOutputTypeCountStudentSchedulesArgs
+    teacherLessons?: boolean | UserCountOutputTypeCountTeacherLessonsArgs
+    studentLessons?: boolean | UserCountOutputTypeCountStudentLessonsArgs
     announcements?: boolean | UserCountOutputTypeCountAnnouncementsArgs
   }
 
@@ -2372,6 +2467,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountStudentSchedulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ClassScheduleWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTeacherLessonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LessonWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountStudentLessonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LessonWhereInput
   }
 
   /**
@@ -8383,6 +8492,1132 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ClassScheduleSubjectInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Lesson
+   */
+
+  export type AggregateLesson = {
+    _count: LessonCountAggregateOutputType | null
+    _avg: LessonAvgAggregateOutputType | null
+    _sum: LessonSumAggregateOutputType | null
+    _min: LessonMinAggregateOutputType | null
+    _max: LessonMaxAggregateOutputType | null
+  }
+
+  export type LessonAvgAggregateOutputType = {
+    id: number | null
+    teacherId: number | null
+    studentId: number | null
+  }
+
+  export type LessonSumAggregateOutputType = {
+    id: number | null
+    teacherId: number | null
+    studentId: number | null
+  }
+
+  export type LessonMinAggregateOutputType = {
+    id: number | null
+    teacherId: number | null
+    studentId: number | null
+    currentLesson: string | null
+    lessonUrl: string | null
+    createdAt: Date | null
+  }
+
+  export type LessonMaxAggregateOutputType = {
+    id: number | null
+    teacherId: number | null
+    studentId: number | null
+    currentLesson: string | null
+    lessonUrl: string | null
+    createdAt: Date | null
+  }
+
+  export type LessonCountAggregateOutputType = {
+    id: number
+    teacherId: number
+    studentId: number
+    currentLesson: number
+    lessonUrl: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type LessonAvgAggregateInputType = {
+    id?: true
+    teacherId?: true
+    studentId?: true
+  }
+
+  export type LessonSumAggregateInputType = {
+    id?: true
+    teacherId?: true
+    studentId?: true
+  }
+
+  export type LessonMinAggregateInputType = {
+    id?: true
+    teacherId?: true
+    studentId?: true
+    currentLesson?: true
+    lessonUrl?: true
+    createdAt?: true
+  }
+
+  export type LessonMaxAggregateInputType = {
+    id?: true
+    teacherId?: true
+    studentId?: true
+    currentLesson?: true
+    lessonUrl?: true
+    createdAt?: true
+  }
+
+  export type LessonCountAggregateInputType = {
+    id?: true
+    teacherId?: true
+    studentId?: true
+    currentLesson?: true
+    lessonUrl?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type LessonAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Lesson to aggregate.
+     */
+    where?: LessonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Lessons to fetch.
+     */
+    orderBy?: LessonOrderByWithRelationInput | LessonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LessonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Lessons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Lessons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Lessons
+    **/
+    _count?: true | LessonCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LessonAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LessonSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LessonMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LessonMaxAggregateInputType
+  }
+
+  export type GetLessonAggregateType<T extends LessonAggregateArgs> = {
+        [P in keyof T & keyof AggregateLesson]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLesson[P]>
+      : GetScalarType<T[P], AggregateLesson[P]>
+  }
+
+
+
+
+  export type LessonGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LessonWhereInput
+    orderBy?: LessonOrderByWithAggregationInput | LessonOrderByWithAggregationInput[]
+    by: LessonScalarFieldEnum[] | LessonScalarFieldEnum
+    having?: LessonScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LessonCountAggregateInputType | true
+    _avg?: LessonAvgAggregateInputType
+    _sum?: LessonSumAggregateInputType
+    _min?: LessonMinAggregateInputType
+    _max?: LessonMaxAggregateInputType
+  }
+
+  export type LessonGroupByOutputType = {
+    id: number
+    teacherId: number
+    studentId: number
+    currentLesson: string
+    lessonUrl: string
+    createdAt: Date
+    _count: LessonCountAggregateOutputType | null
+    _avg: LessonAvgAggregateOutputType | null
+    _sum: LessonSumAggregateOutputType | null
+    _min: LessonMinAggregateOutputType | null
+    _max: LessonMaxAggregateOutputType | null
+  }
+
+  type GetLessonGroupByPayload<T extends LessonGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LessonGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LessonGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LessonGroupByOutputType[P]>
+            : GetScalarType<T[P], LessonGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LessonSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    teacherId?: boolean
+    studentId?: boolean
+    currentLesson?: boolean
+    lessonUrl?: boolean
+    createdAt?: boolean
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["lesson"]>
+
+  export type LessonSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    teacherId?: boolean
+    studentId?: boolean
+    currentLesson?: boolean
+    lessonUrl?: boolean
+    createdAt?: boolean
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["lesson"]>
+
+  export type LessonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    teacherId?: boolean
+    studentId?: boolean
+    currentLesson?: boolean
+    lessonUrl?: boolean
+    createdAt?: boolean
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["lesson"]>
+
+  export type LessonSelectScalar = {
+    id?: boolean
+    teacherId?: boolean
+    studentId?: boolean
+    currentLesson?: boolean
+    lessonUrl?: boolean
+    createdAt?: boolean
+  }
+
+  export type LessonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "teacherId" | "studentId" | "currentLesson" | "lessonUrl" | "createdAt", ExtArgs["result"]["lesson"]>
+  export type LessonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type LessonIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type LessonIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $LessonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Lesson"
+    objects: {
+      teacher: Prisma.$UserPayload<ExtArgs>
+      student: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      teacherId: number
+      studentId: number
+      currentLesson: string
+      lessonUrl: string
+      createdAt: Date
+    }, ExtArgs["result"]["lesson"]>
+    composites: {}
+  }
+
+  type LessonGetPayload<S extends boolean | null | undefined | LessonDefaultArgs> = $Result.GetResult<Prisma.$LessonPayload, S>
+
+  type LessonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LessonFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LessonCountAggregateInputType | true
+    }
+
+  export interface LessonDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Lesson'], meta: { name: 'Lesson' } }
+    /**
+     * Find zero or one Lesson that matches the filter.
+     * @param {LessonFindUniqueArgs} args - Arguments to find a Lesson
+     * @example
+     * // Get one Lesson
+     * const lesson = await prisma.lesson.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LessonFindUniqueArgs>(args: SelectSubset<T, LessonFindUniqueArgs<ExtArgs>>): Prisma__LessonClient<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Lesson that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LessonFindUniqueOrThrowArgs} args - Arguments to find a Lesson
+     * @example
+     * // Get one Lesson
+     * const lesson = await prisma.lesson.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LessonFindUniqueOrThrowArgs>(args: SelectSubset<T, LessonFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LessonClient<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Lesson that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LessonFindFirstArgs} args - Arguments to find a Lesson
+     * @example
+     * // Get one Lesson
+     * const lesson = await prisma.lesson.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LessonFindFirstArgs>(args?: SelectSubset<T, LessonFindFirstArgs<ExtArgs>>): Prisma__LessonClient<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Lesson that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LessonFindFirstOrThrowArgs} args - Arguments to find a Lesson
+     * @example
+     * // Get one Lesson
+     * const lesson = await prisma.lesson.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LessonFindFirstOrThrowArgs>(args?: SelectSubset<T, LessonFindFirstOrThrowArgs<ExtArgs>>): Prisma__LessonClient<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Lessons that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LessonFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Lessons
+     * const lessons = await prisma.lesson.findMany()
+     * 
+     * // Get first 10 Lessons
+     * const lessons = await prisma.lesson.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const lessonWithIdOnly = await prisma.lesson.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LessonFindManyArgs>(args?: SelectSubset<T, LessonFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Lesson.
+     * @param {LessonCreateArgs} args - Arguments to create a Lesson.
+     * @example
+     * // Create one Lesson
+     * const Lesson = await prisma.lesson.create({
+     *   data: {
+     *     // ... data to create a Lesson
+     *   }
+     * })
+     * 
+     */
+    create<T extends LessonCreateArgs>(args: SelectSubset<T, LessonCreateArgs<ExtArgs>>): Prisma__LessonClient<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Lessons.
+     * @param {LessonCreateManyArgs} args - Arguments to create many Lessons.
+     * @example
+     * // Create many Lessons
+     * const lesson = await prisma.lesson.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LessonCreateManyArgs>(args?: SelectSubset<T, LessonCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Lessons and returns the data saved in the database.
+     * @param {LessonCreateManyAndReturnArgs} args - Arguments to create many Lessons.
+     * @example
+     * // Create many Lessons
+     * const lesson = await prisma.lesson.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Lessons and only return the `id`
+     * const lessonWithIdOnly = await prisma.lesson.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LessonCreateManyAndReturnArgs>(args?: SelectSubset<T, LessonCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Lesson.
+     * @param {LessonDeleteArgs} args - Arguments to delete one Lesson.
+     * @example
+     * // Delete one Lesson
+     * const Lesson = await prisma.lesson.delete({
+     *   where: {
+     *     // ... filter to delete one Lesson
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LessonDeleteArgs>(args: SelectSubset<T, LessonDeleteArgs<ExtArgs>>): Prisma__LessonClient<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Lesson.
+     * @param {LessonUpdateArgs} args - Arguments to update one Lesson.
+     * @example
+     * // Update one Lesson
+     * const lesson = await prisma.lesson.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LessonUpdateArgs>(args: SelectSubset<T, LessonUpdateArgs<ExtArgs>>): Prisma__LessonClient<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Lessons.
+     * @param {LessonDeleteManyArgs} args - Arguments to filter Lessons to delete.
+     * @example
+     * // Delete a few Lessons
+     * const { count } = await prisma.lesson.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LessonDeleteManyArgs>(args?: SelectSubset<T, LessonDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Lessons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LessonUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Lessons
+     * const lesson = await prisma.lesson.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LessonUpdateManyArgs>(args: SelectSubset<T, LessonUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Lessons and returns the data updated in the database.
+     * @param {LessonUpdateManyAndReturnArgs} args - Arguments to update many Lessons.
+     * @example
+     * // Update many Lessons
+     * const lesson = await prisma.lesson.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Lessons and only return the `id`
+     * const lessonWithIdOnly = await prisma.lesson.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LessonUpdateManyAndReturnArgs>(args: SelectSubset<T, LessonUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Lesson.
+     * @param {LessonUpsertArgs} args - Arguments to update or create a Lesson.
+     * @example
+     * // Update or create a Lesson
+     * const lesson = await prisma.lesson.upsert({
+     *   create: {
+     *     // ... data to create a Lesson
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Lesson we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LessonUpsertArgs>(args: SelectSubset<T, LessonUpsertArgs<ExtArgs>>): Prisma__LessonClient<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Lessons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LessonCountArgs} args - Arguments to filter Lessons to count.
+     * @example
+     * // Count the number of Lessons
+     * const count = await prisma.lesson.count({
+     *   where: {
+     *     // ... the filter for the Lessons we want to count
+     *   }
+     * })
+    **/
+    count<T extends LessonCountArgs>(
+      args?: Subset<T, LessonCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LessonCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Lesson.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LessonAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LessonAggregateArgs>(args: Subset<T, LessonAggregateArgs>): Prisma.PrismaPromise<GetLessonAggregateType<T>>
+
+    /**
+     * Group by Lesson.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LessonGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LessonGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LessonGroupByArgs['orderBy'] }
+        : { orderBy?: LessonGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LessonGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLessonGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Lesson model
+   */
+  readonly fields: LessonFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Lesson.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LessonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    teacher<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Lesson model
+   */
+  interface LessonFieldRefs {
+    readonly id: FieldRef<"Lesson", 'Int'>
+    readonly teacherId: FieldRef<"Lesson", 'Int'>
+    readonly studentId: FieldRef<"Lesson", 'Int'>
+    readonly currentLesson: FieldRef<"Lesson", 'String'>
+    readonly lessonUrl: FieldRef<"Lesson", 'String'>
+    readonly createdAt: FieldRef<"Lesson", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Lesson findUnique
+   */
+  export type LessonFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
+    /**
+     * Filter, which Lesson to fetch.
+     */
+    where: LessonWhereUniqueInput
+  }
+
+  /**
+   * Lesson findUniqueOrThrow
+   */
+  export type LessonFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
+    /**
+     * Filter, which Lesson to fetch.
+     */
+    where: LessonWhereUniqueInput
+  }
+
+  /**
+   * Lesson findFirst
+   */
+  export type LessonFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
+    /**
+     * Filter, which Lesson to fetch.
+     */
+    where?: LessonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Lessons to fetch.
+     */
+    orderBy?: LessonOrderByWithRelationInput | LessonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Lessons.
+     */
+    cursor?: LessonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Lessons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Lessons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Lessons.
+     */
+    distinct?: LessonScalarFieldEnum | LessonScalarFieldEnum[]
+  }
+
+  /**
+   * Lesson findFirstOrThrow
+   */
+  export type LessonFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
+    /**
+     * Filter, which Lesson to fetch.
+     */
+    where?: LessonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Lessons to fetch.
+     */
+    orderBy?: LessonOrderByWithRelationInput | LessonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Lessons.
+     */
+    cursor?: LessonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Lessons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Lessons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Lessons.
+     */
+    distinct?: LessonScalarFieldEnum | LessonScalarFieldEnum[]
+  }
+
+  /**
+   * Lesson findMany
+   */
+  export type LessonFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
+    /**
+     * Filter, which Lessons to fetch.
+     */
+    where?: LessonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Lessons to fetch.
+     */
+    orderBy?: LessonOrderByWithRelationInput | LessonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Lessons.
+     */
+    cursor?: LessonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Lessons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Lessons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Lessons.
+     */
+    distinct?: LessonScalarFieldEnum | LessonScalarFieldEnum[]
+  }
+
+  /**
+   * Lesson create
+   */
+  export type LessonCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Lesson.
+     */
+    data: XOR<LessonCreateInput, LessonUncheckedCreateInput>
+  }
+
+  /**
+   * Lesson createMany
+   */
+  export type LessonCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Lessons.
+     */
+    data: LessonCreateManyInput | LessonCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Lesson createManyAndReturn
+   */
+  export type LessonCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * The data used to create many Lessons.
+     */
+    data: LessonCreateManyInput | LessonCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Lesson update
+   */
+  export type LessonUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Lesson.
+     */
+    data: XOR<LessonUpdateInput, LessonUncheckedUpdateInput>
+    /**
+     * Choose, which Lesson to update.
+     */
+    where: LessonWhereUniqueInput
+  }
+
+  /**
+   * Lesson updateMany
+   */
+  export type LessonUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Lessons.
+     */
+    data: XOR<LessonUpdateManyMutationInput, LessonUncheckedUpdateManyInput>
+    /**
+     * Filter which Lessons to update
+     */
+    where?: LessonWhereInput
+    /**
+     * Limit how many Lessons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Lesson updateManyAndReturn
+   */
+  export type LessonUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * The data used to update Lessons.
+     */
+    data: XOR<LessonUpdateManyMutationInput, LessonUncheckedUpdateManyInput>
+    /**
+     * Filter which Lessons to update
+     */
+    where?: LessonWhereInput
+    /**
+     * Limit how many Lessons to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Lesson upsert
+   */
+  export type LessonUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Lesson to update in case it exists.
+     */
+    where: LessonWhereUniqueInput
+    /**
+     * In case the Lesson found by the `where` argument doesn't exist, create a new Lesson with this data.
+     */
+    create: XOR<LessonCreateInput, LessonUncheckedCreateInput>
+    /**
+     * In case the Lesson was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LessonUpdateInput, LessonUncheckedUpdateInput>
+  }
+
+  /**
+   * Lesson delete
+   */
+  export type LessonDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
+    /**
+     * Filter which Lesson to delete.
+     */
+    where: LessonWhereUniqueInput
+  }
+
+  /**
+   * Lesson deleteMany
+   */
+  export type LessonDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Lessons to delete
+     */
+    where?: LessonWhereInput
+    /**
+     * Limit how many Lessons to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Lesson without action
+   */
+  export type LessonDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
   }
 
 
@@ -16887,6 +18122,8 @@ export namespace Prisma {
     studentHomework?: boolean | User$studentHomeworkArgs<ExtArgs>
     teacherSchedules?: boolean | User$teacherSchedulesArgs<ExtArgs>
     studentSchedules?: boolean | User$studentSchedulesArgs<ExtArgs>
+    teacherLessons?: boolean | User$teacherLessonsArgs<ExtArgs>
+    studentLessons?: boolean | User$studentLessonsArgs<ExtArgs>
     announcements?: boolean | User$announcementsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -16949,6 +18186,8 @@ export namespace Prisma {
     studentHomework?: boolean | User$studentHomeworkArgs<ExtArgs>
     teacherSchedules?: boolean | User$teacherSchedulesArgs<ExtArgs>
     studentSchedules?: boolean | User$studentSchedulesArgs<ExtArgs>
+    teacherLessons?: boolean | User$teacherLessonsArgs<ExtArgs>
+    studentLessons?: boolean | User$studentLessonsArgs<ExtArgs>
     announcements?: boolean | User$announcementsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -16969,6 +18208,8 @@ export namespace Prisma {
       studentHomework: Prisma.$AssignmentPayload<ExtArgs>[]
       teacherSchedules: Prisma.$ClassSchedulePayload<ExtArgs>[]
       studentSchedules: Prisma.$ClassSchedulePayload<ExtArgs>[]
+      teacherLessons: Prisma.$LessonPayload<ExtArgs>[]
+      studentLessons: Prisma.$LessonPayload<ExtArgs>[]
       announcements: Prisma.$AnnouncementPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -17389,6 +18630,8 @@ export namespace Prisma {
     studentHomework<T extends User$studentHomeworkArgs<ExtArgs> = {}>(args?: Subset<T, User$studentHomeworkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     teacherSchedules<T extends User$teacherSchedulesArgs<ExtArgs> = {}>(args?: Subset<T, User$teacherSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClassSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentSchedules<T extends User$studentSchedulesArgs<ExtArgs> = {}>(args?: Subset<T, User$studentSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClassSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    teacherLessons<T extends User$teacherLessonsArgs<ExtArgs> = {}>(args?: Subset<T, User$teacherLessonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    studentLessons<T extends User$studentLessonsArgs<ExtArgs> = {}>(args?: Subset<T, User$studentLessonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     announcements<T extends User$announcementsArgs<ExtArgs> = {}>(args?: Subset<T, User$announcementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnnouncementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -18075,6 +19318,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ClassScheduleScalarFieldEnum | ClassScheduleScalarFieldEnum[]
+  }
+
+  /**
+   * User.teacherLessons
+   */
+  export type User$teacherLessonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
+    where?: LessonWhereInput
+    orderBy?: LessonOrderByWithRelationInput | LessonOrderByWithRelationInput[]
+    cursor?: LessonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LessonScalarFieldEnum | LessonScalarFieldEnum[]
+  }
+
+  /**
+   * User.studentLessons
+   */
+  export type User$studentLessonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lesson
+     */
+    select?: LessonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lesson
+     */
+    omit?: LessonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LessonInclude<ExtArgs> | null
+    where?: LessonWhereInput
+    orderBy?: LessonOrderByWithRelationInput | LessonOrderByWithRelationInput[]
+    cursor?: LessonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LessonScalarFieldEnum | LessonScalarFieldEnum[]
   }
 
   /**
@@ -19314,6 +20605,18 @@ export namespace Prisma {
   export type ClassScheduleSubjectScalarFieldEnum = (typeof ClassScheduleSubjectScalarFieldEnum)[keyof typeof ClassScheduleSubjectScalarFieldEnum]
 
 
+  export const LessonScalarFieldEnum: {
+    id: 'id',
+    teacherId: 'teacherId',
+    studentId: 'studentId',
+    currentLesson: 'currentLesson',
+    lessonUrl: 'lessonUrl',
+    createdAt: 'createdAt'
+  };
+
+  export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof LessonScalarFieldEnum]
+
+
   export const LookupScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -20040,6 +21343,71 @@ export namespace Prisma {
     subjectId?: IntWithAggregatesFilter<"ClassScheduleSubject"> | number
   }
 
+  export type LessonWhereInput = {
+    AND?: LessonWhereInput | LessonWhereInput[]
+    OR?: LessonWhereInput[]
+    NOT?: LessonWhereInput | LessonWhereInput[]
+    id?: IntFilter<"Lesson"> | number
+    teacherId?: IntFilter<"Lesson"> | number
+    studentId?: IntFilter<"Lesson"> | number
+    currentLesson?: StringFilter<"Lesson"> | string
+    lessonUrl?: StringFilter<"Lesson"> | string
+    createdAt?: DateTimeFilter<"Lesson"> | Date | string
+    teacher?: XOR<UserScalarRelationFilter, UserWhereInput>
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type LessonOrderByWithRelationInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    currentLesson?: SortOrder
+    lessonUrl?: SortOrder
+    createdAt?: SortOrder
+    teacher?: UserOrderByWithRelationInput
+    student?: UserOrderByWithRelationInput
+  }
+
+  export type LessonWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: LessonWhereInput | LessonWhereInput[]
+    OR?: LessonWhereInput[]
+    NOT?: LessonWhereInput | LessonWhereInput[]
+    teacherId?: IntFilter<"Lesson"> | number
+    studentId?: IntFilter<"Lesson"> | number
+    currentLesson?: StringFilter<"Lesson"> | string
+    lessonUrl?: StringFilter<"Lesson"> | string
+    createdAt?: DateTimeFilter<"Lesson"> | Date | string
+    teacher?: XOR<UserScalarRelationFilter, UserWhereInput>
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type LessonOrderByWithAggregationInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    currentLesson?: SortOrder
+    lessonUrl?: SortOrder
+    createdAt?: SortOrder
+    _count?: LessonCountOrderByAggregateInput
+    _avg?: LessonAvgOrderByAggregateInput
+    _max?: LessonMaxOrderByAggregateInput
+    _min?: LessonMinOrderByAggregateInput
+    _sum?: LessonSumOrderByAggregateInput
+  }
+
+  export type LessonScalarWhereWithAggregatesInput = {
+    AND?: LessonScalarWhereWithAggregatesInput | LessonScalarWhereWithAggregatesInput[]
+    OR?: LessonScalarWhereWithAggregatesInput[]
+    NOT?: LessonScalarWhereWithAggregatesInput | LessonScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Lesson"> | number
+    teacherId?: IntWithAggregatesFilter<"Lesson"> | number
+    studentId?: IntWithAggregatesFilter<"Lesson"> | number
+    currentLesson?: StringWithAggregatesFilter<"Lesson"> | string
+    lessonUrl?: StringWithAggregatesFilter<"Lesson"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Lesson"> | Date | string
+  }
+
   export type LookupWhereInput = {
     AND?: LookupWhereInput | LookupWhereInput[]
     OR?: LookupWhereInput[]
@@ -20603,6 +21971,8 @@ export namespace Prisma {
     studentHomework?: AssignmentListRelationFilter
     teacherSchedules?: ClassScheduleListRelationFilter
     studentSchedules?: ClassScheduleListRelationFilter
+    teacherLessons?: LessonListRelationFilter
+    studentLessons?: LessonListRelationFilter
     announcements?: AnnouncementListRelationFilter
   }
 
@@ -20630,6 +22000,8 @@ export namespace Prisma {
     studentHomework?: AssignmentOrderByRelationAggregateInput
     teacherSchedules?: ClassScheduleOrderByRelationAggregateInput
     studentSchedules?: ClassScheduleOrderByRelationAggregateInput
+    teacherLessons?: LessonOrderByRelationAggregateInput
+    studentLessons?: LessonOrderByRelationAggregateInput
     announcements?: AnnouncementOrderByRelationAggregateInput
   }
 
@@ -20660,6 +22032,8 @@ export namespace Prisma {
     studentHomework?: AssignmentListRelationFilter
     teacherSchedules?: ClassScheduleListRelationFilter
     studentSchedules?: ClassScheduleListRelationFilter
+    teacherLessons?: LessonListRelationFilter
+    studentLessons?: LessonListRelationFilter
     announcements?: AnnouncementListRelationFilter
   }, "id" | "userId" | "email">
 
@@ -21188,6 +22562,64 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     classScheduleId?: IntFieldUpdateOperationsInput | number
     subjectId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type LessonCreateInput = {
+    currentLesson: string
+    lessonUrl: string
+    createdAt?: Date | string
+    teacher: UserCreateNestedOneWithoutTeacherLessonsInput
+    student: UserCreateNestedOneWithoutStudentLessonsInput
+  }
+
+  export type LessonUncheckedCreateInput = {
+    id?: number
+    teacherId: number
+    studentId: number
+    currentLesson: string
+    lessonUrl: string
+    createdAt?: Date | string
+  }
+
+  export type LessonUpdateInput = {
+    currentLesson?: StringFieldUpdateOperationsInput | string
+    lessonUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teacher?: UserUpdateOneRequiredWithoutTeacherLessonsNestedInput
+    student?: UserUpdateOneRequiredWithoutStudentLessonsNestedInput
+  }
+
+  export type LessonUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    teacherId?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    currentLesson?: StringFieldUpdateOperationsInput | string
+    lessonUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LessonCreateManyInput = {
+    id?: number
+    teacherId: number
+    studentId: number
+    currentLesson: string
+    lessonUrl: string
+    createdAt?: Date | string
+  }
+
+  export type LessonUpdateManyMutationInput = {
+    currentLesson?: StringFieldUpdateOperationsInput | string
+    lessonUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LessonUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    teacherId?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    currentLesson?: StringFieldUpdateOperationsInput | string
+    lessonUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LookupCreateInput = {
@@ -21748,6 +23180,8 @@ export namespace Prisma {
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -21775,6 +23209,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -21801,6 +23237,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -21828,6 +23266,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -22437,6 +23877,45 @@ export namespace Prisma {
     subjectId?: SortOrder
   }
 
+  export type LessonCountOrderByAggregateInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    currentLesson?: SortOrder
+    lessonUrl?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LessonAvgOrderByAggregateInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+  }
+
+  export type LessonMaxOrderByAggregateInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    currentLesson?: SortOrder
+    lessonUrl?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LessonMinOrderByAggregateInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    currentLesson?: SortOrder
+    lessonUrl?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LessonSumOrderByAggregateInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+  }
+
   export type TuitionPostListRelationFilter = {
     every?: TuitionPostWhereInput
     some?: TuitionPostWhereInput
@@ -22897,6 +24376,12 @@ export namespace Prisma {
     none?: ClassScheduleWhereInput
   }
 
+  export type LessonListRelationFilter = {
+    every?: LessonWhereInput
+    some?: LessonWhereInput
+    none?: LessonWhereInput
+  }
+
   export type AnnouncementListRelationFilter = {
     every?: AnnouncementWhereInput
     some?: AnnouncementWhereInput
@@ -22908,6 +24393,10 @@ export namespace Prisma {
   }
 
   export type ClassScheduleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LessonOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -23324,6 +24813,34 @@ export namespace Prisma {
     upsert?: LookupUpsertWithoutClassScheduleSubjectsInput
     connect?: LookupWhereUniqueInput
     update?: XOR<XOR<LookupUpdateToOneWithWhereWithoutClassScheduleSubjectsInput, LookupUpdateWithoutClassScheduleSubjectsInput>, LookupUncheckedUpdateWithoutClassScheduleSubjectsInput>
+  }
+
+  export type UserCreateNestedOneWithoutTeacherLessonsInput = {
+    create?: XOR<UserCreateWithoutTeacherLessonsInput, UserUncheckedCreateWithoutTeacherLessonsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTeacherLessonsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutStudentLessonsInput = {
+    create?: XOR<UserCreateWithoutStudentLessonsInput, UserUncheckedCreateWithoutStudentLessonsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStudentLessonsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutTeacherLessonsNestedInput = {
+    create?: XOR<UserCreateWithoutTeacherLessonsInput, UserUncheckedCreateWithoutTeacherLessonsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTeacherLessonsInput
+    upsert?: UserUpsertWithoutTeacherLessonsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTeacherLessonsInput, UserUpdateWithoutTeacherLessonsInput>, UserUncheckedUpdateWithoutTeacherLessonsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutStudentLessonsNestedInput = {
+    create?: XOR<UserCreateWithoutStudentLessonsInput, UserUncheckedCreateWithoutStudentLessonsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStudentLessonsInput
+    upsert?: UserUpsertWithoutStudentLessonsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStudentLessonsInput, UserUpdateWithoutStudentLessonsInput>, UserUncheckedUpdateWithoutStudentLessonsInput>
   }
 
   export type TuitionPostCreateNestedManyWithoutStatusInput = {
@@ -23988,6 +25505,20 @@ export namespace Prisma {
     connect?: ClassScheduleWhereUniqueInput | ClassScheduleWhereUniqueInput[]
   }
 
+  export type LessonCreateNestedManyWithoutTeacherInput = {
+    create?: XOR<LessonCreateWithoutTeacherInput, LessonUncheckedCreateWithoutTeacherInput> | LessonCreateWithoutTeacherInput[] | LessonUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: LessonCreateOrConnectWithoutTeacherInput | LessonCreateOrConnectWithoutTeacherInput[]
+    createMany?: LessonCreateManyTeacherInputEnvelope
+    connect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+  }
+
+  export type LessonCreateNestedManyWithoutStudentInput = {
+    create?: XOR<LessonCreateWithoutStudentInput, LessonUncheckedCreateWithoutStudentInput> | LessonCreateWithoutStudentInput[] | LessonUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: LessonCreateOrConnectWithoutStudentInput | LessonCreateOrConnectWithoutStudentInput[]
+    createMany?: LessonCreateManyStudentInputEnvelope
+    connect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+  }
+
   export type AnnouncementCreateNestedManyWithoutCreatedByInput = {
     create?: XOR<AnnouncementCreateWithoutCreatedByInput, AnnouncementUncheckedCreateWithoutCreatedByInput> | AnnouncementCreateWithoutCreatedByInput[] | AnnouncementUncheckedCreateWithoutCreatedByInput[]
     connectOrCreate?: AnnouncementCreateOrConnectWithoutCreatedByInput | AnnouncementCreateOrConnectWithoutCreatedByInput[]
@@ -24068,6 +25599,20 @@ export namespace Prisma {
     connectOrCreate?: ClassScheduleCreateOrConnectWithoutStudentInput | ClassScheduleCreateOrConnectWithoutStudentInput[]
     createMany?: ClassScheduleCreateManyStudentInputEnvelope
     connect?: ClassScheduleWhereUniqueInput | ClassScheduleWhereUniqueInput[]
+  }
+
+  export type LessonUncheckedCreateNestedManyWithoutTeacherInput = {
+    create?: XOR<LessonCreateWithoutTeacherInput, LessonUncheckedCreateWithoutTeacherInput> | LessonCreateWithoutTeacherInput[] | LessonUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: LessonCreateOrConnectWithoutTeacherInput | LessonCreateOrConnectWithoutTeacherInput[]
+    createMany?: LessonCreateManyTeacherInputEnvelope
+    connect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+  }
+
+  export type LessonUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<LessonCreateWithoutStudentInput, LessonUncheckedCreateWithoutStudentInput> | LessonCreateWithoutStudentInput[] | LessonUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: LessonCreateOrConnectWithoutStudentInput | LessonCreateOrConnectWithoutStudentInput[]
+    createMany?: LessonCreateManyStudentInputEnvelope
+    connect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
   }
 
   export type AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput = {
@@ -24225,6 +25770,34 @@ export namespace Prisma {
     update?: ClassScheduleUpdateWithWhereUniqueWithoutStudentInput | ClassScheduleUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: ClassScheduleUpdateManyWithWhereWithoutStudentInput | ClassScheduleUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: ClassScheduleScalarWhereInput | ClassScheduleScalarWhereInput[]
+  }
+
+  export type LessonUpdateManyWithoutTeacherNestedInput = {
+    create?: XOR<LessonCreateWithoutTeacherInput, LessonUncheckedCreateWithoutTeacherInput> | LessonCreateWithoutTeacherInput[] | LessonUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: LessonCreateOrConnectWithoutTeacherInput | LessonCreateOrConnectWithoutTeacherInput[]
+    upsert?: LessonUpsertWithWhereUniqueWithoutTeacherInput | LessonUpsertWithWhereUniqueWithoutTeacherInput[]
+    createMany?: LessonCreateManyTeacherInputEnvelope
+    set?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    disconnect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    delete?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    connect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    update?: LessonUpdateWithWhereUniqueWithoutTeacherInput | LessonUpdateWithWhereUniqueWithoutTeacherInput[]
+    updateMany?: LessonUpdateManyWithWhereWithoutTeacherInput | LessonUpdateManyWithWhereWithoutTeacherInput[]
+    deleteMany?: LessonScalarWhereInput | LessonScalarWhereInput[]
+  }
+
+  export type LessonUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<LessonCreateWithoutStudentInput, LessonUncheckedCreateWithoutStudentInput> | LessonCreateWithoutStudentInput[] | LessonUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: LessonCreateOrConnectWithoutStudentInput | LessonCreateOrConnectWithoutStudentInput[]
+    upsert?: LessonUpsertWithWhereUniqueWithoutStudentInput | LessonUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: LessonCreateManyStudentInputEnvelope
+    set?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    disconnect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    delete?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    connect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    update?: LessonUpdateWithWhereUniqueWithoutStudentInput | LessonUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: LessonUpdateManyWithWhereWithoutStudentInput | LessonUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: LessonScalarWhereInput | LessonScalarWhereInput[]
   }
 
   export type AnnouncementUpdateManyWithoutCreatedByNestedInput = {
@@ -24385,6 +25958,34 @@ export namespace Prisma {
     update?: ClassScheduleUpdateWithWhereUniqueWithoutStudentInput | ClassScheduleUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: ClassScheduleUpdateManyWithWhereWithoutStudentInput | ClassScheduleUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: ClassScheduleScalarWhereInput | ClassScheduleScalarWhereInput[]
+  }
+
+  export type LessonUncheckedUpdateManyWithoutTeacherNestedInput = {
+    create?: XOR<LessonCreateWithoutTeacherInput, LessonUncheckedCreateWithoutTeacherInput> | LessonCreateWithoutTeacherInput[] | LessonUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: LessonCreateOrConnectWithoutTeacherInput | LessonCreateOrConnectWithoutTeacherInput[]
+    upsert?: LessonUpsertWithWhereUniqueWithoutTeacherInput | LessonUpsertWithWhereUniqueWithoutTeacherInput[]
+    createMany?: LessonCreateManyTeacherInputEnvelope
+    set?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    disconnect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    delete?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    connect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    update?: LessonUpdateWithWhereUniqueWithoutTeacherInput | LessonUpdateWithWhereUniqueWithoutTeacherInput[]
+    updateMany?: LessonUpdateManyWithWhereWithoutTeacherInput | LessonUpdateManyWithWhereWithoutTeacherInput[]
+    deleteMany?: LessonScalarWhereInput | LessonScalarWhereInput[]
+  }
+
+  export type LessonUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<LessonCreateWithoutStudentInput, LessonUncheckedCreateWithoutStudentInput> | LessonCreateWithoutStudentInput[] | LessonUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: LessonCreateOrConnectWithoutStudentInput | LessonCreateOrConnectWithoutStudentInput[]
+    upsert?: LessonUpsertWithWhereUniqueWithoutStudentInput | LessonUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: LessonCreateManyStudentInputEnvelope
+    set?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    disconnect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    delete?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    connect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+    update?: LessonUpdateWithWhereUniqueWithoutStudentInput | LessonUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: LessonUpdateManyWithWhereWithoutStudentInput | LessonUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: LessonScalarWhereInput | LessonScalarWhereInput[]
   }
 
   export type AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput = {
@@ -24717,6 +26318,8 @@ export namespace Prisma {
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
   }
 
   export type UserUncheckedCreateWithoutAnnouncementsInput = {
@@ -24743,6 +26346,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type UserCreateOrConnectWithoutAnnouncementsInput = {
@@ -24784,6 +26389,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAnnouncementsInput = {
@@ -24810,6 +26417,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type TuitionPostCreateWithoutAssignedInput = {
@@ -24876,6 +26485,8 @@ export namespace Prisma {
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -24902,6 +26513,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -24932,6 +26545,8 @@ export namespace Prisma {
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -24958,6 +26573,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -25075,6 +26692,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -25101,6 +26720,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -25137,6 +26758,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -25163,6 +26786,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -25222,6 +26847,8 @@ export namespace Prisma {
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -25248,6 +26875,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -25278,6 +26907,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -25304,6 +26935,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -25409,6 +27042,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -25435,6 +27070,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -25471,6 +27108,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -25497,6 +27136,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -25632,6 +27273,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -25658,6 +27301,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -25688,6 +27333,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -25714,6 +27361,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -25814,6 +27463,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -25840,6 +27491,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -25876,6 +27529,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -25902,6 +27557,8 @@ export namespace Prisma {
     teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -26060,6 +27717,258 @@ export namespace Prisma {
     assignmentSubject?: AssignmentUncheckedUpdateManyWithoutSubjectNestedInput
     TuitionPostArea?: TuitionPostUncheckedUpdateManyWithoutAreaNestedInput
     subjects?: TuitionPostSubjectUncheckedUpdateManyWithoutSubjectNestedInput
+  }
+
+  export type UserCreateWithoutTeacherLessonsInput = {
+    userId?: string | null
+    name: string
+    email: string
+    password: string
+    address?: string | null
+    contact?: string | null
+    gender?: $Enums.Gender | null
+    role: $Enums.Role
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    teacherProfile?: TeacherProfileCreateNestedOneWithoutUserInput
+    studentProfile?: StudentProfileCreateNestedOneWithoutUserInput
+    tuitionPosts?: TuitionPostCreateNestedManyWithoutPostedByUserInput
+    applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
+    teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
+    studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
+    teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
+    studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
+    teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
+    studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutTeacherLessonsInput = {
+    id?: number
+    userId?: string | null
+    name: string
+    email: string
+    password: string
+    address?: string | null
+    contact?: string | null
+    gender?: $Enums.Gender | null
+    role: $Enums.Role
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    teacherProfile?: TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutUserInput
+    tuitionPosts?: TuitionPostUncheckedCreateNestedManyWithoutPostedByUserInput
+    applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
+    teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
+    studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
+    teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
+    studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
+    teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
+    studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutTeacherLessonsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTeacherLessonsInput, UserUncheckedCreateWithoutTeacherLessonsInput>
+  }
+
+  export type UserCreateWithoutStudentLessonsInput = {
+    userId?: string | null
+    name: string
+    email: string
+    password: string
+    address?: string | null
+    contact?: string | null
+    gender?: $Enums.Gender | null
+    role: $Enums.Role
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    teacherProfile?: TeacherProfileCreateNestedOneWithoutUserInput
+    studentProfile?: StudentProfileCreateNestedOneWithoutUserInput
+    tuitionPosts?: TuitionPostCreateNestedManyWithoutPostedByUserInput
+    applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
+    teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
+    studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
+    teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
+    studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
+    teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
+    studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutStudentLessonsInput = {
+    id?: number
+    userId?: string | null
+    name: string
+    email: string
+    password: string
+    address?: string | null
+    contact?: string | null
+    gender?: $Enums.Gender | null
+    role: $Enums.Role
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    teacherProfile?: TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutUserInput
+    tuitionPosts?: TuitionPostUncheckedCreateNestedManyWithoutPostedByUserInput
+    applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
+    teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
+    studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
+    teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
+    studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
+    teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
+    studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutStudentLessonsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutStudentLessonsInput, UserUncheckedCreateWithoutStudentLessonsInput>
+  }
+
+  export type UserUpsertWithoutTeacherLessonsInput = {
+    update: XOR<UserUpdateWithoutTeacherLessonsInput, UserUncheckedUpdateWithoutTeacherLessonsInput>
+    create: XOR<UserCreateWithoutTeacherLessonsInput, UserUncheckedCreateWithoutTeacherLessonsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTeacherLessonsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTeacherLessonsInput, UserUncheckedUpdateWithoutTeacherLessonsInput>
+  }
+
+  export type UserUpdateWithoutTeacherLessonsInput = {
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    teacherProfile?: TeacherProfileUpdateOneWithoutUserNestedInput
+    studentProfile?: StudentProfileUpdateOneWithoutUserNestedInput
+    tuitionPosts?: TuitionPostUpdateManyWithoutPostedByUserNestedInput
+    applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
+    teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
+    studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
+    teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
+    studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
+    teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
+    studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTeacherLessonsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    teacherProfile?: TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+    studentProfile?: StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+    tuitionPosts?: TuitionPostUncheckedUpdateManyWithoutPostedByUserNestedInput
+    applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
+    teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
+    studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
+    teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
+    studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
+    teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
+    studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUpsertWithoutStudentLessonsInput = {
+    update: XOR<UserUpdateWithoutStudentLessonsInput, UserUncheckedUpdateWithoutStudentLessonsInput>
+    create: XOR<UserCreateWithoutStudentLessonsInput, UserUncheckedCreateWithoutStudentLessonsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutStudentLessonsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutStudentLessonsInput, UserUncheckedUpdateWithoutStudentLessonsInput>
+  }
+
+  export type UserUpdateWithoutStudentLessonsInput = {
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    teacherProfile?: TeacherProfileUpdateOneWithoutUserNestedInput
+    studentProfile?: StudentProfileUpdateOneWithoutUserNestedInput
+    tuitionPosts?: TuitionPostUpdateManyWithoutPostedByUserNestedInput
+    applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
+    teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
+    studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
+    teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
+    studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
+    teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
+    studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutStudentLessonsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    teacherProfile?: TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+    studentProfile?: StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+    tuitionPosts?: TuitionPostUncheckedUpdateManyWithoutPostedByUserNestedInput
+    applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
+    teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
+    studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
+    teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
+    studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
+    teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
+    studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type TuitionPostCreateWithoutStatusInput = {
@@ -26512,6 +28421,8 @@ export namespace Prisma {
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26538,6 +28449,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26579,6 +28492,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -26605,6 +28520,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -26630,6 +28547,8 @@ export namespace Prisma {
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26656,6 +28575,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26697,6 +28618,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -26723,6 +28646,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -26748,6 +28673,8 @@ export namespace Prisma {
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26774,6 +28701,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26966,6 +28895,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -26992,6 +28923,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27201,6 +29134,8 @@ export namespace Prisma {
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -27227,6 +29162,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -27348,6 +29285,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27374,6 +29313,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27964,6 +29905,56 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type LessonCreateWithoutTeacherInput = {
+    currentLesson: string
+    lessonUrl: string
+    createdAt?: Date | string
+    student: UserCreateNestedOneWithoutStudentLessonsInput
+  }
+
+  export type LessonUncheckedCreateWithoutTeacherInput = {
+    id?: number
+    studentId: number
+    currentLesson: string
+    lessonUrl: string
+    createdAt?: Date | string
+  }
+
+  export type LessonCreateOrConnectWithoutTeacherInput = {
+    where: LessonWhereUniqueInput
+    create: XOR<LessonCreateWithoutTeacherInput, LessonUncheckedCreateWithoutTeacherInput>
+  }
+
+  export type LessonCreateManyTeacherInputEnvelope = {
+    data: LessonCreateManyTeacherInput | LessonCreateManyTeacherInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LessonCreateWithoutStudentInput = {
+    currentLesson: string
+    lessonUrl: string
+    createdAt?: Date | string
+    teacher: UserCreateNestedOneWithoutTeacherLessonsInput
+  }
+
+  export type LessonUncheckedCreateWithoutStudentInput = {
+    id?: number
+    teacherId: number
+    currentLesson: string
+    lessonUrl: string
+    createdAt?: Date | string
+  }
+
+  export type LessonCreateOrConnectWithoutStudentInput = {
+    where: LessonWhereUniqueInput
+    create: XOR<LessonCreateWithoutStudentInput, LessonUncheckedCreateWithoutStudentInput>
+  }
+
+  export type LessonCreateManyStudentInputEnvelope = {
+    data: LessonCreateManyStudentInput | LessonCreateManyStudentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AnnouncementCreateWithoutCreatedByInput = {
     id?: string
     title: string
@@ -28234,6 +30225,50 @@ export namespace Prisma {
     data: XOR<ClassScheduleUpdateManyMutationInput, ClassScheduleUncheckedUpdateManyWithoutStudentInput>
   }
 
+  export type LessonUpsertWithWhereUniqueWithoutTeacherInput = {
+    where: LessonWhereUniqueInput
+    update: XOR<LessonUpdateWithoutTeacherInput, LessonUncheckedUpdateWithoutTeacherInput>
+    create: XOR<LessonCreateWithoutTeacherInput, LessonUncheckedCreateWithoutTeacherInput>
+  }
+
+  export type LessonUpdateWithWhereUniqueWithoutTeacherInput = {
+    where: LessonWhereUniqueInput
+    data: XOR<LessonUpdateWithoutTeacherInput, LessonUncheckedUpdateWithoutTeacherInput>
+  }
+
+  export type LessonUpdateManyWithWhereWithoutTeacherInput = {
+    where: LessonScalarWhereInput
+    data: XOR<LessonUpdateManyMutationInput, LessonUncheckedUpdateManyWithoutTeacherInput>
+  }
+
+  export type LessonScalarWhereInput = {
+    AND?: LessonScalarWhereInput | LessonScalarWhereInput[]
+    OR?: LessonScalarWhereInput[]
+    NOT?: LessonScalarWhereInput | LessonScalarWhereInput[]
+    id?: IntFilter<"Lesson"> | number
+    teacherId?: IntFilter<"Lesson"> | number
+    studentId?: IntFilter<"Lesson"> | number
+    currentLesson?: StringFilter<"Lesson"> | string
+    lessonUrl?: StringFilter<"Lesson"> | string
+    createdAt?: DateTimeFilter<"Lesson"> | Date | string
+  }
+
+  export type LessonUpsertWithWhereUniqueWithoutStudentInput = {
+    where: LessonWhereUniqueInput
+    update: XOR<LessonUpdateWithoutStudentInput, LessonUncheckedUpdateWithoutStudentInput>
+    create: XOR<LessonCreateWithoutStudentInput, LessonUncheckedCreateWithoutStudentInput>
+  }
+
+  export type LessonUpdateWithWhereUniqueWithoutStudentInput = {
+    where: LessonWhereUniqueInput
+    data: XOR<LessonUpdateWithoutStudentInput, LessonUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type LessonUpdateManyWithWhereWithoutStudentInput = {
+    where: LessonScalarWhereInput
+    data: XOR<LessonUpdateManyMutationInput, LessonUncheckedUpdateManyWithoutStudentInput>
+  }
+
   export type AnnouncementUpsertWithWhereUniqueWithoutCreatedByInput = {
     where: AnnouncementWhereUniqueInput
     update: XOR<AnnouncementUpdateWithoutCreatedByInput, AnnouncementUncheckedUpdateWithoutCreatedByInput>
@@ -28287,6 +30322,8 @@ export namespace Prisma {
     studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -28313,6 +30350,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -28354,6 +30393,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -28380,6 +30421,8 @@ export namespace Prisma {
     studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -28993,6 +31036,22 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type LessonCreateManyTeacherInput = {
+    id?: number
+    studentId: number
+    currentLesson: string
+    lessonUrl: string
+    createdAt?: Date | string
+  }
+
+  export type LessonCreateManyStudentInput = {
+    id?: number
+    teacherId: number
+    currentLesson: string
+    lessonUrl: string
+    createdAt?: Date | string
+  }
+
   export type AnnouncementCreateManyCreatedByInput = {
     id?: string
     title: string
@@ -29364,6 +31423,52 @@ export namespace Prisma {
     endTime?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LessonUpdateWithoutTeacherInput = {
+    currentLesson?: StringFieldUpdateOperationsInput | string
+    lessonUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: UserUpdateOneRequiredWithoutStudentLessonsNestedInput
+  }
+
+  export type LessonUncheckedUpdateWithoutTeacherInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    currentLesson?: StringFieldUpdateOperationsInput | string
+    lessonUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LessonUncheckedUpdateManyWithoutTeacherInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    currentLesson?: StringFieldUpdateOperationsInput | string
+    lessonUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LessonUpdateWithoutStudentInput = {
+    currentLesson?: StringFieldUpdateOperationsInput | string
+    lessonUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teacher?: UserUpdateOneRequiredWithoutTeacherLessonsNestedInput
+  }
+
+  export type LessonUncheckedUpdateWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    teacherId?: IntFieldUpdateOperationsInput | number
+    currentLesson?: StringFieldUpdateOperationsInput | string
+    lessonUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LessonUncheckedUpdateManyWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    teacherId?: IntFieldUpdateOperationsInput | number
+    currentLesson?: StringFieldUpdateOperationsInput | string
+    lessonUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AnnouncementUpdateWithoutCreatedByInput = {

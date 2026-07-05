@@ -184,6 +184,15 @@ exports.Prisma.ClassScheduleSubjectScalarFieldEnum = {
   subjectId: 'subjectId'
 };
 
+exports.Prisma.LessonScalarFieldEnum = {
+  id: 'id',
+  teacherId: 'teacherId',
+  studentId: 'studentId',
+  currentLesson: 'currentLesson',
+  lessonUrl: 'lessonUrl',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.LookupScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -330,6 +339,7 @@ exports.Prisma.ModelName = {
   Assignment: 'Assignment',
   ClassSchedule: 'ClassSchedule',
   ClassScheduleSubject: 'ClassScheduleSubject',
+  Lesson: 'Lesson',
   Lookup: 'Lookup',
   RolePermission: 'RolePermission',
   StudentProfile: 'StudentProfile',

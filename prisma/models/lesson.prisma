@@ -1,0 +1,12 @@
+model Lesson {
+  id            Int      @id @default(autoincrement())
+  teacherId     Int
+  studentId     Int
+  currentLesson String
+  lessonUrl     String
+  createdAt     DateTime @default(now())
+
+  teacher User @relation("TeacherLessons", fields: [teacherId], references: [id])
+  student User @relation("StudentLessons", fields: [studentId], references: [id])
+
+}
