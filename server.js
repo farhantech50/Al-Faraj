@@ -39,6 +39,7 @@ app.use(
   }),
 );
 const allowedOrigins = [
+  "https://localhost:8001",
   "https://192.168.68.120:8001",
   "https://192.168.68.120:3000",
   "https://192.168.68.105:3000",

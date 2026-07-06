@@ -48,16 +48,12 @@ export const createLesson = async (req, res) => {
 };
 export const getLessons = async (req, res) => {
   try {
-    const { teacherId, studentId } = req.query;
+    const { teacherId } = req.query;
 
     const where = {};
 
     if (teacherId) {
       where.teacherId = Number(teacherId);
-    }
-
-    if (studentId) {
-      where.studentId = Number(studentId);
     }
 
     const lessons = await prisma.lesson.findMany({

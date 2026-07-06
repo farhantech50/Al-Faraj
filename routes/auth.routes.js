@@ -52,7 +52,7 @@ router.post("/login", (req, res, next) => {
               type: "object",
               required: ["email", "password"],
               properties: {
-                email: { type: "string", example: "admin@email.com" },
+                email: { type: "string", example: "admin@gmail.com" },
                 password: { type: "string", example: "Soft@123" }
               }
             }
