@@ -8,6 +8,7 @@ import {
   getMyTuitionPosts,
   findStudentApplicationStatusCounts,
   confirmDemoTeacher,
+  getAssignedTeachers,
 } from "../controllers/student.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
 import {
@@ -133,7 +134,15 @@ router.get(
     findStudentApplicationStatusCounts(req, res, next);
   },
 );
-
+router.get(
+  "/assigned-teachers",
+  protect,
+  authorizeRoles("admin", "moderator", "student", "teacher"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Student'] */
+    getAssignedTeachers(req, res, next);
+  },
+);
 router.post(
   "/confirm-teacher",
   protect,

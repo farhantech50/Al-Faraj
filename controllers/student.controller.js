@@ -470,3 +470,27 @@ export const confirmDemoTeacher = async (req, res) => {
     });
   }
 };
+export const getAssignedTeachers = async (req, res) => {
+  try {
+    const { studentId } = req.query;
+
+    const teachers = await prisma.assigned.findMany({
+      where: {
+        studentId: Number(studentId),
+      },
+      distinct: ["teacherId"],
+      select: {
+        teacher: {
+          select: { id: true, name: true, email: true, contact: true },
+        },
+      },
+    });
+
+    const result = teachers.map((s) => ({ user: s.teacher }));
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.log("Error in getAssignedStudents", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
