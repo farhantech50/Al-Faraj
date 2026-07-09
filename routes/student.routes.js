@@ -10,6 +10,11 @@ import {
   confirmDemoTeacher,
 } from "../controllers/student.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
+import {
+  createRating,
+  getStudentRatingForTeacher,
+  updateRating,
+} from "../controllers/lesson.controller.js";
 
 const router = express.Router();
 
@@ -138,4 +143,33 @@ router.post(
     confirmDemoTeacher(req, res, next);
   },
 );
+
+router.post(
+  "/rate-teacher",
+  protect,
+  authorizeRoles("admin", "moderator", "student"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Student'] */
+    createRating(req, res, next);
+  },
+);
+router.put(
+  "/rate-teacher-update",
+  protect,
+  authorizeRoles("admin", "moderator", "student"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Student'] */
+    updateRating(req, res, next);
+  },
+);
+router.get(
+  "/get-teacher-rating/:teacherId",
+  protect,
+  authorizeRoles("admin", "moderator", "student"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Student'] */
+    getStudentRatingForTeacher(req, res, next);
+  },
+);
+
 export default router;

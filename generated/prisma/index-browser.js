@@ -193,6 +193,16 @@ exports.Prisma.LessonScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.RatingScalarFieldEnum = {
+  id: 'id',
+  teacherId: 'teacherId',
+  studentId: 'studentId',
+  rating: 'rating',
+  review: 'review',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.LookupScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -340,6 +350,7 @@ exports.Prisma.ModelName = {
   ClassSchedule: 'ClassSchedule',
   ClassScheduleSubject: 'ClassScheduleSubject',
   Lesson: 'Lesson',
+  Rating: 'Rating',
   Lookup: 'Lookup',
   RolePermission: 'RolePermission',
   StudentProfile: 'StudentProfile',

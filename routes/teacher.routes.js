@@ -11,7 +11,11 @@ import {
   getAssignedStudents,
 } from "../controllers/teacher.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
-import { createLesson, getLessons } from "../controllers/lesson.controller.js";
+import {
+  createLesson,
+  getAverageRating,
+  getLessons,
+} from "../controllers/lesson.controller.js";
 
 const router = express.Router();
 
@@ -211,6 +215,15 @@ router.get(
   (req, res, next) => {
     /* #swagger.tags = ['Teacher'] */
     getLessons(req, res, next);
+  },
+);
+router.get(
+  "/get-average-rating",
+  protect,
+  authorizeRoles("admin", "moderator", "teacher"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Teacher'] */
+    getAverageRating(req, res, next);
   },
 );
 export default router;

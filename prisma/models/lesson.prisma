@@ -10,3 +10,19 @@ model Lesson {
   student User @relation("StudentLessons", fields: [studentId], references: [id])
 
 }
+
+model Rating {
+  id        Int      @id @default(autoincrement())
+  teacherId Int
+  studentId Int
+  rating    Int
+  review    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teacher User @relation("TeacherRatings", fields: [teacherId], references: [id])
+  student User @relation("StudentRatings", fields: [studentId], references: [id])
+
+  @@unique([teacherId, studentId])
+  @@map("ratings")
+}

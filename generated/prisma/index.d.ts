@@ -44,6 +44,11 @@ export type ClassScheduleSubject = $Result.DefaultSelection<Prisma.$ClassSchedul
  */
 export type Lesson = $Result.DefaultSelection<Prisma.$LessonPayload>
 /**
+ * Model Rating
+ * 
+ */
+export type Rating = $Result.DefaultSelection<Prisma.$RatingPayload>
+/**
  * Model Lookup
  * 
  */
@@ -330,6 +335,16 @@ export class PrismaClient<
     * ```
     */
   get lesson(): Prisma.LessonDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.rating`: Exposes CRUD operations for the **Rating** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Ratings
+    * const ratings = await prisma.rating.findMany()
+    * ```
+    */
+  get rating(): Prisma.RatingDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.lookup`: Exposes CRUD operations for the **Lookup** model.
@@ -860,6 +875,7 @@ export namespace Prisma {
     ClassSchedule: 'ClassSchedule',
     ClassScheduleSubject: 'ClassScheduleSubject',
     Lesson: 'Lesson',
+    Rating: 'Rating',
     Lookup: 'Lookup',
     RolePermission: 'RolePermission',
     StudentProfile: 'StudentProfile',
@@ -884,7 +900,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "announcement" | "assigned" | "assignment" | "classSchedule" | "classScheduleSubject" | "lesson" | "lookup" | "rolePermission" | "studentProfile" | "teacherProfile" | "tuitionPost" | "tuitionApplication" | "tuitionPostSubject" | "user" | "refreshToken"
+      modelProps: "announcement" | "assigned" | "assignment" | "classSchedule" | "classScheduleSubject" | "lesson" | "rating" | "lookup" | "rolePermission" | "studentProfile" | "teacherProfile" | "tuitionPost" | "tuitionApplication" | "tuitionPostSubject" | "user" | "refreshToken"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1329,6 +1345,80 @@ export namespace Prisma {
           count: {
             args: Prisma.LessonCountArgs<ExtArgs>
             result: $Utils.Optional<LessonCountAggregateOutputType> | number
+          }
+        }
+      }
+      Rating: {
+        payload: Prisma.$RatingPayload<ExtArgs>
+        fields: Prisma.RatingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RatingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RatingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RatingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RatingPayload>
+          }
+          findFirst: {
+            args: Prisma.RatingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RatingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RatingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RatingPayload>
+          }
+          findMany: {
+            args: Prisma.RatingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RatingPayload>[]
+          }
+          create: {
+            args: Prisma.RatingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RatingPayload>
+          }
+          createMany: {
+            args: Prisma.RatingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RatingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RatingPayload>[]
+          }
+          delete: {
+            args: Prisma.RatingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RatingPayload>
+          }
+          update: {
+            args: Prisma.RatingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RatingPayload>
+          }
+          deleteMany: {
+            args: Prisma.RatingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RatingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RatingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RatingPayload>[]
+          }
+          upsert: {
+            args: Prisma.RatingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RatingPayload>
+          }
+          aggregate: {
+            args: Prisma.RatingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRating>
+          }
+          groupBy: {
+            args: Prisma.RatingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RatingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RatingCountArgs<ExtArgs>
+            result: $Utils.Optional<RatingCountAggregateOutputType> | number
           }
         }
       }
@@ -2112,6 +2202,7 @@ export namespace Prisma {
     classSchedule?: ClassScheduleOmit
     classScheduleSubject?: ClassScheduleSubjectOmit
     lesson?: LessonOmit
+    rating?: RatingOmit
     lookup?: LookupOmit
     rolePermission?: RolePermissionOmit
     studentProfile?: StudentProfileOmit
@@ -2377,6 +2468,8 @@ export namespace Prisma {
     studentSchedules: number
     teacherLessons: number
     studentLessons: number
+    teacherRatings: number
+    studentRatings: number
     announcements: number
   }
 
@@ -2392,6 +2485,8 @@ export namespace Prisma {
     studentSchedules?: boolean | UserCountOutputTypeCountStudentSchedulesArgs
     teacherLessons?: boolean | UserCountOutputTypeCountTeacherLessonsArgs
     studentLessons?: boolean | UserCountOutputTypeCountStudentLessonsArgs
+    teacherRatings?: boolean | UserCountOutputTypeCountTeacherRatingsArgs
+    studentRatings?: boolean | UserCountOutputTypeCountStudentRatingsArgs
     announcements?: boolean | UserCountOutputTypeCountAnnouncementsArgs
   }
 
@@ -2481,6 +2576,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountStudentLessonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LessonWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTeacherRatingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RatingWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountStudentRatingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RatingWhereInput
   }
 
   /**
@@ -9618,6 +9727,1149 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: LessonInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Rating
+   */
+
+  export type AggregateRating = {
+    _count: RatingCountAggregateOutputType | null
+    _avg: RatingAvgAggregateOutputType | null
+    _sum: RatingSumAggregateOutputType | null
+    _min: RatingMinAggregateOutputType | null
+    _max: RatingMaxAggregateOutputType | null
+  }
+
+  export type RatingAvgAggregateOutputType = {
+    id: number | null
+    teacherId: number | null
+    studentId: number | null
+    rating: number | null
+  }
+
+  export type RatingSumAggregateOutputType = {
+    id: number | null
+    teacherId: number | null
+    studentId: number | null
+    rating: number | null
+  }
+
+  export type RatingMinAggregateOutputType = {
+    id: number | null
+    teacherId: number | null
+    studentId: number | null
+    rating: number | null
+    review: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RatingMaxAggregateOutputType = {
+    id: number | null
+    teacherId: number | null
+    studentId: number | null
+    rating: number | null
+    review: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RatingCountAggregateOutputType = {
+    id: number
+    teacherId: number
+    studentId: number
+    rating: number
+    review: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RatingAvgAggregateInputType = {
+    id?: true
+    teacherId?: true
+    studentId?: true
+    rating?: true
+  }
+
+  export type RatingSumAggregateInputType = {
+    id?: true
+    teacherId?: true
+    studentId?: true
+    rating?: true
+  }
+
+  export type RatingMinAggregateInputType = {
+    id?: true
+    teacherId?: true
+    studentId?: true
+    rating?: true
+    review?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RatingMaxAggregateInputType = {
+    id?: true
+    teacherId?: true
+    studentId?: true
+    rating?: true
+    review?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RatingCountAggregateInputType = {
+    id?: true
+    teacherId?: true
+    studentId?: true
+    rating?: true
+    review?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RatingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Rating to aggregate.
+     */
+    where?: RatingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Ratings to fetch.
+     */
+    orderBy?: RatingOrderByWithRelationInput | RatingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RatingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Ratings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Ratings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Ratings
+    **/
+    _count?: true | RatingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RatingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RatingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RatingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RatingMaxAggregateInputType
+  }
+
+  export type GetRatingAggregateType<T extends RatingAggregateArgs> = {
+        [P in keyof T & keyof AggregateRating]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRating[P]>
+      : GetScalarType<T[P], AggregateRating[P]>
+  }
+
+
+
+
+  export type RatingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RatingWhereInput
+    orderBy?: RatingOrderByWithAggregationInput | RatingOrderByWithAggregationInput[]
+    by: RatingScalarFieldEnum[] | RatingScalarFieldEnum
+    having?: RatingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RatingCountAggregateInputType | true
+    _avg?: RatingAvgAggregateInputType
+    _sum?: RatingSumAggregateInputType
+    _min?: RatingMinAggregateInputType
+    _max?: RatingMaxAggregateInputType
+  }
+
+  export type RatingGroupByOutputType = {
+    id: number
+    teacherId: number
+    studentId: number
+    rating: number
+    review: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: RatingCountAggregateOutputType | null
+    _avg: RatingAvgAggregateOutputType | null
+    _sum: RatingSumAggregateOutputType | null
+    _min: RatingMinAggregateOutputType | null
+    _max: RatingMaxAggregateOutputType | null
+  }
+
+  type GetRatingGroupByPayload<T extends RatingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RatingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RatingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RatingGroupByOutputType[P]>
+            : GetScalarType<T[P], RatingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RatingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    teacherId?: boolean
+    studentId?: boolean
+    rating?: boolean
+    review?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["rating"]>
+
+  export type RatingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    teacherId?: boolean
+    studentId?: boolean
+    rating?: boolean
+    review?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["rating"]>
+
+  export type RatingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    teacherId?: boolean
+    studentId?: boolean
+    rating?: boolean
+    review?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["rating"]>
+
+  export type RatingSelectScalar = {
+    id?: boolean
+    teacherId?: boolean
+    studentId?: boolean
+    rating?: boolean
+    review?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type RatingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "teacherId" | "studentId" | "rating" | "review" | "createdAt" | "updatedAt", ExtArgs["result"]["rating"]>
+  export type RatingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type RatingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type RatingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    teacher?: boolean | UserDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $RatingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Rating"
+    objects: {
+      teacher: Prisma.$UserPayload<ExtArgs>
+      student: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      teacherId: number
+      studentId: number
+      rating: number
+      review: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["rating"]>
+    composites: {}
+  }
+
+  type RatingGetPayload<S extends boolean | null | undefined | RatingDefaultArgs> = $Result.GetResult<Prisma.$RatingPayload, S>
+
+  type RatingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RatingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RatingCountAggregateInputType | true
+    }
+
+  export interface RatingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Rating'], meta: { name: 'Rating' } }
+    /**
+     * Find zero or one Rating that matches the filter.
+     * @param {RatingFindUniqueArgs} args - Arguments to find a Rating
+     * @example
+     * // Get one Rating
+     * const rating = await prisma.rating.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RatingFindUniqueArgs>(args: SelectSubset<T, RatingFindUniqueArgs<ExtArgs>>): Prisma__RatingClient<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Rating that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RatingFindUniqueOrThrowArgs} args - Arguments to find a Rating
+     * @example
+     * // Get one Rating
+     * const rating = await prisma.rating.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RatingFindUniqueOrThrowArgs>(args: SelectSubset<T, RatingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RatingClient<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Rating that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RatingFindFirstArgs} args - Arguments to find a Rating
+     * @example
+     * // Get one Rating
+     * const rating = await prisma.rating.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RatingFindFirstArgs>(args?: SelectSubset<T, RatingFindFirstArgs<ExtArgs>>): Prisma__RatingClient<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Rating that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RatingFindFirstOrThrowArgs} args - Arguments to find a Rating
+     * @example
+     * // Get one Rating
+     * const rating = await prisma.rating.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RatingFindFirstOrThrowArgs>(args?: SelectSubset<T, RatingFindFirstOrThrowArgs<ExtArgs>>): Prisma__RatingClient<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Ratings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RatingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Ratings
+     * const ratings = await prisma.rating.findMany()
+     * 
+     * // Get first 10 Ratings
+     * const ratings = await prisma.rating.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ratingWithIdOnly = await prisma.rating.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RatingFindManyArgs>(args?: SelectSubset<T, RatingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Rating.
+     * @param {RatingCreateArgs} args - Arguments to create a Rating.
+     * @example
+     * // Create one Rating
+     * const Rating = await prisma.rating.create({
+     *   data: {
+     *     // ... data to create a Rating
+     *   }
+     * })
+     * 
+     */
+    create<T extends RatingCreateArgs>(args: SelectSubset<T, RatingCreateArgs<ExtArgs>>): Prisma__RatingClient<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Ratings.
+     * @param {RatingCreateManyArgs} args - Arguments to create many Ratings.
+     * @example
+     * // Create many Ratings
+     * const rating = await prisma.rating.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RatingCreateManyArgs>(args?: SelectSubset<T, RatingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Ratings and returns the data saved in the database.
+     * @param {RatingCreateManyAndReturnArgs} args - Arguments to create many Ratings.
+     * @example
+     * // Create many Ratings
+     * const rating = await prisma.rating.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Ratings and only return the `id`
+     * const ratingWithIdOnly = await prisma.rating.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RatingCreateManyAndReturnArgs>(args?: SelectSubset<T, RatingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Rating.
+     * @param {RatingDeleteArgs} args - Arguments to delete one Rating.
+     * @example
+     * // Delete one Rating
+     * const Rating = await prisma.rating.delete({
+     *   where: {
+     *     // ... filter to delete one Rating
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RatingDeleteArgs>(args: SelectSubset<T, RatingDeleteArgs<ExtArgs>>): Prisma__RatingClient<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Rating.
+     * @param {RatingUpdateArgs} args - Arguments to update one Rating.
+     * @example
+     * // Update one Rating
+     * const rating = await prisma.rating.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RatingUpdateArgs>(args: SelectSubset<T, RatingUpdateArgs<ExtArgs>>): Prisma__RatingClient<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Ratings.
+     * @param {RatingDeleteManyArgs} args - Arguments to filter Ratings to delete.
+     * @example
+     * // Delete a few Ratings
+     * const { count } = await prisma.rating.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RatingDeleteManyArgs>(args?: SelectSubset<T, RatingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Ratings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RatingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Ratings
+     * const rating = await prisma.rating.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RatingUpdateManyArgs>(args: SelectSubset<T, RatingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Ratings and returns the data updated in the database.
+     * @param {RatingUpdateManyAndReturnArgs} args - Arguments to update many Ratings.
+     * @example
+     * // Update many Ratings
+     * const rating = await prisma.rating.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Ratings and only return the `id`
+     * const ratingWithIdOnly = await prisma.rating.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RatingUpdateManyAndReturnArgs>(args: SelectSubset<T, RatingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Rating.
+     * @param {RatingUpsertArgs} args - Arguments to update or create a Rating.
+     * @example
+     * // Update or create a Rating
+     * const rating = await prisma.rating.upsert({
+     *   create: {
+     *     // ... data to create a Rating
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Rating we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RatingUpsertArgs>(args: SelectSubset<T, RatingUpsertArgs<ExtArgs>>): Prisma__RatingClient<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Ratings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RatingCountArgs} args - Arguments to filter Ratings to count.
+     * @example
+     * // Count the number of Ratings
+     * const count = await prisma.rating.count({
+     *   where: {
+     *     // ... the filter for the Ratings we want to count
+     *   }
+     * })
+    **/
+    count<T extends RatingCountArgs>(
+      args?: Subset<T, RatingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RatingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Rating.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RatingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RatingAggregateArgs>(args: Subset<T, RatingAggregateArgs>): Prisma.PrismaPromise<GetRatingAggregateType<T>>
+
+    /**
+     * Group by Rating.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RatingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RatingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RatingGroupByArgs['orderBy'] }
+        : { orderBy?: RatingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RatingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRatingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Rating model
+   */
+  readonly fields: RatingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Rating.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RatingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    teacher<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Rating model
+   */
+  interface RatingFieldRefs {
+    readonly id: FieldRef<"Rating", 'Int'>
+    readonly teacherId: FieldRef<"Rating", 'Int'>
+    readonly studentId: FieldRef<"Rating", 'Int'>
+    readonly rating: FieldRef<"Rating", 'Int'>
+    readonly review: FieldRef<"Rating", 'String'>
+    readonly createdAt: FieldRef<"Rating", 'DateTime'>
+    readonly updatedAt: FieldRef<"Rating", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Rating findUnique
+   */
+  export type RatingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
+    /**
+     * Filter, which Rating to fetch.
+     */
+    where: RatingWhereUniqueInput
+  }
+
+  /**
+   * Rating findUniqueOrThrow
+   */
+  export type RatingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
+    /**
+     * Filter, which Rating to fetch.
+     */
+    where: RatingWhereUniqueInput
+  }
+
+  /**
+   * Rating findFirst
+   */
+  export type RatingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
+    /**
+     * Filter, which Rating to fetch.
+     */
+    where?: RatingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Ratings to fetch.
+     */
+    orderBy?: RatingOrderByWithRelationInput | RatingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Ratings.
+     */
+    cursor?: RatingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Ratings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Ratings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Ratings.
+     */
+    distinct?: RatingScalarFieldEnum | RatingScalarFieldEnum[]
+  }
+
+  /**
+   * Rating findFirstOrThrow
+   */
+  export type RatingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
+    /**
+     * Filter, which Rating to fetch.
+     */
+    where?: RatingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Ratings to fetch.
+     */
+    orderBy?: RatingOrderByWithRelationInput | RatingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Ratings.
+     */
+    cursor?: RatingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Ratings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Ratings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Ratings.
+     */
+    distinct?: RatingScalarFieldEnum | RatingScalarFieldEnum[]
+  }
+
+  /**
+   * Rating findMany
+   */
+  export type RatingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
+    /**
+     * Filter, which Ratings to fetch.
+     */
+    where?: RatingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Ratings to fetch.
+     */
+    orderBy?: RatingOrderByWithRelationInput | RatingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Ratings.
+     */
+    cursor?: RatingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Ratings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Ratings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Ratings.
+     */
+    distinct?: RatingScalarFieldEnum | RatingScalarFieldEnum[]
+  }
+
+  /**
+   * Rating create
+   */
+  export type RatingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Rating.
+     */
+    data: XOR<RatingCreateInput, RatingUncheckedCreateInput>
+  }
+
+  /**
+   * Rating createMany
+   */
+  export type RatingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Ratings.
+     */
+    data: RatingCreateManyInput | RatingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Rating createManyAndReturn
+   */
+  export type RatingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * The data used to create many Ratings.
+     */
+    data: RatingCreateManyInput | RatingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Rating update
+   */
+  export type RatingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Rating.
+     */
+    data: XOR<RatingUpdateInput, RatingUncheckedUpdateInput>
+    /**
+     * Choose, which Rating to update.
+     */
+    where: RatingWhereUniqueInput
+  }
+
+  /**
+   * Rating updateMany
+   */
+  export type RatingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Ratings.
+     */
+    data: XOR<RatingUpdateManyMutationInput, RatingUncheckedUpdateManyInput>
+    /**
+     * Filter which Ratings to update
+     */
+    where?: RatingWhereInput
+    /**
+     * Limit how many Ratings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Rating updateManyAndReturn
+   */
+  export type RatingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * The data used to update Ratings.
+     */
+    data: XOR<RatingUpdateManyMutationInput, RatingUncheckedUpdateManyInput>
+    /**
+     * Filter which Ratings to update
+     */
+    where?: RatingWhereInput
+    /**
+     * Limit how many Ratings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Rating upsert
+   */
+  export type RatingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Rating to update in case it exists.
+     */
+    where: RatingWhereUniqueInput
+    /**
+     * In case the Rating found by the `where` argument doesn't exist, create a new Rating with this data.
+     */
+    create: XOR<RatingCreateInput, RatingUncheckedCreateInput>
+    /**
+     * In case the Rating was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RatingUpdateInput, RatingUncheckedUpdateInput>
+  }
+
+  /**
+   * Rating delete
+   */
+  export type RatingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
+    /**
+     * Filter which Rating to delete.
+     */
+    where: RatingWhereUniqueInput
+  }
+
+  /**
+   * Rating deleteMany
+   */
+  export type RatingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Ratings to delete
+     */
+    where?: RatingWhereInput
+    /**
+     * Limit how many Ratings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Rating without action
+   */
+  export type RatingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
   }
 
 
@@ -18124,6 +19376,8 @@ export namespace Prisma {
     studentSchedules?: boolean | User$studentSchedulesArgs<ExtArgs>
     teacherLessons?: boolean | User$teacherLessonsArgs<ExtArgs>
     studentLessons?: boolean | User$studentLessonsArgs<ExtArgs>
+    teacherRatings?: boolean | User$teacherRatingsArgs<ExtArgs>
+    studentRatings?: boolean | User$studentRatingsArgs<ExtArgs>
     announcements?: boolean | User$announcementsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -18188,6 +19442,8 @@ export namespace Prisma {
     studentSchedules?: boolean | User$studentSchedulesArgs<ExtArgs>
     teacherLessons?: boolean | User$teacherLessonsArgs<ExtArgs>
     studentLessons?: boolean | User$studentLessonsArgs<ExtArgs>
+    teacherRatings?: boolean | User$teacherRatingsArgs<ExtArgs>
+    studentRatings?: boolean | User$studentRatingsArgs<ExtArgs>
     announcements?: boolean | User$announcementsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -18210,6 +19466,8 @@ export namespace Prisma {
       studentSchedules: Prisma.$ClassSchedulePayload<ExtArgs>[]
       teacherLessons: Prisma.$LessonPayload<ExtArgs>[]
       studentLessons: Prisma.$LessonPayload<ExtArgs>[]
+      teacherRatings: Prisma.$RatingPayload<ExtArgs>[]
+      studentRatings: Prisma.$RatingPayload<ExtArgs>[]
       announcements: Prisma.$AnnouncementPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -18632,6 +19890,8 @@ export namespace Prisma {
     studentSchedules<T extends User$studentSchedulesArgs<ExtArgs> = {}>(args?: Subset<T, User$studentSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClassSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     teacherLessons<T extends User$teacherLessonsArgs<ExtArgs> = {}>(args?: Subset<T, User$teacherLessonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     studentLessons<T extends User$studentLessonsArgs<ExtArgs> = {}>(args?: Subset<T, User$studentLessonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    teacherRatings<T extends User$teacherRatingsArgs<ExtArgs> = {}>(args?: Subset<T, User$teacherRatingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    studentRatings<T extends User$studentRatingsArgs<ExtArgs> = {}>(args?: Subset<T, User$studentRatingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     announcements<T extends User$announcementsArgs<ExtArgs> = {}>(args?: Subset<T, User$announcementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnnouncementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -19366,6 +20626,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: LessonScalarFieldEnum | LessonScalarFieldEnum[]
+  }
+
+  /**
+   * User.teacherRatings
+   */
+  export type User$teacherRatingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
+    where?: RatingWhereInput
+    orderBy?: RatingOrderByWithRelationInput | RatingOrderByWithRelationInput[]
+    cursor?: RatingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RatingScalarFieldEnum | RatingScalarFieldEnum[]
+  }
+
+  /**
+   * User.studentRatings
+   */
+  export type User$studentRatingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Rating
+     */
+    select?: RatingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Rating
+     */
+    omit?: RatingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RatingInclude<ExtArgs> | null
+    where?: RatingWhereInput
+    orderBy?: RatingOrderByWithRelationInput | RatingOrderByWithRelationInput[]
+    cursor?: RatingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RatingScalarFieldEnum | RatingScalarFieldEnum[]
   }
 
   /**
@@ -20617,6 +21925,19 @@ export namespace Prisma {
   export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof LessonScalarFieldEnum]
 
 
+  export const RatingScalarFieldEnum: {
+    id: 'id',
+    teacherId: 'teacherId',
+    studentId: 'studentId',
+    rating: 'rating',
+    review: 'review',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RatingScalarFieldEnum = (typeof RatingScalarFieldEnum)[keyof typeof RatingScalarFieldEnum]
+
+
   export const LookupScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -21408,6 +22729,77 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Lesson"> | Date | string
   }
 
+  export type RatingWhereInput = {
+    AND?: RatingWhereInput | RatingWhereInput[]
+    OR?: RatingWhereInput[]
+    NOT?: RatingWhereInput | RatingWhereInput[]
+    id?: IntFilter<"Rating"> | number
+    teacherId?: IntFilter<"Rating"> | number
+    studentId?: IntFilter<"Rating"> | number
+    rating?: IntFilter<"Rating"> | number
+    review?: StringNullableFilter<"Rating"> | string | null
+    createdAt?: DateTimeFilter<"Rating"> | Date | string
+    updatedAt?: DateTimeFilter<"Rating"> | Date | string
+    teacher?: XOR<UserScalarRelationFilter, UserWhereInput>
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type RatingOrderByWithRelationInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    rating?: SortOrder
+    review?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    teacher?: UserOrderByWithRelationInput
+    student?: UserOrderByWithRelationInput
+  }
+
+  export type RatingWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    teacherId_studentId?: RatingTeacherIdStudentIdCompoundUniqueInput
+    AND?: RatingWhereInput | RatingWhereInput[]
+    OR?: RatingWhereInput[]
+    NOT?: RatingWhereInput | RatingWhereInput[]
+    teacherId?: IntFilter<"Rating"> | number
+    studentId?: IntFilter<"Rating"> | number
+    rating?: IntFilter<"Rating"> | number
+    review?: StringNullableFilter<"Rating"> | string | null
+    createdAt?: DateTimeFilter<"Rating"> | Date | string
+    updatedAt?: DateTimeFilter<"Rating"> | Date | string
+    teacher?: XOR<UserScalarRelationFilter, UserWhereInput>
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "teacherId_studentId">
+
+  export type RatingOrderByWithAggregationInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    rating?: SortOrder
+    review?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RatingCountOrderByAggregateInput
+    _avg?: RatingAvgOrderByAggregateInput
+    _max?: RatingMaxOrderByAggregateInput
+    _min?: RatingMinOrderByAggregateInput
+    _sum?: RatingSumOrderByAggregateInput
+  }
+
+  export type RatingScalarWhereWithAggregatesInput = {
+    AND?: RatingScalarWhereWithAggregatesInput | RatingScalarWhereWithAggregatesInput[]
+    OR?: RatingScalarWhereWithAggregatesInput[]
+    NOT?: RatingScalarWhereWithAggregatesInput | RatingScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Rating"> | number
+    teacherId?: IntWithAggregatesFilter<"Rating"> | number
+    studentId?: IntWithAggregatesFilter<"Rating"> | number
+    rating?: IntWithAggregatesFilter<"Rating"> | number
+    review?: StringNullableWithAggregatesFilter<"Rating"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Rating"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Rating"> | Date | string
+  }
+
   export type LookupWhereInput = {
     AND?: LookupWhereInput | LookupWhereInput[]
     OR?: LookupWhereInput[]
@@ -21973,6 +23365,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleListRelationFilter
     teacherLessons?: LessonListRelationFilter
     studentLessons?: LessonListRelationFilter
+    teacherRatings?: RatingListRelationFilter
+    studentRatings?: RatingListRelationFilter
     announcements?: AnnouncementListRelationFilter
   }
 
@@ -22002,6 +23396,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleOrderByRelationAggregateInput
     teacherLessons?: LessonOrderByRelationAggregateInput
     studentLessons?: LessonOrderByRelationAggregateInput
+    teacherRatings?: RatingOrderByRelationAggregateInput
+    studentRatings?: RatingOrderByRelationAggregateInput
     announcements?: AnnouncementOrderByRelationAggregateInput
   }
 
@@ -22034,6 +23430,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleListRelationFilter
     teacherLessons?: LessonListRelationFilter
     studentLessons?: LessonListRelationFilter
+    teacherRatings?: RatingListRelationFilter
+    studentRatings?: RatingListRelationFilter
     announcements?: AnnouncementListRelationFilter
   }, "id" | "userId" | "email">
 
@@ -22622,6 +24020,71 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RatingCreateInput = {
+    rating: number
+    review?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teacher: UserCreateNestedOneWithoutTeacherRatingsInput
+    student: UserCreateNestedOneWithoutStudentRatingsInput
+  }
+
+  export type RatingUncheckedCreateInput = {
+    id?: number
+    teacherId: number
+    studentId: number
+    rating: number
+    review?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RatingUpdateInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    review?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teacher?: UserUpdateOneRequiredWithoutTeacherRatingsNestedInput
+    student?: UserUpdateOneRequiredWithoutStudentRatingsNestedInput
+  }
+
+  export type RatingUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    teacherId?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    review?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RatingCreateManyInput = {
+    id?: number
+    teacherId: number
+    studentId: number
+    rating: number
+    review?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RatingUpdateManyMutationInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    review?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RatingUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    teacherId?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    review?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type LookupCreateInput = {
     name: string
     value: string
@@ -23182,6 +24645,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -23211,6 +24676,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -23239,6 +24706,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -23268,6 +24737,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -23916,6 +25387,55 @@ export namespace Prisma {
     studentId?: SortOrder
   }
 
+  export type RatingTeacherIdStudentIdCompoundUniqueInput = {
+    teacherId: number
+    studentId: number
+  }
+
+  export type RatingCountOrderByAggregateInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    rating?: SortOrder
+    review?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RatingAvgOrderByAggregateInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    rating?: SortOrder
+  }
+
+  export type RatingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    rating?: SortOrder
+    review?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RatingMinOrderByAggregateInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    rating?: SortOrder
+    review?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RatingSumOrderByAggregateInput = {
+    id?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    rating?: SortOrder
+  }
+
   export type TuitionPostListRelationFilter = {
     every?: TuitionPostWhereInput
     some?: TuitionPostWhereInput
@@ -24382,6 +25902,12 @@ export namespace Prisma {
     none?: LessonWhereInput
   }
 
+  export type RatingListRelationFilter = {
+    every?: RatingWhereInput
+    some?: RatingWhereInput
+    none?: RatingWhereInput
+  }
+
   export type AnnouncementListRelationFilter = {
     every?: AnnouncementWhereInput
     some?: AnnouncementWhereInput
@@ -24397,6 +25923,10 @@ export namespace Prisma {
   }
 
   export type LessonOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RatingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -24841,6 +26371,34 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutStudentLessonsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStudentLessonsInput, UserUpdateWithoutStudentLessonsInput>, UserUncheckedUpdateWithoutStudentLessonsInput>
+  }
+
+  export type UserCreateNestedOneWithoutTeacherRatingsInput = {
+    create?: XOR<UserCreateWithoutTeacherRatingsInput, UserUncheckedCreateWithoutTeacherRatingsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTeacherRatingsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutStudentRatingsInput = {
+    create?: XOR<UserCreateWithoutStudentRatingsInput, UserUncheckedCreateWithoutStudentRatingsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStudentRatingsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutTeacherRatingsNestedInput = {
+    create?: XOR<UserCreateWithoutTeacherRatingsInput, UserUncheckedCreateWithoutTeacherRatingsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTeacherRatingsInput
+    upsert?: UserUpsertWithoutTeacherRatingsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTeacherRatingsInput, UserUpdateWithoutTeacherRatingsInput>, UserUncheckedUpdateWithoutTeacherRatingsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutStudentRatingsNestedInput = {
+    create?: XOR<UserCreateWithoutStudentRatingsInput, UserUncheckedCreateWithoutStudentRatingsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStudentRatingsInput
+    upsert?: UserUpsertWithoutStudentRatingsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStudentRatingsInput, UserUpdateWithoutStudentRatingsInput>, UserUncheckedUpdateWithoutStudentRatingsInput>
   }
 
   export type TuitionPostCreateNestedManyWithoutStatusInput = {
@@ -25519,6 +27077,20 @@ export namespace Prisma {
     connect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
   }
 
+  export type RatingCreateNestedManyWithoutTeacherInput = {
+    create?: XOR<RatingCreateWithoutTeacherInput, RatingUncheckedCreateWithoutTeacherInput> | RatingCreateWithoutTeacherInput[] | RatingUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: RatingCreateOrConnectWithoutTeacherInput | RatingCreateOrConnectWithoutTeacherInput[]
+    createMany?: RatingCreateManyTeacherInputEnvelope
+    connect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+  }
+
+  export type RatingCreateNestedManyWithoutStudentInput = {
+    create?: XOR<RatingCreateWithoutStudentInput, RatingUncheckedCreateWithoutStudentInput> | RatingCreateWithoutStudentInput[] | RatingUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: RatingCreateOrConnectWithoutStudentInput | RatingCreateOrConnectWithoutStudentInput[]
+    createMany?: RatingCreateManyStudentInputEnvelope
+    connect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+  }
+
   export type AnnouncementCreateNestedManyWithoutCreatedByInput = {
     create?: XOR<AnnouncementCreateWithoutCreatedByInput, AnnouncementUncheckedCreateWithoutCreatedByInput> | AnnouncementCreateWithoutCreatedByInput[] | AnnouncementUncheckedCreateWithoutCreatedByInput[]
     connectOrCreate?: AnnouncementCreateOrConnectWithoutCreatedByInput | AnnouncementCreateOrConnectWithoutCreatedByInput[]
@@ -25613,6 +27185,20 @@ export namespace Prisma {
     connectOrCreate?: LessonCreateOrConnectWithoutStudentInput | LessonCreateOrConnectWithoutStudentInput[]
     createMany?: LessonCreateManyStudentInputEnvelope
     connect?: LessonWhereUniqueInput | LessonWhereUniqueInput[]
+  }
+
+  export type RatingUncheckedCreateNestedManyWithoutTeacherInput = {
+    create?: XOR<RatingCreateWithoutTeacherInput, RatingUncheckedCreateWithoutTeacherInput> | RatingCreateWithoutTeacherInput[] | RatingUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: RatingCreateOrConnectWithoutTeacherInput | RatingCreateOrConnectWithoutTeacherInput[]
+    createMany?: RatingCreateManyTeacherInputEnvelope
+    connect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+  }
+
+  export type RatingUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<RatingCreateWithoutStudentInput, RatingUncheckedCreateWithoutStudentInput> | RatingCreateWithoutStudentInput[] | RatingUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: RatingCreateOrConnectWithoutStudentInput | RatingCreateOrConnectWithoutStudentInput[]
+    createMany?: RatingCreateManyStudentInputEnvelope
+    connect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
   }
 
   export type AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput = {
@@ -25798,6 +27384,34 @@ export namespace Prisma {
     update?: LessonUpdateWithWhereUniqueWithoutStudentInput | LessonUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: LessonUpdateManyWithWhereWithoutStudentInput | LessonUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: LessonScalarWhereInput | LessonScalarWhereInput[]
+  }
+
+  export type RatingUpdateManyWithoutTeacherNestedInput = {
+    create?: XOR<RatingCreateWithoutTeacherInput, RatingUncheckedCreateWithoutTeacherInput> | RatingCreateWithoutTeacherInput[] | RatingUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: RatingCreateOrConnectWithoutTeacherInput | RatingCreateOrConnectWithoutTeacherInput[]
+    upsert?: RatingUpsertWithWhereUniqueWithoutTeacherInput | RatingUpsertWithWhereUniqueWithoutTeacherInput[]
+    createMany?: RatingCreateManyTeacherInputEnvelope
+    set?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    disconnect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    delete?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    connect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    update?: RatingUpdateWithWhereUniqueWithoutTeacherInput | RatingUpdateWithWhereUniqueWithoutTeacherInput[]
+    updateMany?: RatingUpdateManyWithWhereWithoutTeacherInput | RatingUpdateManyWithWhereWithoutTeacherInput[]
+    deleteMany?: RatingScalarWhereInput | RatingScalarWhereInput[]
+  }
+
+  export type RatingUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<RatingCreateWithoutStudentInput, RatingUncheckedCreateWithoutStudentInput> | RatingCreateWithoutStudentInput[] | RatingUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: RatingCreateOrConnectWithoutStudentInput | RatingCreateOrConnectWithoutStudentInput[]
+    upsert?: RatingUpsertWithWhereUniqueWithoutStudentInput | RatingUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: RatingCreateManyStudentInputEnvelope
+    set?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    disconnect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    delete?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    connect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    update?: RatingUpdateWithWhereUniqueWithoutStudentInput | RatingUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: RatingUpdateManyWithWhereWithoutStudentInput | RatingUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: RatingScalarWhereInput | RatingScalarWhereInput[]
   }
 
   export type AnnouncementUpdateManyWithoutCreatedByNestedInput = {
@@ -25986,6 +27600,34 @@ export namespace Prisma {
     update?: LessonUpdateWithWhereUniqueWithoutStudentInput | LessonUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: LessonUpdateManyWithWhereWithoutStudentInput | LessonUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: LessonScalarWhereInput | LessonScalarWhereInput[]
+  }
+
+  export type RatingUncheckedUpdateManyWithoutTeacherNestedInput = {
+    create?: XOR<RatingCreateWithoutTeacherInput, RatingUncheckedCreateWithoutTeacherInput> | RatingCreateWithoutTeacherInput[] | RatingUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: RatingCreateOrConnectWithoutTeacherInput | RatingCreateOrConnectWithoutTeacherInput[]
+    upsert?: RatingUpsertWithWhereUniqueWithoutTeacherInput | RatingUpsertWithWhereUniqueWithoutTeacherInput[]
+    createMany?: RatingCreateManyTeacherInputEnvelope
+    set?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    disconnect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    delete?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    connect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    update?: RatingUpdateWithWhereUniqueWithoutTeacherInput | RatingUpdateWithWhereUniqueWithoutTeacherInput[]
+    updateMany?: RatingUpdateManyWithWhereWithoutTeacherInput | RatingUpdateManyWithWhereWithoutTeacherInput[]
+    deleteMany?: RatingScalarWhereInput | RatingScalarWhereInput[]
+  }
+
+  export type RatingUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<RatingCreateWithoutStudentInput, RatingUncheckedCreateWithoutStudentInput> | RatingCreateWithoutStudentInput[] | RatingUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: RatingCreateOrConnectWithoutStudentInput | RatingCreateOrConnectWithoutStudentInput[]
+    upsert?: RatingUpsertWithWhereUniqueWithoutStudentInput | RatingUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: RatingCreateManyStudentInputEnvelope
+    set?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    disconnect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    delete?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    connect?: RatingWhereUniqueInput | RatingWhereUniqueInput[]
+    update?: RatingUpdateWithWhereUniqueWithoutStudentInput | RatingUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: RatingUpdateManyWithWhereWithoutStudentInput | RatingUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: RatingScalarWhereInput | RatingScalarWhereInput[]
   }
 
   export type AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput = {
@@ -26320,6 +27962,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
   }
 
   export type UserUncheckedCreateWithoutAnnouncementsInput = {
@@ -26348,6 +27992,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type UserCreateOrConnectWithoutAnnouncementsInput = {
@@ -26391,6 +28037,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAnnouncementsInput = {
@@ -26419,6 +28067,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type TuitionPostCreateWithoutAssignedInput = {
@@ -26487,6 +28137,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26515,6 +28167,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26547,6 +28201,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26575,6 +28231,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26694,6 +28352,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -26722,6 +28382,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -26760,6 +28422,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -26788,6 +28452,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -26849,6 +28515,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26877,6 +28545,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26909,6 +28579,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -26937,6 +28609,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -27044,6 +28718,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27072,6 +28748,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27110,6 +28788,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27138,6 +28818,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27275,6 +28957,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -27303,6 +28987,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -27335,6 +29021,8 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -27363,6 +29051,8 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -27465,6 +29155,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27493,6 +29185,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27531,6 +29225,8 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27559,6 +29255,8 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27743,6 +29441,8 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -27771,6 +29471,8 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -27803,6 +29505,8 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -27831,6 +29535,8 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -27874,6 +29580,8 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27902,6 +29610,8 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27940,6 +29650,8 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -27968,6 +29680,276 @@ export namespace Prisma {
     teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
+    announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserCreateWithoutTeacherRatingsInput = {
+    userId?: string | null
+    name: string
+    email: string
+    password: string
+    address?: string | null
+    contact?: string | null
+    gender?: $Enums.Gender | null
+    role: $Enums.Role
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    teacherProfile?: TeacherProfileCreateNestedOneWithoutUserInput
+    studentProfile?: StudentProfileCreateNestedOneWithoutUserInput
+    tuitionPosts?: TuitionPostCreateNestedManyWithoutPostedByUserInput
+    applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
+    teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
+    studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
+    teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
+    studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
+    teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
+    studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
+    announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutTeacherRatingsInput = {
+    id?: number
+    userId?: string | null
+    name: string
+    email: string
+    password: string
+    address?: string | null
+    contact?: string | null
+    gender?: $Enums.Gender | null
+    role: $Enums.Role
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    teacherProfile?: TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutUserInput
+    tuitionPosts?: TuitionPostUncheckedCreateNestedManyWithoutPostedByUserInput
+    applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
+    teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
+    studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
+    teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
+    studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
+    teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
+    studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
+    announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutTeacherRatingsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTeacherRatingsInput, UserUncheckedCreateWithoutTeacherRatingsInput>
+  }
+
+  export type UserCreateWithoutStudentRatingsInput = {
+    userId?: string | null
+    name: string
+    email: string
+    password: string
+    address?: string | null
+    contact?: string | null
+    gender?: $Enums.Gender | null
+    role: $Enums.Role
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    refreshTokens?: RefreshTokenCreateNestedManyWithoutUserInput
+    teacherProfile?: TeacherProfileCreateNestedOneWithoutUserInput
+    studentProfile?: StudentProfileCreateNestedOneWithoutUserInput
+    tuitionPosts?: TuitionPostCreateNestedManyWithoutPostedByUserInput
+    applications?: TuitionApplicationCreateNestedManyWithoutTeacherInput
+    teacherAssignments?: AssignedCreateNestedManyWithoutTeacherInput
+    studentAssignments?: AssignedCreateNestedManyWithoutStudentInput
+    teacherHomework?: AssignmentCreateNestedManyWithoutTeacherInput
+    studentHomework?: AssignmentCreateNestedManyWithoutStudentInput
+    teacherSchedules?: ClassScheduleCreateNestedManyWithoutTeacherInput
+    studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutStudentRatingsInput = {
+    id?: number
+    userId?: string | null
+    name: string
+    email: string
+    password: string
+    address?: string | null
+    contact?: string | null
+    gender?: $Enums.Gender | null
+    role: $Enums.Role
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    refreshTokens?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+    teacherProfile?: TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutUserInput
+    tuitionPosts?: TuitionPostUncheckedCreateNestedManyWithoutPostedByUserInput
+    applications?: TuitionApplicationUncheckedCreateNestedManyWithoutTeacherInput
+    teacherAssignments?: AssignedUncheckedCreateNestedManyWithoutTeacherInput
+    studentAssignments?: AssignedUncheckedCreateNestedManyWithoutStudentInput
+    teacherHomework?: AssignmentUncheckedCreateNestedManyWithoutTeacherInput
+    studentHomework?: AssignmentUncheckedCreateNestedManyWithoutStudentInput
+    teacherSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutTeacherInput
+    studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
+    teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
+    studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutStudentRatingsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutStudentRatingsInput, UserUncheckedCreateWithoutStudentRatingsInput>
+  }
+
+  export type UserUpsertWithoutTeacherRatingsInput = {
+    update: XOR<UserUpdateWithoutTeacherRatingsInput, UserUncheckedUpdateWithoutTeacherRatingsInput>
+    create: XOR<UserCreateWithoutTeacherRatingsInput, UserUncheckedCreateWithoutTeacherRatingsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTeacherRatingsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTeacherRatingsInput, UserUncheckedUpdateWithoutTeacherRatingsInput>
+  }
+
+  export type UserUpdateWithoutTeacherRatingsInput = {
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    teacherProfile?: TeacherProfileUpdateOneWithoutUserNestedInput
+    studentProfile?: StudentProfileUpdateOneWithoutUserNestedInput
+    tuitionPosts?: TuitionPostUpdateManyWithoutPostedByUserNestedInput
+    applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
+    teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
+    studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
+    teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
+    studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
+    teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
+    studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
+    announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTeacherRatingsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    teacherProfile?: TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+    studentProfile?: StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+    tuitionPosts?: TuitionPostUncheckedUpdateManyWithoutPostedByUserNestedInput
+    applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
+    teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
+    studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
+    teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
+    studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
+    teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
+    studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
+    announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUpsertWithoutStudentRatingsInput = {
+    update: XOR<UserUpdateWithoutStudentRatingsInput, UserUncheckedUpdateWithoutStudentRatingsInput>
+    create: XOR<UserCreateWithoutStudentRatingsInput, UserUncheckedCreateWithoutStudentRatingsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutStudentRatingsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutStudentRatingsInput, UserUncheckedUpdateWithoutStudentRatingsInput>
+  }
+
+  export type UserUpdateWithoutStudentRatingsInput = {
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshTokens?: RefreshTokenUpdateManyWithoutUserNestedInput
+    teacherProfile?: TeacherProfileUpdateOneWithoutUserNestedInput
+    studentProfile?: StudentProfileUpdateOneWithoutUserNestedInput
+    tuitionPosts?: TuitionPostUpdateManyWithoutPostedByUserNestedInput
+    applications?: TuitionApplicationUpdateManyWithoutTeacherNestedInput
+    teacherAssignments?: AssignedUpdateManyWithoutTeacherNestedInput
+    studentAssignments?: AssignedUpdateManyWithoutStudentNestedInput
+    teacherHomework?: AssignmentUpdateManyWithoutTeacherNestedInput
+    studentHomework?: AssignmentUpdateManyWithoutStudentNestedInput
+    teacherSchedules?: ClassScheduleUpdateManyWithoutTeacherNestedInput
+    studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutStudentRatingsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshTokens?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+    teacherProfile?: TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+    studentProfile?: StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+    tuitionPosts?: TuitionPostUncheckedUpdateManyWithoutPostedByUserNestedInput
+    applications?: TuitionApplicationUncheckedUpdateManyWithoutTeacherNestedInput
+    teacherAssignments?: AssignedUncheckedUpdateManyWithoutTeacherNestedInput
+    studentAssignments?: AssignedUncheckedUpdateManyWithoutStudentNestedInput
+    teacherHomework?: AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
+    studentHomework?: AssignmentUncheckedUpdateManyWithoutStudentNestedInput
+    teacherSchedules?: ClassScheduleUncheckedUpdateManyWithoutTeacherNestedInput
+    studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
+    teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
+    studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -28423,6 +30405,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -28451,6 +30435,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -28494,6 +30480,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -28522,6 +30510,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -28549,6 +30539,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -28577,6 +30569,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -28620,6 +30614,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -28648,6 +30644,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -28675,6 +30673,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -28703,6 +30703,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -28897,6 +30899,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -28925,6 +30929,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -29136,6 +31142,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -29164,6 +31172,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -29287,6 +31297,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -29315,6 +31327,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -29955,6 +31969,60 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type RatingCreateWithoutTeacherInput = {
+    rating: number
+    review?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    student: UserCreateNestedOneWithoutStudentRatingsInput
+  }
+
+  export type RatingUncheckedCreateWithoutTeacherInput = {
+    id?: number
+    studentId: number
+    rating: number
+    review?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RatingCreateOrConnectWithoutTeacherInput = {
+    where: RatingWhereUniqueInput
+    create: XOR<RatingCreateWithoutTeacherInput, RatingUncheckedCreateWithoutTeacherInput>
+  }
+
+  export type RatingCreateManyTeacherInputEnvelope = {
+    data: RatingCreateManyTeacherInput | RatingCreateManyTeacherInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RatingCreateWithoutStudentInput = {
+    rating: number
+    review?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teacher: UserCreateNestedOneWithoutTeacherRatingsInput
+  }
+
+  export type RatingUncheckedCreateWithoutStudentInput = {
+    id?: number
+    teacherId: number
+    rating: number
+    review?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RatingCreateOrConnectWithoutStudentInput = {
+    where: RatingWhereUniqueInput
+    create: XOR<RatingCreateWithoutStudentInput, RatingUncheckedCreateWithoutStudentInput>
+  }
+
+  export type RatingCreateManyStudentInputEnvelope = {
+    data: RatingCreateManyStudentInput | RatingCreateManyStudentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AnnouncementCreateWithoutCreatedByInput = {
     id?: string
     title: string
@@ -30269,6 +32337,51 @@ export namespace Prisma {
     data: XOR<LessonUpdateManyMutationInput, LessonUncheckedUpdateManyWithoutStudentInput>
   }
 
+  export type RatingUpsertWithWhereUniqueWithoutTeacherInput = {
+    where: RatingWhereUniqueInput
+    update: XOR<RatingUpdateWithoutTeacherInput, RatingUncheckedUpdateWithoutTeacherInput>
+    create: XOR<RatingCreateWithoutTeacherInput, RatingUncheckedCreateWithoutTeacherInput>
+  }
+
+  export type RatingUpdateWithWhereUniqueWithoutTeacherInput = {
+    where: RatingWhereUniqueInput
+    data: XOR<RatingUpdateWithoutTeacherInput, RatingUncheckedUpdateWithoutTeacherInput>
+  }
+
+  export type RatingUpdateManyWithWhereWithoutTeacherInput = {
+    where: RatingScalarWhereInput
+    data: XOR<RatingUpdateManyMutationInput, RatingUncheckedUpdateManyWithoutTeacherInput>
+  }
+
+  export type RatingScalarWhereInput = {
+    AND?: RatingScalarWhereInput | RatingScalarWhereInput[]
+    OR?: RatingScalarWhereInput[]
+    NOT?: RatingScalarWhereInput | RatingScalarWhereInput[]
+    id?: IntFilter<"Rating"> | number
+    teacherId?: IntFilter<"Rating"> | number
+    studentId?: IntFilter<"Rating"> | number
+    rating?: IntFilter<"Rating"> | number
+    review?: StringNullableFilter<"Rating"> | string | null
+    createdAt?: DateTimeFilter<"Rating"> | Date | string
+    updatedAt?: DateTimeFilter<"Rating"> | Date | string
+  }
+
+  export type RatingUpsertWithWhereUniqueWithoutStudentInput = {
+    where: RatingWhereUniqueInput
+    update: XOR<RatingUpdateWithoutStudentInput, RatingUncheckedUpdateWithoutStudentInput>
+    create: XOR<RatingCreateWithoutStudentInput, RatingUncheckedCreateWithoutStudentInput>
+  }
+
+  export type RatingUpdateWithWhereUniqueWithoutStudentInput = {
+    where: RatingWhereUniqueInput
+    data: XOR<RatingUpdateWithoutStudentInput, RatingUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type RatingUpdateManyWithWhereWithoutStudentInput = {
+    where: RatingScalarWhereInput
+    data: XOR<RatingUpdateManyMutationInput, RatingUncheckedUpdateManyWithoutStudentInput>
+  }
+
   export type AnnouncementUpsertWithWhereUniqueWithoutCreatedByInput = {
     where: AnnouncementWhereUniqueInput
     update: XOR<AnnouncementUpdateWithoutCreatedByInput, AnnouncementUncheckedUpdateWithoutCreatedByInput>
@@ -30324,6 +32437,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatedByInput
   }
 
@@ -30352,6 +32467,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedCreateNestedManyWithoutStudentInput
     teacherLessons?: LessonUncheckedCreateNestedManyWithoutTeacherInput
     studentLessons?: LessonUncheckedCreateNestedManyWithoutStudentInput
+    teacherRatings?: RatingUncheckedCreateNestedManyWithoutTeacherInput
+    studentRatings?: RatingUncheckedCreateNestedManyWithoutStudentInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -30395,6 +32512,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -30423,6 +32542,8 @@ export namespace Prisma {
     studentSchedules?: ClassScheduleUncheckedUpdateManyWithoutStudentNestedInput
     teacherLessons?: LessonUncheckedUpdateManyWithoutTeacherNestedInput
     studentLessons?: LessonUncheckedUpdateManyWithoutStudentNestedInput
+    teacherRatings?: RatingUncheckedUpdateManyWithoutTeacherNestedInput
+    studentRatings?: RatingUncheckedUpdateManyWithoutStudentNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -31052,6 +33173,24 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type RatingCreateManyTeacherInput = {
+    id?: number
+    studentId: number
+    rating: number
+    review?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RatingCreateManyStudentInput = {
+    id?: number
+    teacherId: number
+    rating: number
+    review?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AnnouncementCreateManyCreatedByInput = {
     id?: string
     title: string
@@ -31469,6 +33608,58 @@ export namespace Prisma {
     currentLesson?: StringFieldUpdateOperationsInput | string
     lessonUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RatingUpdateWithoutTeacherInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    review?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: UserUpdateOneRequiredWithoutStudentRatingsNestedInput
+  }
+
+  export type RatingUncheckedUpdateWithoutTeacherInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    review?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RatingUncheckedUpdateManyWithoutTeacherInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    review?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RatingUpdateWithoutStudentInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    review?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teacher?: UserUpdateOneRequiredWithoutTeacherRatingsNestedInput
+  }
+
+  export type RatingUncheckedUpdateWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    teacherId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    review?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RatingUncheckedUpdateManyWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    teacherId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    review?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AnnouncementUpdateWithoutCreatedByInput = {

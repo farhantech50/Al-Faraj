@@ -35,6 +35,9 @@ model User {
   teacherLessons Lesson[] @relation("TeacherLessons")
   studentLessons Lesson[] @relation("StudentLessons")
 
+  teacherRatings Rating[] @relation("TeacherRatings")
+  studentRatings Rating[] @relation("StudentRatings")
+  
   announcements    Announcement[]
 
   @@map("users")

@@ -90,3 +90,178 @@ export const getLessons = async (req, res) => {
     });
   }
 };
+
+export const createRating = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+    const { teacherId, rating, review } = req.body;
+
+    if (rating < 1 || rating > 5) {
+      return res.status(400).json({
+        error: "Rating must be between 1 and 5.",
+      });
+    }
+
+    const existingRating = await prisma.rating.findUnique({
+      where: {
+        teacherId_studentId: {
+          teacherId: Number(teacherId),
+          studentId,
+        },
+      },
+    });
+
+    if (existingRating) {
+      return res.status(400).json({
+        error: "You have already rated this teacher.",
+      });
+    }
+
+    const createdRating = await prisma.rating.create({
+      data: {
+        teacherId: Number(teacherId),
+        studentId,
+        rating: Number(rating),
+        review,
+      },
+    });
+
+    return res.status(201).json(createdRating);
+  } catch (error) {
+    console.log("Error in createRating", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
+export const getAverageRating = async (req, res) => {
+  try {
+    const teacherId = req.user.id;
+
+    const [aggregate, reviews] = await Promise.all([
+      prisma.rating.aggregate({
+        where: {
+          teacherId: Number(teacherId),
+        },
+        _avg: {
+          rating: true,
+        },
+        _count: {
+          rating: true,
+        },
+      }),
+
+      prisma.rating.findMany({
+        where: {
+          teacherId: Number(teacherId),
+        },
+        include: {
+          student: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      }),
+    ]);
+
+    return res.status(200).json({
+      teacherId: Number(teacherId),
+      averageRating: aggregate._avg.rating
+        ? Number(aggregate._avg.rating.toFixed(1))
+        : 0,
+      totalRatings: aggregate._count.rating,
+      reviews: reviews.map((item) => ({
+        studentId: item.student.id,
+        studentName: item.student.name,
+        rating: item.rating,
+        review: item.review,
+        createdAt: item.createdAt,
+      })),
+    });
+  } catch (error) {
+    console.log("Error in getAverageRating", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
+export const updateRating = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+    const { teacherId, rating, review } = req.body;
+
+    if (rating < 1 || rating > 5) {
+      return res.status(400).json({
+        error: "Rating must be between 1 and 5.",
+      });
+    }
+
+    const existingRating = await prisma.rating.findUnique({
+      where: {
+        teacherId_studentId: {
+          teacherId: Number(teacherId),
+          studentId,
+        },
+      },
+    });
+
+    if (!existingRating) {
+      return res.status(404).json({
+        error: "Rating not found.",
+      });
+    }
+
+    const updatedRating = await prisma.rating.update({
+      where: {
+        teacherId_studentId: {
+          teacherId: Number(teacherId),
+          studentId,
+        },
+      },
+      data: {
+        rating: Number(rating),
+        review,
+      },
+    });
+
+    return res.status(200).json(updatedRating);
+  } catch (error) {
+    console.log("Error in updateRating", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+export const getStudentRatingForTeacher = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+    const { teacherId } = req.params;
+
+    const rating = await prisma.rating.findUnique({
+      where: {
+        teacherId_studentId: {
+          teacherId: Number(teacherId),
+          studentId,
+        },
+      },
+    });
+
+    return res.status(200).json(rating);
+  } catch (error) {
+    console.log("Error in getStudentRatingForTeacher", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
