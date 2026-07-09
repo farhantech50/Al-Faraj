@@ -73,7 +73,7 @@ app.use(routes);
    const USE_HTTPS = false;
 ========================================== */
 
-const USE_HTTPS = true;
+const USE_HTTPS = false;
 
 let server;
 
