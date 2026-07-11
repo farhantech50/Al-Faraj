@@ -494,3 +494,82 @@ export const getAssignedTeachers = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+export const browseTeachers = async (req, res) => {
+  try {
+    const student = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: {
+        studentProfile: {
+          select: {
+            mode: true,
+          },
+        },
+      },
+    });
+
+    const mode = student?.studentProfile?.mode;
+
+    const teachers = await prisma.user.findMany({
+      where: {
+        role: "teacher",
+        isActive: true,
+        teacherProfile: mode
+          ? {
+              is: { mode },
+            }
+          : undefined,
+      },
+      select: {
+        id: true,
+        name: true,
+        address: true,
+        gender: true,
+        teacherProfile: {
+          select: {
+            experienceYears: true,
+            educationalBackground: true,
+          },
+        },
+        teacherRatings: {
+          select: {
+            rating: true,
+          },
+        },
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    const data = teachers.map((teacher) => {
+      let sum = 0;
+
+      for (const { rating } of teacher.teacherRatings) {
+        sum += rating;
+      }
+
+      const totalRatings = teacher.teacherRatings.length;
+
+      return {
+        id: teacher.id,
+        name: teacher.name,
+        address: teacher.address,
+        gender: teacher.gender,
+        experienceYears: teacher.teacherProfile?.experienceYears,
+        educationalBackground: teacher.teacherProfile?.educationalBackground,
+        averageRating: totalRatings
+          ? Number((sum / totalRatings).toFixed(1))
+          : 0,
+        totalRatings,
+      };
+    });
+
+    return res.status(200).json(data);
+  } catch (error) {
+    console.log("Error in browseTeachers", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};

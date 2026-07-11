@@ -9,6 +9,7 @@ import {
   findStudentApplicationStatusCounts,
   confirmDemoTeacher,
   getAssignedTeachers,
+  browseTeachers,
 } from "../controllers/student.controller.js";
 import { protect, authorizeRoles } from "../middlewares/auth.middleware.js";
 import {
@@ -180,5 +181,13 @@ router.get(
     getStudentRatingForTeacher(req, res, next);
   },
 );
-
+router.get(
+  "/browse-teachers",
+  protect,
+  authorizeRoles("admin", "moderator", "student"),
+  (req, res, next) => {
+    /* #swagger.tags = ['Student'] */
+    browseTeachers(req, res, next);
+  },
+);
 export default router;
