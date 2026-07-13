@@ -400,12 +400,51 @@ export const getAssignedStudents = async (req, res) => {
       distinct: ["studentId"],
       select: {
         student: {
-          select: { id: true, name: true, email: true, contact: true },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            contact: true,
+          },
         },
+        tuitionPost: {
+          select: {
+            subjects: {
+              select: {
+                subject: {
+                  select: {
+                    id: true,
+                    value: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        isDemo: true,
+        isActive: true,
+        isConfirmed: true,
+        startDate: true,
       },
     });
+    const result = students.map((s) => {
+      let status = "Unknown";
 
-    const result = students.map((s) => ({ user: s.student }));
+      if (s.isDemo && !s.isConfirmed && s.isActive) {
+        status = "Demo";
+      } else if (!s.isDemo && !s.isConfirmed && !s.isActive) {
+        status = "Cancelled";
+      } else if (!s.isDemo && s.isConfirmed && s.isActive) {
+        status = "Active";
+      }
+
+      return {
+        user: s.student,
+        tuitionPost: s.tuitionPost,
+        status,
+        joiningDate: s.startDate,
+      };
+    });
 
     return res.status(200).json(result);
   } catch (error) {
