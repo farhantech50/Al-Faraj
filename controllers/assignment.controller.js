@@ -42,8 +42,10 @@ export const submitHomework = async (req, res) => {
     let fileName = null;
 
     if (req.file) {
-      const result = await uploadToCloudinary(req.file.buffer);
-
+      const result = await uploadToCloudinary(
+        req.file.buffer,
+        req.file.originalname,
+      );
       fileUrl = result.secure_url;
       fileName = req.file.originalname;
     }

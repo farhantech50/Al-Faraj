@@ -10,7 +10,7 @@ import paymentRoutes from "./payment.routes.js";
 import studentRoutes from "./student.routes.js";
 import teacherRoutes from "./teacher.routes.js";
 import tuitionRoutes from "./tuition.routes.js";
-
+import digitalLibraryRoutes from "./digitalLibrary.routes.js";
 const router = Router();
 
 router.use("/api/auth", authRoutes);
@@ -24,5 +24,5 @@ router.use("/api/assignment", assignmentRoutes);
 router.use("/api/dashboard", dashboardRoutes);
 router.use("/api/announcements", announcementRoutes);
 router.use("/api/payment", paymentRoutes);
-
+router.use("/api/library", digitalLibraryRoutes);
 export default router;

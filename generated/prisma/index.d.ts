@@ -39,6 +39,11 @@ export type ClassSchedule = $Result.DefaultSelection<Prisma.$ClassSchedulePayloa
  */
 export type ClassScheduleSubject = $Result.DefaultSelection<Prisma.$ClassScheduleSubjectPayload>
 /**
+ * Model DigitalLibrary
+ * 
+ */
+export type DigitalLibrary = $Result.DefaultSelection<Prisma.$DigitalLibraryPayload>
+/**
  * Model Lesson
  * 
  */
@@ -325,6 +330,16 @@ export class PrismaClient<
     * ```
     */
   get classScheduleSubject(): Prisma.ClassScheduleSubjectDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.digitalLibrary`: Exposes CRUD operations for the **DigitalLibrary** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DigitalLibraries
+    * const digitalLibraries = await prisma.digitalLibrary.findMany()
+    * ```
+    */
+  get digitalLibrary(): Prisma.DigitalLibraryDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.lesson`: Exposes CRUD operations for the **Lesson** model.
@@ -874,6 +889,7 @@ export namespace Prisma {
     Assignment: 'Assignment',
     ClassSchedule: 'ClassSchedule',
     ClassScheduleSubject: 'ClassScheduleSubject',
+    DigitalLibrary: 'DigitalLibrary',
     Lesson: 'Lesson',
     Rating: 'Rating',
     Lookup: 'Lookup',
@@ -900,7 +916,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "announcement" | "assigned" | "assignment" | "classSchedule" | "classScheduleSubject" | "lesson" | "rating" | "lookup" | "rolePermission" | "studentProfile" | "teacherProfile" | "tuitionPost" | "tuitionApplication" | "tuitionPostSubject" | "user" | "refreshToken"
+      modelProps: "announcement" | "assigned" | "assignment" | "classSchedule" | "classScheduleSubject" | "digitalLibrary" | "lesson" | "rating" | "lookup" | "rolePermission" | "studentProfile" | "teacherProfile" | "tuitionPost" | "tuitionApplication" | "tuitionPostSubject" | "user" | "refreshToken"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1271,6 +1287,80 @@ export namespace Prisma {
           count: {
             args: Prisma.ClassScheduleSubjectCountArgs<ExtArgs>
             result: $Utils.Optional<ClassScheduleSubjectCountAggregateOutputType> | number
+          }
+        }
+      }
+      DigitalLibrary: {
+        payload: Prisma.$DigitalLibraryPayload<ExtArgs>
+        fields: Prisma.DigitalLibraryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DigitalLibraryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DigitalLibraryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DigitalLibraryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DigitalLibraryPayload>
+          }
+          findFirst: {
+            args: Prisma.DigitalLibraryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DigitalLibraryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DigitalLibraryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DigitalLibraryPayload>
+          }
+          findMany: {
+            args: Prisma.DigitalLibraryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DigitalLibraryPayload>[]
+          }
+          create: {
+            args: Prisma.DigitalLibraryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DigitalLibraryPayload>
+          }
+          createMany: {
+            args: Prisma.DigitalLibraryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DigitalLibraryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DigitalLibraryPayload>[]
+          }
+          delete: {
+            args: Prisma.DigitalLibraryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DigitalLibraryPayload>
+          }
+          update: {
+            args: Prisma.DigitalLibraryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DigitalLibraryPayload>
+          }
+          deleteMany: {
+            args: Prisma.DigitalLibraryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DigitalLibraryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DigitalLibraryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DigitalLibraryPayload>[]
+          }
+          upsert: {
+            args: Prisma.DigitalLibraryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DigitalLibraryPayload>
+          }
+          aggregate: {
+            args: Prisma.DigitalLibraryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDigitalLibrary>
+          }
+          groupBy: {
+            args: Prisma.DigitalLibraryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DigitalLibraryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DigitalLibraryCountArgs<ExtArgs>
+            result: $Utils.Optional<DigitalLibraryCountAggregateOutputType> | number
           }
         }
       }
@@ -2201,6 +2291,7 @@ export namespace Prisma {
     assignment?: AssignmentOmit
     classSchedule?: ClassScheduleOmit
     classScheduleSubject?: ClassScheduleSubjectOmit
+    digitalLibrary?: DigitalLibraryOmit
     lesson?: LessonOmit
     rating?: RatingOmit
     lookup?: LookupOmit
@@ -8601,6 +8692,1066 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ClassScheduleSubjectInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DigitalLibrary
+   */
+
+  export type AggregateDigitalLibrary = {
+    _count: DigitalLibraryCountAggregateOutputType | null
+    _avg: DigitalLibraryAvgAggregateOutputType | null
+    _sum: DigitalLibrarySumAggregateOutputType | null
+    _min: DigitalLibraryMinAggregateOutputType | null
+    _max: DigitalLibraryMaxAggregateOutputType | null
+  }
+
+  export type DigitalLibraryAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type DigitalLibrarySumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type DigitalLibraryMinAggregateOutputType = {
+    id: number | null
+    title: string | null
+    description: string | null
+    fileUrl: string | null
+    fileName: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DigitalLibraryMaxAggregateOutputType = {
+    id: number | null
+    title: string | null
+    description: string | null
+    fileUrl: string | null
+    fileName: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DigitalLibraryCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    fileUrl: number
+    fileName: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DigitalLibraryAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type DigitalLibrarySumAggregateInputType = {
+    id?: true
+  }
+
+  export type DigitalLibraryMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    fileUrl?: true
+    fileName?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DigitalLibraryMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    fileUrl?: true
+    fileName?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DigitalLibraryCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    fileUrl?: true
+    fileName?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DigitalLibraryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DigitalLibrary to aggregate.
+     */
+    where?: DigitalLibraryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DigitalLibraries to fetch.
+     */
+    orderBy?: DigitalLibraryOrderByWithRelationInput | DigitalLibraryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DigitalLibraryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DigitalLibraries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DigitalLibraries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DigitalLibraries
+    **/
+    _count?: true | DigitalLibraryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DigitalLibraryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DigitalLibrarySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DigitalLibraryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DigitalLibraryMaxAggregateInputType
+  }
+
+  export type GetDigitalLibraryAggregateType<T extends DigitalLibraryAggregateArgs> = {
+        [P in keyof T & keyof AggregateDigitalLibrary]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDigitalLibrary[P]>
+      : GetScalarType<T[P], AggregateDigitalLibrary[P]>
+  }
+
+
+
+
+  export type DigitalLibraryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DigitalLibraryWhereInput
+    orderBy?: DigitalLibraryOrderByWithAggregationInput | DigitalLibraryOrderByWithAggregationInput[]
+    by: DigitalLibraryScalarFieldEnum[] | DigitalLibraryScalarFieldEnum
+    having?: DigitalLibraryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DigitalLibraryCountAggregateInputType | true
+    _avg?: DigitalLibraryAvgAggregateInputType
+    _sum?: DigitalLibrarySumAggregateInputType
+    _min?: DigitalLibraryMinAggregateInputType
+    _max?: DigitalLibraryMaxAggregateInputType
+  }
+
+  export type DigitalLibraryGroupByOutputType = {
+    id: number
+    title: string
+    description: string | null
+    fileUrl: string
+    fileName: string
+    createdAt: Date
+    updatedAt: Date
+    _count: DigitalLibraryCountAggregateOutputType | null
+    _avg: DigitalLibraryAvgAggregateOutputType | null
+    _sum: DigitalLibrarySumAggregateOutputType | null
+    _min: DigitalLibraryMinAggregateOutputType | null
+    _max: DigitalLibraryMaxAggregateOutputType | null
+  }
+
+  type GetDigitalLibraryGroupByPayload<T extends DigitalLibraryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DigitalLibraryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DigitalLibraryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DigitalLibraryGroupByOutputType[P]>
+            : GetScalarType<T[P], DigitalLibraryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DigitalLibrarySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    fileUrl?: boolean
+    fileName?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["digitalLibrary"]>
+
+  export type DigitalLibrarySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    fileUrl?: boolean
+    fileName?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["digitalLibrary"]>
+
+  export type DigitalLibrarySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    fileUrl?: boolean
+    fileName?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["digitalLibrary"]>
+
+  export type DigitalLibrarySelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    fileUrl?: boolean
+    fileName?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DigitalLibraryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "fileUrl" | "fileName" | "createdAt" | "updatedAt", ExtArgs["result"]["digitalLibrary"]>
+
+  export type $DigitalLibraryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DigitalLibrary"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      title: string
+      description: string | null
+      fileUrl: string
+      fileName: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["digitalLibrary"]>
+    composites: {}
+  }
+
+  type DigitalLibraryGetPayload<S extends boolean | null | undefined | DigitalLibraryDefaultArgs> = $Result.GetResult<Prisma.$DigitalLibraryPayload, S>
+
+  type DigitalLibraryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DigitalLibraryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DigitalLibraryCountAggregateInputType | true
+    }
+
+  export interface DigitalLibraryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DigitalLibrary'], meta: { name: 'DigitalLibrary' } }
+    /**
+     * Find zero or one DigitalLibrary that matches the filter.
+     * @param {DigitalLibraryFindUniqueArgs} args - Arguments to find a DigitalLibrary
+     * @example
+     * // Get one DigitalLibrary
+     * const digitalLibrary = await prisma.digitalLibrary.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DigitalLibraryFindUniqueArgs>(args: SelectSubset<T, DigitalLibraryFindUniqueArgs<ExtArgs>>): Prisma__DigitalLibraryClient<$Result.GetResult<Prisma.$DigitalLibraryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DigitalLibrary that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DigitalLibraryFindUniqueOrThrowArgs} args - Arguments to find a DigitalLibrary
+     * @example
+     * // Get one DigitalLibrary
+     * const digitalLibrary = await prisma.digitalLibrary.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DigitalLibraryFindUniqueOrThrowArgs>(args: SelectSubset<T, DigitalLibraryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DigitalLibraryClient<$Result.GetResult<Prisma.$DigitalLibraryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DigitalLibrary that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DigitalLibraryFindFirstArgs} args - Arguments to find a DigitalLibrary
+     * @example
+     * // Get one DigitalLibrary
+     * const digitalLibrary = await prisma.digitalLibrary.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DigitalLibraryFindFirstArgs>(args?: SelectSubset<T, DigitalLibraryFindFirstArgs<ExtArgs>>): Prisma__DigitalLibraryClient<$Result.GetResult<Prisma.$DigitalLibraryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DigitalLibrary that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DigitalLibraryFindFirstOrThrowArgs} args - Arguments to find a DigitalLibrary
+     * @example
+     * // Get one DigitalLibrary
+     * const digitalLibrary = await prisma.digitalLibrary.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DigitalLibraryFindFirstOrThrowArgs>(args?: SelectSubset<T, DigitalLibraryFindFirstOrThrowArgs<ExtArgs>>): Prisma__DigitalLibraryClient<$Result.GetResult<Prisma.$DigitalLibraryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DigitalLibraries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DigitalLibraryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DigitalLibraries
+     * const digitalLibraries = await prisma.digitalLibrary.findMany()
+     * 
+     * // Get first 10 DigitalLibraries
+     * const digitalLibraries = await prisma.digitalLibrary.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const digitalLibraryWithIdOnly = await prisma.digitalLibrary.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DigitalLibraryFindManyArgs>(args?: SelectSubset<T, DigitalLibraryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DigitalLibraryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DigitalLibrary.
+     * @param {DigitalLibraryCreateArgs} args - Arguments to create a DigitalLibrary.
+     * @example
+     * // Create one DigitalLibrary
+     * const DigitalLibrary = await prisma.digitalLibrary.create({
+     *   data: {
+     *     // ... data to create a DigitalLibrary
+     *   }
+     * })
+     * 
+     */
+    create<T extends DigitalLibraryCreateArgs>(args: SelectSubset<T, DigitalLibraryCreateArgs<ExtArgs>>): Prisma__DigitalLibraryClient<$Result.GetResult<Prisma.$DigitalLibraryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DigitalLibraries.
+     * @param {DigitalLibraryCreateManyArgs} args - Arguments to create many DigitalLibraries.
+     * @example
+     * // Create many DigitalLibraries
+     * const digitalLibrary = await prisma.digitalLibrary.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DigitalLibraryCreateManyArgs>(args?: SelectSubset<T, DigitalLibraryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DigitalLibraries and returns the data saved in the database.
+     * @param {DigitalLibraryCreateManyAndReturnArgs} args - Arguments to create many DigitalLibraries.
+     * @example
+     * // Create many DigitalLibraries
+     * const digitalLibrary = await prisma.digitalLibrary.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DigitalLibraries and only return the `id`
+     * const digitalLibraryWithIdOnly = await prisma.digitalLibrary.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DigitalLibraryCreateManyAndReturnArgs>(args?: SelectSubset<T, DigitalLibraryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DigitalLibraryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DigitalLibrary.
+     * @param {DigitalLibraryDeleteArgs} args - Arguments to delete one DigitalLibrary.
+     * @example
+     * // Delete one DigitalLibrary
+     * const DigitalLibrary = await prisma.digitalLibrary.delete({
+     *   where: {
+     *     // ... filter to delete one DigitalLibrary
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DigitalLibraryDeleteArgs>(args: SelectSubset<T, DigitalLibraryDeleteArgs<ExtArgs>>): Prisma__DigitalLibraryClient<$Result.GetResult<Prisma.$DigitalLibraryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DigitalLibrary.
+     * @param {DigitalLibraryUpdateArgs} args - Arguments to update one DigitalLibrary.
+     * @example
+     * // Update one DigitalLibrary
+     * const digitalLibrary = await prisma.digitalLibrary.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DigitalLibraryUpdateArgs>(args: SelectSubset<T, DigitalLibraryUpdateArgs<ExtArgs>>): Prisma__DigitalLibraryClient<$Result.GetResult<Prisma.$DigitalLibraryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DigitalLibraries.
+     * @param {DigitalLibraryDeleteManyArgs} args - Arguments to filter DigitalLibraries to delete.
+     * @example
+     * // Delete a few DigitalLibraries
+     * const { count } = await prisma.digitalLibrary.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DigitalLibraryDeleteManyArgs>(args?: SelectSubset<T, DigitalLibraryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DigitalLibraries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DigitalLibraryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DigitalLibraries
+     * const digitalLibrary = await prisma.digitalLibrary.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DigitalLibraryUpdateManyArgs>(args: SelectSubset<T, DigitalLibraryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DigitalLibraries and returns the data updated in the database.
+     * @param {DigitalLibraryUpdateManyAndReturnArgs} args - Arguments to update many DigitalLibraries.
+     * @example
+     * // Update many DigitalLibraries
+     * const digitalLibrary = await prisma.digitalLibrary.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DigitalLibraries and only return the `id`
+     * const digitalLibraryWithIdOnly = await prisma.digitalLibrary.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DigitalLibraryUpdateManyAndReturnArgs>(args: SelectSubset<T, DigitalLibraryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DigitalLibraryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DigitalLibrary.
+     * @param {DigitalLibraryUpsertArgs} args - Arguments to update or create a DigitalLibrary.
+     * @example
+     * // Update or create a DigitalLibrary
+     * const digitalLibrary = await prisma.digitalLibrary.upsert({
+     *   create: {
+     *     // ... data to create a DigitalLibrary
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DigitalLibrary we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DigitalLibraryUpsertArgs>(args: SelectSubset<T, DigitalLibraryUpsertArgs<ExtArgs>>): Prisma__DigitalLibraryClient<$Result.GetResult<Prisma.$DigitalLibraryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DigitalLibraries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DigitalLibraryCountArgs} args - Arguments to filter DigitalLibraries to count.
+     * @example
+     * // Count the number of DigitalLibraries
+     * const count = await prisma.digitalLibrary.count({
+     *   where: {
+     *     // ... the filter for the DigitalLibraries we want to count
+     *   }
+     * })
+    **/
+    count<T extends DigitalLibraryCountArgs>(
+      args?: Subset<T, DigitalLibraryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DigitalLibraryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DigitalLibrary.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DigitalLibraryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DigitalLibraryAggregateArgs>(args: Subset<T, DigitalLibraryAggregateArgs>): Prisma.PrismaPromise<GetDigitalLibraryAggregateType<T>>
+
+    /**
+     * Group by DigitalLibrary.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DigitalLibraryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DigitalLibraryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DigitalLibraryGroupByArgs['orderBy'] }
+        : { orderBy?: DigitalLibraryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DigitalLibraryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDigitalLibraryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DigitalLibrary model
+   */
+  readonly fields: DigitalLibraryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DigitalLibrary.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DigitalLibraryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DigitalLibrary model
+   */
+  interface DigitalLibraryFieldRefs {
+    readonly id: FieldRef<"DigitalLibrary", 'Int'>
+    readonly title: FieldRef<"DigitalLibrary", 'String'>
+    readonly description: FieldRef<"DigitalLibrary", 'String'>
+    readonly fileUrl: FieldRef<"DigitalLibrary", 'String'>
+    readonly fileName: FieldRef<"DigitalLibrary", 'String'>
+    readonly createdAt: FieldRef<"DigitalLibrary", 'DateTime'>
+    readonly updatedAt: FieldRef<"DigitalLibrary", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DigitalLibrary findUnique
+   */
+  export type DigitalLibraryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
+    /**
+     * Filter, which DigitalLibrary to fetch.
+     */
+    where: DigitalLibraryWhereUniqueInput
+  }
+
+  /**
+   * DigitalLibrary findUniqueOrThrow
+   */
+  export type DigitalLibraryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
+    /**
+     * Filter, which DigitalLibrary to fetch.
+     */
+    where: DigitalLibraryWhereUniqueInput
+  }
+
+  /**
+   * DigitalLibrary findFirst
+   */
+  export type DigitalLibraryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
+    /**
+     * Filter, which DigitalLibrary to fetch.
+     */
+    where?: DigitalLibraryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DigitalLibraries to fetch.
+     */
+    orderBy?: DigitalLibraryOrderByWithRelationInput | DigitalLibraryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DigitalLibraries.
+     */
+    cursor?: DigitalLibraryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DigitalLibraries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DigitalLibraries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DigitalLibraries.
+     */
+    distinct?: DigitalLibraryScalarFieldEnum | DigitalLibraryScalarFieldEnum[]
+  }
+
+  /**
+   * DigitalLibrary findFirstOrThrow
+   */
+  export type DigitalLibraryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
+    /**
+     * Filter, which DigitalLibrary to fetch.
+     */
+    where?: DigitalLibraryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DigitalLibraries to fetch.
+     */
+    orderBy?: DigitalLibraryOrderByWithRelationInput | DigitalLibraryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DigitalLibraries.
+     */
+    cursor?: DigitalLibraryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DigitalLibraries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DigitalLibraries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DigitalLibraries.
+     */
+    distinct?: DigitalLibraryScalarFieldEnum | DigitalLibraryScalarFieldEnum[]
+  }
+
+  /**
+   * DigitalLibrary findMany
+   */
+  export type DigitalLibraryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
+    /**
+     * Filter, which DigitalLibraries to fetch.
+     */
+    where?: DigitalLibraryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DigitalLibraries to fetch.
+     */
+    orderBy?: DigitalLibraryOrderByWithRelationInput | DigitalLibraryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DigitalLibraries.
+     */
+    cursor?: DigitalLibraryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DigitalLibraries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DigitalLibraries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DigitalLibraries.
+     */
+    distinct?: DigitalLibraryScalarFieldEnum | DigitalLibraryScalarFieldEnum[]
+  }
+
+  /**
+   * DigitalLibrary create
+   */
+  export type DigitalLibraryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
+    /**
+     * The data needed to create a DigitalLibrary.
+     */
+    data: XOR<DigitalLibraryCreateInput, DigitalLibraryUncheckedCreateInput>
+  }
+
+  /**
+   * DigitalLibrary createMany
+   */
+  export type DigitalLibraryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DigitalLibraries.
+     */
+    data: DigitalLibraryCreateManyInput | DigitalLibraryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DigitalLibrary createManyAndReturn
+   */
+  export type DigitalLibraryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
+    /**
+     * The data used to create many DigitalLibraries.
+     */
+    data: DigitalLibraryCreateManyInput | DigitalLibraryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DigitalLibrary update
+   */
+  export type DigitalLibraryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
+    /**
+     * The data needed to update a DigitalLibrary.
+     */
+    data: XOR<DigitalLibraryUpdateInput, DigitalLibraryUncheckedUpdateInput>
+    /**
+     * Choose, which DigitalLibrary to update.
+     */
+    where: DigitalLibraryWhereUniqueInput
+  }
+
+  /**
+   * DigitalLibrary updateMany
+   */
+  export type DigitalLibraryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DigitalLibraries.
+     */
+    data: XOR<DigitalLibraryUpdateManyMutationInput, DigitalLibraryUncheckedUpdateManyInput>
+    /**
+     * Filter which DigitalLibraries to update
+     */
+    where?: DigitalLibraryWhereInput
+    /**
+     * Limit how many DigitalLibraries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DigitalLibrary updateManyAndReturn
+   */
+  export type DigitalLibraryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
+    /**
+     * The data used to update DigitalLibraries.
+     */
+    data: XOR<DigitalLibraryUpdateManyMutationInput, DigitalLibraryUncheckedUpdateManyInput>
+    /**
+     * Filter which DigitalLibraries to update
+     */
+    where?: DigitalLibraryWhereInput
+    /**
+     * Limit how many DigitalLibraries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DigitalLibrary upsert
+   */
+  export type DigitalLibraryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
+    /**
+     * The filter to search for the DigitalLibrary to update in case it exists.
+     */
+    where: DigitalLibraryWhereUniqueInput
+    /**
+     * In case the DigitalLibrary found by the `where` argument doesn't exist, create a new DigitalLibrary with this data.
+     */
+    create: XOR<DigitalLibraryCreateInput, DigitalLibraryUncheckedCreateInput>
+    /**
+     * In case the DigitalLibrary was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DigitalLibraryUpdateInput, DigitalLibraryUncheckedUpdateInput>
+  }
+
+  /**
+   * DigitalLibrary delete
+   */
+  export type DigitalLibraryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
+    /**
+     * Filter which DigitalLibrary to delete.
+     */
+    where: DigitalLibraryWhereUniqueInput
+  }
+
+  /**
+   * DigitalLibrary deleteMany
+   */
+  export type DigitalLibraryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DigitalLibraries to delete
+     */
+    where?: DigitalLibraryWhereInput
+    /**
+     * Limit how many DigitalLibraries to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DigitalLibrary without action
+   */
+  export type DigitalLibraryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DigitalLibrary
+     */
+    select?: DigitalLibrarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DigitalLibrary
+     */
+    omit?: DigitalLibraryOmit<ExtArgs> | null
   }
 
 
@@ -21913,6 +23064,19 @@ export namespace Prisma {
   export type ClassScheduleSubjectScalarFieldEnum = (typeof ClassScheduleSubjectScalarFieldEnum)[keyof typeof ClassScheduleSubjectScalarFieldEnum]
 
 
+  export const DigitalLibraryScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    fileUrl: 'fileUrl',
+    fileName: 'fileName',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DigitalLibraryScalarFieldEnum = (typeof DigitalLibraryScalarFieldEnum)[keyof typeof DigitalLibraryScalarFieldEnum]
+
+
   export const LessonScalarFieldEnum: {
     id: 'id',
     teacherId: 'teacherId',
@@ -22662,6 +23826,70 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"ClassScheduleSubject"> | number
     classScheduleId?: IntWithAggregatesFilter<"ClassScheduleSubject"> | number
     subjectId?: IntWithAggregatesFilter<"ClassScheduleSubject"> | number
+  }
+
+  export type DigitalLibraryWhereInput = {
+    AND?: DigitalLibraryWhereInput | DigitalLibraryWhereInput[]
+    OR?: DigitalLibraryWhereInput[]
+    NOT?: DigitalLibraryWhereInput | DigitalLibraryWhereInput[]
+    id?: IntFilter<"DigitalLibrary"> | number
+    title?: StringFilter<"DigitalLibrary"> | string
+    description?: StringNullableFilter<"DigitalLibrary"> | string | null
+    fileUrl?: StringFilter<"DigitalLibrary"> | string
+    fileName?: StringFilter<"DigitalLibrary"> | string
+    createdAt?: DateTimeFilter<"DigitalLibrary"> | Date | string
+    updatedAt?: DateTimeFilter<"DigitalLibrary"> | Date | string
+  }
+
+  export type DigitalLibraryOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    fileUrl?: SortOrder
+    fileName?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DigitalLibraryWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: DigitalLibraryWhereInput | DigitalLibraryWhereInput[]
+    OR?: DigitalLibraryWhereInput[]
+    NOT?: DigitalLibraryWhereInput | DigitalLibraryWhereInput[]
+    title?: StringFilter<"DigitalLibrary"> | string
+    description?: StringNullableFilter<"DigitalLibrary"> | string | null
+    fileUrl?: StringFilter<"DigitalLibrary"> | string
+    fileName?: StringFilter<"DigitalLibrary"> | string
+    createdAt?: DateTimeFilter<"DigitalLibrary"> | Date | string
+    updatedAt?: DateTimeFilter<"DigitalLibrary"> | Date | string
+  }, "id">
+
+  export type DigitalLibraryOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    fileUrl?: SortOrder
+    fileName?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DigitalLibraryCountOrderByAggregateInput
+    _avg?: DigitalLibraryAvgOrderByAggregateInput
+    _max?: DigitalLibraryMaxOrderByAggregateInput
+    _min?: DigitalLibraryMinOrderByAggregateInput
+    _sum?: DigitalLibrarySumOrderByAggregateInput
+  }
+
+  export type DigitalLibraryScalarWhereWithAggregatesInput = {
+    AND?: DigitalLibraryScalarWhereWithAggregatesInput | DigitalLibraryScalarWhereWithAggregatesInput[]
+    OR?: DigitalLibraryScalarWhereWithAggregatesInput[]
+    NOT?: DigitalLibraryScalarWhereWithAggregatesInput | DigitalLibraryScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DigitalLibrary"> | number
+    title?: StringWithAggregatesFilter<"DigitalLibrary"> | string
+    description?: StringNullableWithAggregatesFilter<"DigitalLibrary"> | string | null
+    fileUrl?: StringWithAggregatesFilter<"DigitalLibrary"> | string
+    fileName?: StringWithAggregatesFilter<"DigitalLibrary"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"DigitalLibrary"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"DigitalLibrary"> | Date | string
   }
 
   export type LessonWhereInput = {
@@ -23960,6 +25188,73 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     classScheduleId?: IntFieldUpdateOperationsInput | number
     subjectId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DigitalLibraryCreateInput = {
+    title: string
+    description?: string | null
+    fileUrl: string
+    fileName: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DigitalLibraryUncheckedCreateInput = {
+    id?: number
+    title: string
+    description?: string | null
+    fileUrl: string
+    fileName: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DigitalLibraryUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DigitalLibraryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DigitalLibraryCreateManyInput = {
+    id?: number
+    title: string
+    description?: string | null
+    fileUrl: string
+    fileName: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DigitalLibraryUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DigitalLibraryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LessonCreateInput = {
@@ -25346,6 +26641,44 @@ export namespace Prisma {
     id?: SortOrder
     classScheduleId?: SortOrder
     subjectId?: SortOrder
+  }
+
+  export type DigitalLibraryCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    fileUrl?: SortOrder
+    fileName?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DigitalLibraryAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type DigitalLibraryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    fileUrl?: SortOrder
+    fileName?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DigitalLibraryMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    fileUrl?: SortOrder
+    fileName?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DigitalLibrarySumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type LessonCountOrderByAggregateInput = {
